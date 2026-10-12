@@ -4,6 +4,9 @@ import type { Language } from '../src/features/language/savedLanguage';
 export const languages: Language[] = ['en', 'he'];
 
 export const openSite = async (page: Page, language: Language) => {
+  await page.route('https://cdn.replybase.dev/widget.js', (route) =>
+    route.fulfill({ contentType: 'application/javascript', body: '' }),
+  );
   await page.addInitScript((saved) => localStorage.setItem('jts-language', saved), language);
   return page.goto('/');
 };
