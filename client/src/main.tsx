@@ -4,6 +4,7 @@ import './globalStyles.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
+import { loadChatWidget } from './features/chat/loadChatWidget';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Missing application root');
@@ -13,3 +14,4 @@ root.render(
     <App />
   </StrictMode>,
 );
+loadChatWidget();
