@@ -3,7 +3,7 @@ const securityHeaders = {
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'X-Frame-Options': 'DENY',
   'Content-Security-Policy':
-    "default-src 'self'; script-src 'self' https://cdn.replybase.dev; style-src 'self' 'unsafe-inline'; img-src 'self' https://replybase.dev; font-src 'self'; connect-src 'self' https://api.replybase.dev; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'",
+    "default-src 'self'; script-src 'self' https://cdn.replybase.dev https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' https://replybase.dev https://www.googletagmanager.com https://*.google-analytics.com; font-src 'self'; connect-src 'self' https://api.replybase.dev https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; frame-src https://www.googletagmanager.com; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'",
 };
 
 export const addSecurityHeaders = (headers: Headers) => {

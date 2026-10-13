@@ -72,6 +72,22 @@ names or CSS classes.
   military service.
 - Use CSS logical properties. Mirror directional animations under `html[dir="rtl"]`.
 
+## Visitor tracking
+
+- Google Tag Manager (container `GTM-5KKTTCRT`) in `features/visitorTracking/` runs for every
+  visitor. It exists only in the production build, and Google's script loads only after the
+  page settles, so it never delays the first paint. `index.html` keeps Google's no-script
+  frame right after `<body>`.
+- Google Analytics (`G-FGK25F36RF`) is a Google tag inside the container. Do not paste the
+  gtag.js snippet into the code as well: every visit would be counted twice.
+- The container loads from a module, not from Google's inline snippet, so the CSP keeps no
+  `unsafe-inline` for scripts. Custom HTML tags and Custom JavaScript variables need
+  `unsafe-inline` and `unsafe-eval`, so they do not run here: use the built-in tag templates.
+- Checks never reach Google: Playwright serves a stand-in from `e2e/openSite.ts` and
+  Lighthouse blocks `www.googletagmanager.com`.
+- An outside host works only after it is added to the CSP in `worker/securityHeaders.ts`.
+  A tag added in the container needs its hosts there first.
+
 ## Caching and routes
 
 - `worker/cacheHeaders.ts` sets them (Cloudflare ignores `_headers` when the Worker runs

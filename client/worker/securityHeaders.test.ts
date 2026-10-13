@@ -13,4 +13,24 @@ describe('security headers', () => {
     expect(policy).toContain("font-src 'self'");
     expect(policy).toContain("frame-ancestors 'none'");
   });
+
+  it('lets Google Tag Manager load its container and its no-script frame', () => {
+    const headers = new Headers();
+    addSecurityHeaders(headers);
+    const policy = headers.get('Content-Security-Policy');
+    expect(policy).toMatch(/script-src [^;]*https:\/\/www\.googletagmanager\.com/);
+    expect(policy).toMatch(/img-src [^;]*https:\/\/www\.googletagmanager\.com/);
+    expect(policy).toMatch(/connect-src [^;]*https:\/\/www\.googletagmanager\.com/);
+    expect(policy).toMatch(/frame-src [^;]*https:\/\/www\.googletagmanager\.com/);
+    expect(policy).not.toMatch(/script-src [^;]*'unsafe-(inline|eval)'/);
+  });
+
+  it('lets the Google Analytics tag in the container report visits', () => {
+    const headers = new Headers();
+    addSecurityHeaders(headers);
+    const policy = headers.get('Content-Security-Policy');
+    expect(policy).toMatch(/img-src [^;]*https:\/\/\*\.google-analytics\.com/);
+    expect(policy).toMatch(/connect-src [^;]*https:\/\/\*\.google-analytics\.com/);
+    expect(policy).toMatch(/connect-src [^;]*https:\/\/\*\.google\.com/);
+  });
 });

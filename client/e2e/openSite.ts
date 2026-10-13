@@ -7,6 +7,9 @@ export const openSite = async (page: Page, language: Language) => {
   await page.route('https://cdn.replybase.dev/widget.js', (route) =>
     route.fulfill({ contentType: 'application/javascript', body: '' }),
   );
+  await page.route('https://www.googletagmanager.com/**', (route) =>
+    route.fulfill({ contentType: 'application/javascript', body: '' }),
+  );
   await page.addInitScript((saved) => localStorage.setItem('jts-language', saved), language);
   return page.goto('/');
 };
