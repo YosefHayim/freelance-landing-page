@@ -34,6 +34,7 @@ export const WorkShowcase = ({ language, prefersReducedMotion, isCovered }: Work
               key={workType}
               type="button"
               className="work-type-button"
+              data-track={`work_type_${workType}`}
               aria-pressed={workType === activeWorkType}
               onClick={() => chooseWorkType(workType)}
             >
