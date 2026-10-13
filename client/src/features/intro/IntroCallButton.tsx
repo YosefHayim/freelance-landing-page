@@ -16,7 +16,13 @@ const confettiPieces = [
 export const IntroCallButton = ({ language }: { language: Language }) => {
   const text = introText[language];
   return (
-    <a className="intro-call-button" href={whatsappLink(language)} target="_blank" rel="noopener">
+    <a
+      className="intro-call-button"
+      data-track="intro_call"
+      href={whatsappLink(language)}
+      target="_blank"
+      rel="noopener"
+    >
       <RollingLabel label={text.callLabel} hoverLabel={text.callHoverLabel} />
       <span className="call-icon-swap" aria-hidden="true">
         <svg

@@ -73,6 +73,21 @@ names or CSS classes.
   facts already in the text. Do not mention military service.
 - Use CSS logical properties. Mirror directional animations under `html[dir="rtl"]`.
 
+## Visitor tracking
+
+- The Meta Pixel in `features/visitorTracking/` runs for every visitor, with no consent banner.
+  It exists only in the production build, and Meta's script loads only after the page
+  settles, so it never delays the first paint.
+- It reports the page view, a WhatsApp click as `Contact`, and the custom events `Click`,
+  `Hover`, `Hold`, `SectionView`, `ScrollDepth`, `TimeOnPage`, `TextSelect`, `TextCopy`,
+  `ChatOpen` and `ChatClick`. Names and values are the same in both languages.
+- Every new button or link gets a `data-track` name in snake_case. Other places report as
+  `none`.
+- Checks never reach Meta: Playwright serves a stand-in script from `e2e/openSite.ts` and
+  Lighthouse blocks `connect.facebook.net`. The Lighthouse gate measures the site's own code:
+  Meta's script adds main-thread work that only Meta can change.
+- An outside host works only after it is added to the CSP in `worker/securityHeaders.ts`.
+
 ## Caching and routes
 
 - `worker/cacheHeaders.ts` sets them (Cloudflare ignores `_headers` when the Worker runs
@@ -91,7 +106,8 @@ free.
 
 CI runs the same checks as parallel jobs behind one required `CI Gate` job. Before opening a
 PR, run them locally with `act workflow_dispatch -W .github/workflows/ci.yml`; the root
-`.actrc` picks the Docker runner and keeps the pnpm store outside the workspace. act skips the
+`.actrc` picks the Docker runner, keeps the pnpm store outside the workspace and gives each
+job its own copy of an action, so parallel jobs cannot break each other's setup. act skips the
 Lighthouse job because Docker is too slow to measure it; `pnpm test:vitals` covers it locally.
 
 ## Release
