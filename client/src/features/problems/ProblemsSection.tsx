@@ -33,13 +33,9 @@ export const ProblemsSection = ({
   return (
     <section className="stacking-section" id="problems" aria-labelledby="problems-heading">
       <div className="section-content">
-        <div className="problems-heading reveal-on-scroll">
-          <h2 id="problems-heading" className="display-heading">
-            {text.heading}
-            <br />
-            <span className="muted-line">{text.mutedHeading}</span>
-          </h2>
-        </div>
+        <h2 id="problems-heading" className="display-heading problems-heading reveal-on-scroll">
+          <span>{text.heading}</span> <span className="muted-line">{text.mutedHeading}</span>
+        </h2>
         <div className="problems-layout reveal-on-scroll">
           <ProblemCarousel
             language={language}

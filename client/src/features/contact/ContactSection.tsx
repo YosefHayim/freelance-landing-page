@@ -1,4 +1,5 @@
 import './contact.css';
+import { LogoMark } from '../../components/LogoMark';
 import type { Language } from '../language/savedLanguage';
 import { whatsappLink } from '../whatsapp/whatsappLink';
 import { CopiedNotice } from './CopiedNotice';
@@ -7,13 +8,13 @@ import { SocialLinks } from './SocialLinks';
 import { StarrySkyCanvas } from './StarrySkyCanvas';
 import { useCopiedNotice } from './useCopiedNotice';
 
-const sunsetClouds = [
+const skyGlows = [
   {
     width: '60%',
     height: '28%',
     left: '-10%',
     bottom: '8%',
-    background: '#FF8A4C',
+    background: 'var(--blue-dark)',
     animationDuration: '28s',
     animationDelay: '-8s',
   },
@@ -22,7 +23,7 @@ const sunsetClouds = [
     height: '22%',
     right: '-8%',
     bottom: '20%',
-    background: '#F35E62',
+    background: 'var(--blue)',
     animationDuration: '34s',
     animationDelay: '-14s',
   },
@@ -31,11 +32,10 @@ const sunsetClouds = [
     height: '20%',
     left: '20%',
     bottom: '-6%',
-    background: '#FFC074',
+    background: 'var(--blue-light)',
     animationDuration: '25s',
     animationDelay: '-4s',
   },
-  { width: '40%', height: '18%', left: '30%', top: '38%', background: '#7B2D8A', opacity: 0.55 },
 ];
 
 interface ContactSectionProps {
@@ -51,16 +51,13 @@ export const ContactSection = ({ language, prefersReducedMotion }: ContactSectio
   return (
     <section className="contact-section" id="contact" aria-labelledby="contact-heading">
       <div className="moving-sky" aria-hidden="true" />
-      {sunsetClouds.map((cloud) => (
-        <div key={cloud.background} className="sunset-cloud" style={cloud} />
+      {skyGlows.map((glow) => (
+        <div key={glow.background} className="sky-glow" style={glow} />
       ))}
       <StarrySkyCanvas prefersReducedMotion={prefersReducedMotion} />
-      <div className="contact-content">
+      <div className="section-content contact-content">
         <h2 id="contact-heading" className="display-heading contact-heading reveal-on-scroll">
-          {firstHeadingLine}
-          <br />
-          {secondHeadingLine}
-          <br />
+          <span>{firstHeadingLine}</span> <span>{secondHeadingLine}</span>{' '}
           <span className="contact-muted-line">{text.mutedLine}</span>
         </h2>
         <div className="contact-actions reveal-on-scroll" style={{ transitionDelay: '.1s' }}>
@@ -76,6 +73,7 @@ export const ContactSection = ({ language, prefersReducedMotion }: ContactSectio
         </div>
       </div>
       <footer className="site-footer">
+        <LogoMark />
         <SocialLinks language={language} onHandleCopied={showNotice} />
       </footer>
       <CopiedNotice

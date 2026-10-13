@@ -1,4 +1,5 @@
 import './topBar.css';
+import { LogoMark } from '../../components/LogoMark';
 import { LanguageFlagButton } from '../language/LanguageFlagButton';
 import type { Language } from '../language/savedLanguage';
 import { TopBarCallButton } from './TopBarCallButton';
@@ -11,7 +12,10 @@ interface TopBarProps {
 
 export const TopBar = ({ language, onToggleLanguage }: TopBarProps) => (
   <nav className="top-bar" aria-label={topBarText[language].navigationLabel}>
-    <LanguageFlagButton language={language} onToggle={onToggleLanguage} />
-    <TopBarCallButton language={language} />
+    <LogoMark />
+    <div className="top-bar-actions">
+      <LanguageFlagButton language={language} onToggle={onToggleLanguage} />
+      <TopBarCallButton language={language} />
+    </div>
   </nav>
 );

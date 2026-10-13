@@ -1,27 +1,52 @@
 .about-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(40px, 6vw, 96px);
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+    "iceberg heading"
+    "iceberg lead"
+    "iceberg story";
+  column-gap: clamp(40px, 6vw, 96px);
   align-items: start;
 }
 
 .about-heading {
-  font-size: clamp(32px, 3.6vw, 50px);
-  margin-bottom: 32px;
+  grid-area: heading;
+  margin-bottom: 28px;
 }
 
-.about-heading span {
-  display: block;
+.about-lead {
+  grid-area: lead;
+  max-width: 30em;
+  font-size: clamp(18px, 1.5vw, 21px);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.about-story {
+  grid-area: story;
+  display: grid;
+  gap: 16px;
+  max-width: 38em;
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--hairline);
 }
 
 .about-paragraph {
-  color: #3a3a3a;
-  max-width: 34em;
-  margin-bottom: 16px;
-  font-size: 17px;
+  font-size: 16.5px;
+  line-height: 1.65;
+  color: var(--text-soft);
+  text-wrap: pretty;
+}
+
+.about-paragraph-opening {
+  font-weight: 600;
+  color: var(--text);
 }
 
 .iceberg-figure {
+  grid-area: iceberg;
   position: sticky;
   top: 120px;
   perspective: 900px;
@@ -29,7 +54,7 @@
 
 .iceberg {
   position: relative;
-  border-radius: 16px;
+  border-radius: var(--panel-radius);
   overflow: hidden;
   aspect-ratio: 4 / 5;
   transform-style: flat;
@@ -38,12 +63,12 @@
     180deg,
     #f4f9ff 0%,
     #e6f2ff 34%,
-    #0f3e7e 36%,
-    #0a2a5c 70%,
-    #061a3c 100%
+    var(--navy) 36%,
+    var(--navy-dark) 70%,
+    var(--navy-deep) 100%
   );
   border: 1px solid var(--hairline);
-  box-shadow: 0 30px 60px -30px rgba(15, 62, 126, 0.55);
+  box-shadow: 0 32px 56px -40px var(--navy-shadow);
   container-type: inline-size;
 }
 
@@ -147,7 +172,7 @@
   border-radius: 2.4cqw;
   background: #fff;
   border: 1px solid #dce6f2;
-  box-shadow: 0 3cqw 5cqw -3cqw rgba(15, 62, 126, 0.4);
+  box-shadow: 0 3cqw 5cqw -3cqw var(--navy-shadow);
   display: flex;
   flex-direction: column;
   gap: 1.4cqw;
@@ -381,7 +406,7 @@
   border: 1px solid rgba(143, 211, 255, 0.45);
   display: grid;
   place-items: center;
-  color: #bde6ff;
+  color: var(--blue-pale);
   flex: none;
 }
 
@@ -433,7 +458,7 @@
   top: 0;
   width: 200%;
   height: 100%;
-  fill: #0f3e7e;
+  fill: var(--navy);
   animation: wave-roll 7s linear infinite;
 }
 
@@ -452,13 +477,24 @@
 
 @media (max-width: 760px) {
   .about-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas:
+      "heading"
+      "lead"
+      "iceberg"
+      "story";
   }
 
   .iceberg-figure {
     position: relative;
     top: 0;
-    margin-top: 8px;
+    margin-top: 32px;
+  }
+
+  .about-story {
+    padding-top: 0;
+    border-top: 0;
   }
 }
 

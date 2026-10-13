@@ -22,27 +22,28 @@ export const AboutSection = ({ language, prefersReducedMotion, isCovered }: Abou
       aria-labelledby="about-heading"
     >
       <div className="section-content about-layout">
-        <div>
-          <h2 id="about-heading" className="display-heading about-heading reveal-on-scroll">
-            <span>{text.heading}</span>
-            {text.mutedHeadingLines.map((line) => (
-              <span key={line} className="muted-line">
-                {line}
-              </span>
-            ))}
-          </h2>
-          {text.paragraphs.map((paragraph) => (
-            <p key={paragraph} className="about-paragraph reveal-on-scroll">
-              {paragraph}
-            </p>
+        <h2 id="about-heading" className="display-heading about-heading reveal-on-scroll">
+          <span>{text.heading}</span>
+          {text.mutedHeadingLines.map((line) => (
+            <span key={line} className="muted-line">
+              {line}
+            </span>
           ))}
-        </div>
+        </h2>
+        <p className="about-lead reveal-on-scroll">{text.lead}</p>
         <Iceberg
           language={language}
           prefersReducedMotion={prefersReducedMotion}
           isCovered={isCovered}
           tiltAreaRef={sectionRef}
         />
+        <div className="about-story">
+          {text.paragraphs.map((paragraph) => (
+            <p key={paragraph.opening} className="about-paragraph reveal-on-scroll">
+              <b className="about-paragraph-opening">{paragraph.opening}</b> {paragraph.rest}
+            </p>
+          ))}
+        </div>
       </div>
     </section>
   );

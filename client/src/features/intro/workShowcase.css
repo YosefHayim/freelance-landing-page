@@ -1,16 +1,17 @@
 .work-showcase {
-  width: min(100%, 660px);
+  width: 100%;
 }
 
 .work-showcase-panel {
-  height: 350px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 14px;
   border: 1px solid var(--hairline);
-  border-radius: 22px;
+  border-radius: var(--panel-radius);
   background: var(--soft-gray);
+  box-shadow: 0 32px 56px -40px var(--navy-shadow);
   text-align: start;
   overflow: hidden;
 }
@@ -373,6 +374,12 @@ html[dir="rtl"] .data-flow-track {
 
 html[dir="rtl"] .queue-progress i {
   transform-origin: right;
+}
+
+@media (max-width: 960px) {
+  .work-showcase {
+    max-width: 660px;
+  }
 }
 
 @media (max-width: 760px) {

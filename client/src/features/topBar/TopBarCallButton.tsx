@@ -14,7 +14,6 @@ export const TopBarCallButton = ({ language }: { language: Language }) => {
       target="_blank"
       rel="noopener"
     >
-      <span className="online-dot" aria-hidden="true" />
       <RollingLabel label={text.callLabel} hoverLabel={text.callHoverLabel} />
       <span className="phone-icon" aria-hidden="true">
         <PhoneIcon />

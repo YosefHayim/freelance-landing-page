@@ -41,26 +41,27 @@ export const IntroSection = ({ language, prefersReducedMotion, isCovered }: Intr
         prefersReducedMotion={prefersReducedMotion}
         isCovered={isCovered}
       />
-      <div className="section-content">
-        <h1 className="display-heading intro-headline reveal-on-scroll">
-          {text.greeting}{' '}
-          <span className="headline-photo">
-            <img
-              className="headline-photo-image"
-              src={profilePhoto}
-              alt={text.photoAlt}
-              width="320"
-              height="320"
-            />
-          </span>
-          <br />
-          {text.headline}
-          <br />
-          <span className="muted-line">{text.mutedLine}</span>
-        </h1>
-        <p className="intro-summary reveal-on-scroll">{text.summary}</p>
-        <div className="reveal-on-scroll" style={{ transitionDelay: '.15s' }}>
-          <IntroCallButton language={language} />
+      <div className="section-content intro-layout">
+        <div className="intro-pitch">
+          <h1 className="display-heading intro-headline reveal-on-scroll">
+            <span className="intro-greeting">
+              {text.greeting}
+              <span className="headline-photo">
+                <img
+                  className="headline-photo-image"
+                  src={profilePhoto}
+                  alt={text.photoAlt}
+                  width="320"
+                  height="320"
+                />
+              </span>
+            </span>{' '}
+            <span>{text.headline}</span> <span className="muted-line">{text.mutedLine}</span>
+          </h1>
+          <p className="intro-summary reveal-on-scroll">{text.summary}</p>
+          <div className="intro-call-area reveal-on-scroll" style={{ transitionDelay: '.15s' }}>
+            <IntroCallButton language={language} />
+          </div>
         </div>
         <WorkShowcase
           language={language}
