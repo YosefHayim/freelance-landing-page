@@ -5,6 +5,6 @@ type PageTitleText = {
 };
 
 export const pageTitleText: Record<Language, PageTitleText> = {
-  en: { title: 'Joseph Sabag | Software engineer for founders' },
+  en: { title: 'Joseph Sabag | Software engineer for founders and businesses' },
   he: { title: 'יוסף סבג | מהנדס תוכנה ליזמים ולעסקים' },
 };
