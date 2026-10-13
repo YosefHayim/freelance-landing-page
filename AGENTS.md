@@ -83,6 +83,9 @@ names or CSS classes.
   `ChatOpen` and `ChatClick`. Names and values are the same in both languages.
 - Every new button or link gets a `data-track` name in snake_case. Other places report as
   `none`.
+- The pixel copies each event to its Conversions API Gateway. The CSP `connect-src` lists the
+  gateway's two exact hosts, never a wildcard. The hosts come from the pixel's settings in Meta
+  Events Manager: if they change there, the browser console names the blocked host.
 - Google Tag Manager (container `GTM-5KKTTCRT`) in `features/visitorTracking/` runs for every
   visitor. It exists only in the production build, and Google's script loads only after the
   page settles, so it never delays the first paint. `index.html` keeps Google's no-script

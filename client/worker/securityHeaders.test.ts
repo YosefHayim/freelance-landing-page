@@ -42,4 +42,15 @@ describe('security headers', () => {
     expect(policy).toMatch(/img-src [^;]*https:\/\/www\.facebook\.com/);
     expect(policy).toMatch(/connect-src [^;]*https:\/\/www\.facebook\.com/);
   });
+
+  it('lets the Meta Pixel copy events to its Conversions API gateway, with no wildcard', () => {
+    const headers = new Headers();
+    addSecurityHeaders(headers);
+    const policy = headers.get('Content-Security-Policy');
+    expect(policy).toMatch(/connect-src [^;]*https:\/\/mpc2-prod-29-is5qnl632q-uc\.a\.run\.app/);
+    expect(policy).toMatch(
+      /connect-src [^;]*https:\/\/5z-2b6b7616f94640c2840d1841e1ac24c3\.ecs\.us-east-1\.on\.aws/,
+    );
+    expect(policy).not.toMatch(/\*\.[^ ;]*(run\.app|on\.aws)/);
+  });
 });
