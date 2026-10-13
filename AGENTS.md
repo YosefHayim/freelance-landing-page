@@ -67,24 +67,36 @@ names or CSS classes.
 - English (`ltr`) and Hebrew (`rtl`) are equal. The first visit uses Hebrew when the browser's
   main language is Hebrew. A manual choice is saved in `localStorage` and wins later.
 - Every visible word and accessible label lives in a `<feature>.text.ts` in both languages.
-- Voice: spoken, specific, first person. Hebrew talks to the visitor in plural. No em dashes,
-  no revenue promises, no claims beyond the facts already in the text. Do not mention
-  military service.
+- Voice: spoken and specific. Open on the visitor's problem in their own words, then give the
+  fix. The visitor is the one acting, so keep "I" rare. Hebrew talks to the visitor in plural
+  and sounds spoken, not written. No em dashes, no revenue promises, no claims beyond the
+  facts already in the text. Do not mention military service.
 - Use CSS logical properties. Mirror directional animations under `html[dir="rtl"]`.
 
 ## Visitor tracking
 
+- The Meta Pixel in `features/visitorTracking/` runs for every visitor, with no consent banner.
+  It exists only in the production build, and Meta's script loads only after the page
+  settles, so it never delays the first paint.
+- It reports the page view, a WhatsApp click as `Contact`, and the custom events `Click`,
+  `Hover`, `Hold`, `SectionView`, `ScrollDepth`, `TimeOnPage`, `TextSelect`, `TextCopy`,
+  `ChatOpen` and `ChatClick`. Names and values are the same in both languages.
+- Every new button or link gets a `data-track` name in snake_case. Other places report as
+  `none`.
 - Google Tag Manager (container `GTM-5KKTTCRT`) in `features/visitorTracking/` runs for every
   visitor. It exists only in the production build, and Google's script loads only after the
   page settles, so it never delays the first paint. `index.html` keeps Google's no-script
   frame right after `<body>`.
 - Google Analytics (`G-FGK25F36RF`) is a Google tag inside the container. Do not paste the
   gtag.js snippet into the code as well: every visit would be counted twice.
+- Do not add a Facebook Pixel tag in the container: the pixel already runs from the code, so
+  every page view would be counted twice.
 - The container loads from a module, not from Google's inline snippet, so the CSP keeps no
   `unsafe-inline` for scripts. Custom HTML tags and Custom JavaScript variables need
   `unsafe-inline` and `unsafe-eval`, so they do not run here: use the built-in tag templates.
-- Checks never reach Google: Playwright serves a stand-in from `e2e/openSite.ts` and
-  Lighthouse blocks `www.googletagmanager.com`.
+- Checks never reach Meta or Google: Playwright serves stand-ins from `e2e/openSite.ts` and
+  Lighthouse blocks `connect.facebook.net` and `www.googletagmanager.com`. The Lighthouse gate
+  measures the site's own code: Meta's script adds main-thread work that only Meta can change.
 - An outside host works only after it is added to the CSP in `worker/securityHeaders.ts`.
   A tag added in the container needs its hosts there first.
 
@@ -106,7 +118,8 @@ free.
 
 CI runs the same checks as parallel jobs behind one required `CI Gate` job. Before opening a
 PR, run them locally with `act workflow_dispatch -W .github/workflows/ci.yml`; the root
-`.actrc` picks the Docker runner and keeps the pnpm store outside the workspace. act skips the
+`.actrc` picks the Docker runner, keeps the pnpm store outside the workspace and gives each
+job its own copy of an action, so parallel jobs cannot break each other's setup. act skips the
 Lighthouse job because Docker is too slow to measure it; `pnpm test:vitals` covers it locally.
 
 ## Release
