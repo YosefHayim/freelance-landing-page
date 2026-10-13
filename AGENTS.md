@@ -90,7 +90,8 @@ free.
 
 CI runs the same checks as parallel jobs behind one required `CI Gate` job. Before opening a
 PR, run them locally with `act workflow_dispatch -W .github/workflows/ci.yml`; the root
-`.actrc` picks the Docker runner and keeps the pnpm store outside the workspace. act skips the
+`.actrc` picks the Docker runner, keeps the pnpm store outside the workspace and gives each
+job its own copy of an action, so parallel jobs cannot break each other's setup. act skips the
 Lighthouse job because Docker is too slow to measure it; `pnpm test:vitals` covers it locally.
 
 ## Release
