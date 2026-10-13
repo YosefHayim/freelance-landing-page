@@ -4,7 +4,8 @@
       "startServerCommand": "pnpm preview",
       "startServerReadyPattern": "Ready on",
       "url": ["http://127.0.0.1:4173/"],
-      "numberOfRuns": 3
+      "numberOfRuns": 3,
+      "settings": { "blockedUrlPatterns": ["*://www.facebook.com/*"] }
     },
     "assert": {
       "assertions": {

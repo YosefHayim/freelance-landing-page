@@ -5,6 +5,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import { loadChatWidget } from './features/chat/loadChatWidget';
+import { loadMetaPixel } from './features/visitorTracking/metaPixel';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Missing application root');
@@ -15,3 +16,4 @@ root.render(
   </StrictMode>,
 );
 loadChatWidget();
+loadMetaPixel();
