@@ -13,4 +13,13 @@ describe('security headers', () => {
     expect(policy).toContain("font-src 'self'");
     expect(policy).toContain("frame-ancestors 'none'");
   });
+
+  it('lets the Meta Pixel load its script and report events', () => {
+    const headers = new Headers();
+    addSecurityHeaders(headers);
+    const policy = headers.get('Content-Security-Policy');
+    expect(policy).toMatch(/script-src [^;]*https:\/\/connect\.facebook\.net/);
+    expect(policy).toMatch(/img-src [^;]*https:\/\/www\.facebook\.com/);
+    expect(policy).toMatch(/connect-src [^;]*https:\/\/www\.facebook\.com/);
+  });
 });

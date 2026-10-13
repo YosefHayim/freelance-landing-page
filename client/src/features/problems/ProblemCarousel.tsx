@@ -109,6 +109,7 @@ export const ProblemCarousel = ({
               type="button"
               role="tab"
               className={tab.position === listPosition ? 'problem-tab is-active' : 'problem-tab'}
+              data-track={`problem_${tab.problem + 1}`}
               aria-controls="problem-animation-panel"
               aria-selected={tab.position === problemCount + activeProblem}
               aria-hidden={tab.isMiddleCopy ? undefined : true}
