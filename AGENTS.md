@@ -67,9 +67,10 @@ names or CSS classes.
 - English (`ltr`) and Hebrew (`rtl`) are equal. The first visit uses Hebrew when the browser's
   main language is Hebrew. A manual choice is saved in `localStorage` and wins later.
 - Every visible word and accessible label lives in a `<feature>.text.ts` in both languages.
-- Voice: spoken, specific, first person. Hebrew talks to the visitor in plural. No em dashes,
-  no revenue promises, no claims beyond the facts already in the text. Do not mention
-  military service.
+- Voice: spoken and specific. Open on the visitor's problem in their own words, then give the
+  fix. The visitor is the one acting, so keep "I" rare. Hebrew talks to the visitor in plural
+  and sounds spoken, not written. No em dashes, no revenue promises, no claims beyond the
+  facts already in the text. Do not mention military service.
 - Use CSS logical properties. Mirror directional animations under `html[dir="rtl"]`.
 
 ## Visitor tracking
