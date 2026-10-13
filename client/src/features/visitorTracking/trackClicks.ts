@@ -24,6 +24,7 @@ export const trackClicks = () => {
     const place = trackedPlace(clicked);
     if (clicked.closest(whatsappLinkSelector)) {
       sendStandardEvent('Contact', place);
+      sendCustomEvent('WhatsAppClick', place);
       return;
     }
     sendCustomEvent('Click', place);
