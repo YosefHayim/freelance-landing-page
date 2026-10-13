@@ -81,6 +81,9 @@ names or CSS classes.
 - It reports the page view, a WhatsApp click as `Contact`, and the custom events `Click`,
   `Hover`, `Hold`, `SectionView`, `ScrollDepth`, `TimeOnPage`, `TextSelect`, `TextCopy`,
   `ChatOpen` and `ChatClick`. Names and values are the same in both languages.
+- A WhatsApp click also goes out as the custom event `WhatsAppClick`, with the same button
+  name. Ads Manager offers `Contact` as a conversion event only for some campaign goals, and
+  a custom event for all of them.
 - Every new button or link gets a `data-track` name in snake_case. Other places report as
   `none`.
 - The pixel copies each event to its Conversions API Gateway. The CSP `connect-src` lists the

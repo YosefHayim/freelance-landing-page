@@ -20,6 +20,11 @@ const collectPixelCalls = (page: Page) => {
 const callsNamed = (pixelCalls: unknown[][], eventName: string) =>
   pixelCalls.filter((pixelCall) => pixelCall[1] === eventName);
 
+const detailsNamed = (pixelCalls: unknown[][], eventName: string) => {
+  const namedCalls = callsNamed(pixelCalls, eventName);
+  return namedCalls.map((pixelCall) => pixelCall[2]);
+};
+
 const openSiteWithPixel = async (page: Page, language: Language) => {
   const pixelCalls = collectPixelCalls(page);
   await openSite(page, language);
@@ -81,6 +86,11 @@ test('a WhatsApp click is a contact and other clicks name their button', async (
     ]);
   expect(pixelCalls).toContainEqual([
     'trackCustom',
+    'WhatsAppClick',
+    { target: 'intro_call', section: 'intro', language: 'he' },
+  ]);
+  expect(pixelCalls).toContainEqual([
+    'trackCustom',
     'Click',
     { target: 'work_type_app', section: 'intro', language: 'he' },
   ]);
@@ -90,6 +100,7 @@ test('a WhatsApp click is a contact and other clicks name their button', async (
     { target: 'none', section: 'intro', language: 'he' },
   ]);
   expect(callsNamed(pixelCalls, 'Contact')).toHaveLength(1);
+  expect(callsNamed(pixelCalls, 'WhatsAppClick')).toHaveLength(1);
   expect(callsNamed(pixelCalls, 'Click')).toHaveLength(2);
 });
 
@@ -100,14 +111,15 @@ test('every WhatsApp button and the top bar report under their own names', async
     await link.dispatchEvent('click');
   }
   await page.locator('.language-flag-button').click();
-  await expect.poll(() => callsNamed(pixelCalls, 'Contact')).toHaveLength(4);
-  const contactTargets = callsNamed(pixelCalls, 'Contact').map((pixelCall) => pixelCall[2]);
-  expect(contactTargets).toEqual([
+  await expect.poll(() => callsNamed(pixelCalls, 'WhatsAppClick')).toHaveLength(4);
+  const whatsappButtons = [
     { target: 'top_bar_call', section: 'page', language: 'en' },
     { target: 'intro_call', section: 'intro', language: 'en' },
     { target: 'contact_call', section: 'contact', language: 'en' },
     { target: 'footer_whatsapp', section: 'contact', language: 'en' },
-  ]);
+  ];
+  expect(detailsNamed(pixelCalls, 'Contact')).toEqual(whatsappButtons);
+  expect(detailsNamed(pixelCalls, 'WhatsAppClick')).toEqual(whatsappButtons);
   expect(pixelCalls).toContainEqual([
     'trackCustom',
     'Click',
@@ -123,6 +135,7 @@ test('a middle click counts as a click and a right click does not', async ({ pag
   await expect
     .poll(() => callsNamed(pixelCalls, 'Contact'))
     .toEqual([['track', 'Contact', { target: 'intro_call', section: 'intro', language: 'en' }]]);
+  expect(callsNamed(pixelCalls, 'WhatsAppClick')).toHaveLength(1);
   expect(callsNamed(pixelCalls, 'Click')).toHaveLength(0);
 });
 
