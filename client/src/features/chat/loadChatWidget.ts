@@ -1,3 +1,7 @@
+import { runAfterPageSettles } from '../pageLoad/runAfterPageSettles';
+
+export const chatWidgetTag = 'ai-chat-widget';
+
 const firstInteractionEvents = ['pointerdown', 'pointermove', 'keydown', 'scroll'] as const;
 
 const mountChatWidget = () => {
@@ -13,12 +17,4 @@ const mountOnFirstInteraction = () => {
   });
 };
 
-const scheduleChatWidget = () => window.setTimeout(mountOnFirstInteraction, 1500);
-
-export const loadChatWidget = () => {
-  if (document.readyState === 'complete') {
-    scheduleChatWidget();
-    return;
-  }
-  window.addEventListener('load', scheduleChatWidget, { once: true });
-};
+export const loadChatWidget = () => runAfterPageSettles(mountOnFirstInteraction);
