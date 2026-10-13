@@ -6,7 +6,10 @@ import {
 
 const noTransitionRuns = () => {
   const animations = document.getAnimations();
-  return animations.every((animation) => !(animation instanceof CSSTransition));
+  const runningTransitions = animations.filter(
+    (animation) => animation instanceof CSSTransition && animation.playState === 'running',
+  );
+  return runningTransitions.length === 0;
 };
 
 export const letPageSettle = async (page: Page) => {
