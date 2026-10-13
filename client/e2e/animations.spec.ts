@@ -4,10 +4,16 @@ import { languages, openSite } from './openSite';
 
 const problemDuration = 3800;
 const cycleDuration = 10600;
-const cycleWithMargin = cycleDuration + 500;
+const fixTextStep = 300;
 
 const activeProblemTitle = (page: Page) =>
   page.locator('.problem-tab[aria-selected="true"] .problem-tab-title');
+
+const runUntilFixTextShows = (page: Page, fix: string) =>
+  expect(async () => {
+    await page.clock.runFor(fixTextStep);
+    await expect(page.locator('.problem-fix-text')).toContainText(fix, { timeout: 500 });
+  }).toPass({ timeout: 5000 });
 
 for (const language of languages) {
   test(`${language} problems show their fix, move on, and never repeat back to back`, async ({
@@ -26,8 +32,7 @@ for (const language of languages) {
     await expect(page.locator('.problem-progress-bar.is-running')).toHaveCount(1);
 
     await expect(activeProblemTitle(page)).toHaveText(text.problems[0].title);
-    await page.clock.runFor(300);
-    await expect(page.locator('.problem-fix-text')).toContainText(text.problems[0].fix);
+    await runUntilFixTextShows(page, text.problems[0].fix);
     await expect(panel).not.toHaveClass(/is-showing-fix/);
     await page.clock.runFor(problemDuration);
     await expect(panel).toHaveClass(/is-showing-fix/);
@@ -35,10 +40,12 @@ for (const language of languages) {
     const titles = [text.problems[0].title];
     for (const cycle of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
       const previousTitle = String(titles.at(-1));
-      await page.clock.runFor(cycleWithMargin);
+      await page.clock.runFor(cycleDuration);
       await expect(activeProblemTitle(page), `cycle ${cycle}`).not.toHaveText(previousTitle);
       const title = await activeProblemTitle(page).textContent();
-      titles.push(String(title));
+      const [activeProblem] = text.problems.filter((problem) => problem.title === title);
+      await runUntilFixTextShows(page, activeProblem.fix);
+      titles.push(activeProblem.title);
     }
   });
 }
