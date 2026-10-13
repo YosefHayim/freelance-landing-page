@@ -1,5 +1,5 @@
 import { expect, type Page, test } from '@playwright/test';
-import { pageSettleDuration } from '../src/features/pageLoad/runAfterPageSettles';
+import { letPageSettle } from './letPageSettle';
 import { openSite } from './openSite';
 
 const googleTagManagerHost = 'https://www.googletagmanager.com/';
@@ -26,7 +26,7 @@ test('the container queues its start and loads once the page has settled', async
   const queuedEvents = await page.evaluate('window.dataLayer');
   expect(queuedEvents).toEqual([{ 'gtm.start': visitStart.getTime(), event: 'gtm.js' }]);
   expect(responseAddresses).toEqual([]);
-  await page.clock.runFor(pageSettleDuration);
+  await letPageSettle(page);
   await expect.poll(() => responseAddresses).toEqual([containerScriptAddress]);
 });
 
