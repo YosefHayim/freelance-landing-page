@@ -94,6 +94,10 @@ names or CSS classes.
 - The container loads from a module, not from Google's inline snippet, so the CSP keeps no
   `unsafe-inline` for scripts. Custom HTML tags and Custom JavaScript variables need
   `unsafe-inline` and `unsafe-eval`, so they do not run here: use the built-in tag templates.
+- Outside scripts start through `runAfterPageSettles`: after the wait that follows `load`, once
+  no CSS transition is still running and the last frame had time to paint. Lighthouse counts an
+  outside request that starts before the largest paint, even a blocked one. A test that needs
+  the settled page calls `letPageSettle` from `e2e/letPageSettle.ts`.
 - Checks never reach Meta or Google: Playwright serves stand-ins from `e2e/openSite.ts` and
   Lighthouse blocks `connect.facebook.net` and `www.googletagmanager.com`. The Lighthouse gate
   measures the site's own code: Meta's script adds main-thread work that only Meta can change.

@@ -1,6 +1,6 @@
 import { expect, type Page, test } from '@playwright/test';
 import type { Language } from '../src/features/language/savedLanguage';
-import { pageSettleDuration } from '../src/features/pageLoad/runAfterPageSettles';
+import { letPageSettle } from './letPageSettle';
 import { openSite, pixelCallLogPrefix } from './openSite';
 
 const clockStart = new Date('2026-01-01T09:00:00');
@@ -23,7 +23,7 @@ const callsNamed = (pixelCalls: unknown[][], eventName: string) =>
 const openSiteWithPixel = async (page: Page, language: Language) => {
   const pixelCalls = collectPixelCalls(page);
   await openSite(page, language);
-  await page.clock.runFor(pageSettleDuration);
+  await letPageSettle(page);
   await expect.poll(() => pixelCalls).toContainEqual(['track', 'PageView']);
   return pixelCalls;
 };
