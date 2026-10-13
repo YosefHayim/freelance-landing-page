@@ -3,6 +3,9 @@ import type { Language } from '../src/features/language/savedLanguage';
 import { pageSettleDuration } from '../src/features/pageLoad/runAfterPageSettles';
 import { openSite, pixelCallLogPrefix } from './openSite';
 
+const clockStart = new Date('2026-01-01T09:00:00');
+const visitStart = new Date('2026-01-01T10:00:00');
+
 const collectPixelCalls = (page: Page) => {
   const pixelCalls: unknown[][] = [];
   page.on('console', (message) => {
@@ -25,6 +28,21 @@ const openSiteWithPixel = async (page: Page, language: Language) => {
   return pixelCalls;
 };
 
+const scrollToEdge = (page: Page, edge: 'top' | 'bottom') =>
+  page.evaluate(
+    (isBottom) =>
+      new Promise<void>((pageSawScroll) => {
+        const top = isBottom ? document.documentElement.scrollHeight : 0;
+        window.scrollTo(0, top);
+        const nextRender = new IntersectionObserver(() => {
+          nextRender.disconnect();
+          pageSawScroll();
+        });
+        nextRender.observe(document.documentElement);
+      }),
+    edge === 'bottom',
+  );
+
 const keepClicksOnPage = (page: Page) =>
   page.evaluate(() => {
     for (const eventType of ['click', 'auxclick', 'contextmenu']) {
@@ -35,7 +53,8 @@ const keepClicksOnPage = (page: Page) =>
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.clock.install();
+  await page.clock.install({ time: clockStart });
+  await page.clock.pauseAt(visitStart);
 });
 
 test('the pixel starts with the page view', async ({ page }) => {
@@ -158,11 +177,11 @@ test('scrolling reports each depth once and the sections the visitor stops on', 
     .poll(() => callsNamed(pixelCalls, 'SectionView'))
     .toEqual([['trackCustom', 'SectionView', { section: 'intro', language: 'en' }]]);
 
-  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await scrollToEdge(page, 'bottom');
   await page.clock.runFor(1100);
-  await page.evaluate(() => window.scrollTo(0, 0));
+  await scrollToEdge(page, 'top');
   await page.clock.runFor(1100);
-  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await scrollToEdge(page, 'bottom');
   await page.clock.runFor(1100);
   await expect
     .poll(() => callsNamed(pixelCalls, 'ScrollDepth').map((pixelCall) => pixelCall[2]))
@@ -172,11 +191,12 @@ test('scrolling reports each depth once and the sections the visitor stops on', 
       { percent: 75, language: 'en' },
       { percent: 100, language: 'en' },
     ]);
-  const viewedSections = callsNamed(pixelCalls, 'SectionView').map((pixelCall) => pixelCall[2]);
-  expect(viewedSections).toEqual([
-    { section: 'intro', language: 'en' },
-    { section: 'contact', language: 'en' },
-  ]);
+  await expect
+    .poll(() => callsNamed(pixelCalls, 'SectionView').map((pixelCall) => pixelCall[2]))
+    .toEqual([
+      { section: 'intro', language: 'en' },
+      { section: 'contact', language: 'en' },
+    ]);
 });
 
 test('time on the page is reported at each milestone', async ({ page }) => {

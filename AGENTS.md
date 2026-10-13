@@ -76,14 +76,15 @@ names or CSS classes.
 
 - The Meta Pixel in `features/visitorTracking/` runs for every visitor, with no consent banner.
   Meta's script loads only in the production build and only after the page settles, so it
-  stays out of the Lighthouse numbers.
+  never delays the first paint.
 - It reports the page view, a WhatsApp click as `Contact`, and the custom events `Click`,
   `Hover`, `Hold`, `SectionView`, `ScrollDepth`, `TimeOnPage`, `TextSelect`, `TextCopy`,
   `ChatOpen` and `ChatClick`. Names and values are the same in both languages.
 - Every new button or link gets a `data-track` name in snake_case. Other places report as
   `none`.
 - Checks never reach Meta: Playwright serves a stand-in script from `e2e/openSite.ts` and
-  Lighthouse blocks `www.facebook.com`.
+  Lighthouse blocks `connect.facebook.net`. The Lighthouse gate measures the site's own code:
+  Meta's script adds main-thread work that only Meta can change.
 - An outside host works only after it is added to the CSP in `worker/securityHeaders.ts`.
 
 ## Caching and routes
