@@ -8,6 +8,7 @@ import { ProblemsSection } from './features/problems/ProblemsSection';
 import { useRevealOnScroll } from './features/scrollEffects/useRevealOnScroll';
 import { useStackOnScroll } from './features/scrollEffects/useStackOnScroll';
 import { TopBar } from './features/topBar/TopBar';
+import { useVisitorTracking } from './features/visitorTracking/useVisitorTracking';
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion';
 import { pageTitleText } from './pageTitle.text';
 
@@ -17,6 +18,7 @@ export const App = () => {
   const stackRef = useRef<HTMLElement>(null);
   const coveredSectionCount = useStackOnScroll(stackRef, prefersReducedMotion);
   useRevealOnScroll(stackRef);
+  useVisitorTracking(stackRef);
 
   return (
     <>

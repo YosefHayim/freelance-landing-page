@@ -24,18 +24,21 @@ export const SocialLinks = ({ language, onHandleCopied }: SocialLinksProps) => {
   const profileLinks = [
     {
       name: 'LinkedIn',
+      trackedName: 'footer_linkedin',
       href: 'https://www.linkedin.com/in/yosef-hayim-sabag/',
       brandColor: '#0A66C2',
       iconPath: linkedinIconPath,
     },
     {
       name: 'GitHub',
+      trackedName: 'footer_github',
       href: 'https://github.com/YosefHayim',
       brandColor: '#181717',
       iconPath: githubIconPath,
     },
     {
       name: 'WhatsApp',
+      trackedName: 'footer_whatsapp',
       href: whatsappLink(language),
       brandColor: '#25D366',
       iconPath: whatsappIconPath,
@@ -48,6 +51,7 @@ export const SocialLinks = ({ language, onHandleCopied }: SocialLinksProps) => {
         <a
           key={profile.name}
           className="social-link"
+          data-track={profile.trackedName}
           href={profile.href}
           target="_blank"
           rel="noopener"
@@ -65,6 +69,7 @@ export const SocialLinks = ({ language, onHandleCopied }: SocialLinksProps) => {
       <button
         type="button"
         className="social-link"
+        data-track="footer_copy_x_handle"
         aria-label={text.copyHandleLabel}
         data-tooltip={text.copyHandleTooltip}
         style={{ '--brand': '#000' }}
