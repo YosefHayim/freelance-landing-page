@@ -15,7 +15,7 @@ describe('scroll depth', () => {
 
   it('stays inside 0 to 100 when the browser overscrolls', () => {
     expect(scrollDepthPercent(3300, 800, 4000)).toBe(100);
-    expect(scrollDepthPercent(-40, 800, 4000)).toBeLessThan(25);
+    expect(scrollDepthPercent(-40, 800, 4000)).toBe(0);
   });
 
   it('is 0 when the page does not scroll', () => {

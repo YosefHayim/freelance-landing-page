@@ -75,8 +75,8 @@ names or CSS classes.
 ## Visitor tracking
 
 - The Meta Pixel in `features/visitorTracking/` runs for every visitor, with no consent banner.
-  Meta's script loads only in the production build and only after the page settles, so it
-  never delays the first paint.
+  It exists only in the production build, and Meta's script loads only after the page
+  settles, so it never delays the first paint.
 - It reports the page view, a WhatsApp click as `Contact`, and the custom events `Click`,
   `Hover`, `Hold`, `SectionView`, `ScrollDepth`, `TimeOnPage`, `TextSelect`, `TextCopy`,
   `ChatOpen` and `ChatClick`. Names and values are the same in both languages.

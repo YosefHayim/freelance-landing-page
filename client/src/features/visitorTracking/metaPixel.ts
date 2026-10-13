@@ -45,13 +45,13 @@ const addPixelScript = () => {
 };
 
 export const loadMetaPixel = () => {
-  if (window.fbq) return;
+  if (window.fbq || !import.meta.env.PROD) return;
   const pixel = createPixel();
   window.fbq = pixel;
   window._fbq = pixel;
   pixel('init', pixelId);
   pixel('track', 'PageView');
-  if (import.meta.env.PROD) runAfterPageSettles(addPixelScript);
+  runAfterPageSettles(addPixelScript);
 };
 
 const sendEvent = (method: 'track' | 'trackCustom', eventName: string, details: EventDetails) => {
