@@ -1,3 +1,5 @@
+import { runAfterPageSettles } from '../pageLoad/runAfterPageSettles';
+
 const mountChatWidget = () => {
   const widgetTemplate = document.getElementById('replybase-widget');
   if (!(widgetTemplate instanceof HTMLTemplateElement)) return;
@@ -5,12 +7,4 @@ const mountChatWidget = () => {
   widgetTemplate.replaceWith(widget);
 };
 
-const scheduleChatWidget = () => window.setTimeout(mountChatWidget, 1500);
-
-export const loadChatWidget = () => {
-  if (document.readyState === 'complete') {
-    scheduleChatWidget();
-    return;
-  }
-  window.addEventListener('load', scheduleChatWidget, { once: true });
-};
+export const loadChatWidget = () => runAfterPageSettles(mountChatWidget);
