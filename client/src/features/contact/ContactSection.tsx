@@ -66,6 +66,7 @@ export const ContactSection = ({ language, prefersReducedMotion }: ContactSectio
         <div className="contact-actions reveal-on-scroll" style={{ transitionDelay: '.1s' }}>
           <a
             className="contact-call-button"
+            data-track="contact_call"
             href={whatsappLink(language)}
             target="_blank"
             rel="noopener"

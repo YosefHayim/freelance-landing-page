@@ -11,6 +11,7 @@ export const LanguageFlagButton = ({ language, onToggle }: LanguageFlagButtonPro
   <button
     type="button"
     className="language-flag-button"
+    data-track="language_switch"
     aria-label={languageText[language].switchLabel}
     onClick={onToggle}
   >
