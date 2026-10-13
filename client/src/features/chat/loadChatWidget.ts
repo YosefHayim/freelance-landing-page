@@ -1,3 +1,5 @@
+const firstInteractionEvents = ['pointerdown', 'pointermove', 'keydown', 'scroll'] as const;
+
 const mountChatWidget = () => {
   const widgetTemplate = document.getElementById('replybase-widget');
   if (!(widgetTemplate instanceof HTMLTemplateElement)) return;
@@ -5,7 +7,13 @@ const mountChatWidget = () => {
   widgetTemplate.replaceWith(widget);
 };
 
-const scheduleChatWidget = () => window.setTimeout(mountChatWidget, 1500);
+const mountOnFirstInteraction = () => {
+  firstInteractionEvents.forEach((eventName) => {
+    window.addEventListener(eventName, mountChatWidget, { once: true, passive: true });
+  });
+};
+
+const scheduleChatWidget = () => window.setTimeout(mountOnFirstInteraction, 1500);
 
 export const loadChatWidget = () => {
   if (document.readyState === 'complete') {
