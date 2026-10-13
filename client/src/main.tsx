@@ -5,6 +5,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import { loadChatWidget } from './features/chat/loadChatWidget';
+import { loadGoogleTagManager } from './features/visitorTracking/googleTagManager';
 import { loadMetaPixel } from './features/visitorTracking/metaPixel';
 
 const rootElement = document.getElementById('root');
@@ -17,3 +18,4 @@ root.render(
 );
 loadChatWidget();
 loadMetaPixel();
+loadGoogleTagManager();

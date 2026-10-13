@@ -17,6 +17,9 @@ export const standInForOutsideScripts = async (page: Page) => {
   await page.route('https://cdn.replybase.dev/widget.js', (route) =>
     route.fulfill({ contentType: 'application/javascript', body: '' }),
   );
+  await page.route('https://www.googletagmanager.com/**', (route) =>
+    route.fulfill({ contentType: 'application/javascript', body: '' }),
+  );
   await page.route('https://connect.facebook.net/**', (route) =>
     route.fulfill({ contentType: 'application/javascript', body: metaPixelStandIn }),
   );
