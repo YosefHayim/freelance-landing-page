@@ -11,11 +11,11 @@ jobs:
       - uses: actions/checkout@v6
       - name: Setup workspace
         uses: ./.github/actions/setup
-      - run: pnpm --dir client exec playwright install --with-deps --only-shell chromium webkit
+      - run: pnpm exec playwright install --with-deps --only-shell chromium webkit
       - run: pnpm build && pnpm test:browser
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: browser-failures
-          path: client/test-results
+          path: test-results
           retention-days: 7

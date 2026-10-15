@@ -6,9 +6,7 @@ settings:
 
 importers:
 
-  .: {}
-
-  client:
+  .:
     dependencies:
       '@fontsource-variable/heebo':
         specifier: ^5.2.0

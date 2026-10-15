@@ -1,4 +1,4 @@
-name: Client checks
+name: Checks
 'on':
   pull_request: null
   push:

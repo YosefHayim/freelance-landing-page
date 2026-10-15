@@ -11,17 +11,16 @@ There are no forms, accounts, business API, database or secrets.
 Code is split by where it runs, then by feature. Imports go one way.
 
 ```txt
-client/
-  prerender.ts          runs at build: writes both language pages with the CSS inlined
-  src/                  runs in the browser (React 19 + Vite)
-    main.ts  startApp.tsx  renderPage.tsx  App.tsx  globalStyles.css
-    assets/             images Vite hashes
-    components/         UI used by 2+ features
-    hooks/              hooks used by 2+ features
-    features/<feature>/ everything one feature needs
-  worker/               runs on Cloudflare: page language, redirects, headers, 404s
-  e2e/                  runs in Node: Playwright against the production build
-  public/               copied as is: 404 page, robots, sitemap
+prerender.ts          runs at build: writes both language pages with the CSS inlined
+src/                  runs in the browser (React 19 + Vite)
+  main.ts  startApp.tsx  renderPage.tsx  App.tsx  globalStyles.css
+  assets/             images Vite hashes
+  components/         UI used by 2+ features
+  hooks/              hooks used by 2+ features
+  features/<feature>/ everything one feature needs
+worker/               runs on Cloudflare: page language, redirects, headers, 404s
+e2e/                  runs in Node: Playwright against the production build
+public/               copied as is: 404 page, robots, sitemap
 ```
 
 - `src/**` never imports `worker/**` and the reverse (Biome `noRestrictedImports`).
@@ -176,7 +175,7 @@ Lighthouse job because Docker is too slow to measure it; `pnpm test:vitals` cove
 - Before merging, deploying or changing DNS: show verified mobile screenshots and get explicit
   approval. CI never deploys.
 - Steps: record the current Worker version for rollback. Squash merge. On the approved main
-  commit run `pnpm install --frozen-lockfile`, `pnpm check`, `pnpm --dir client run deploy`.
+  commit run `pnpm install --frozen-lockfile`, `pnpm check`, `pnpm run deploy`.
   Then check on the real domains: the canonical apex serves the site, every other host returns
   308 with path and query kept, a retired path ends in 404, both languages and the WhatsApp
   links work. Save the commit and Worker version in the PR. If the live check fails, roll back
