@@ -1,6 +1,7 @@
 import { Effect } from 'effect';
 import { cacheControlFor } from './cacheHeaders';
 import { redirectDestination } from './domainRedirects';
+import { addPageHeaders } from './pageHeaders';
 import { addSecurityHeaders } from './securityHeaders';
 
 const defaultCacheControl = 'public, max-age=0, must-revalidate';
@@ -14,6 +15,7 @@ const serveFile = (request: Request, env: Env) => {
     const cacheControl = cacheControlFor(pathname, response.status, current);
     response.headers.set('Cache-Control', cacheControl);
     addSecurityHeaders(response.headers);
+    addPageHeaders(response.headers, request);
     return response;
   });
   const handleFailure = Effect.catchAll(withHeaders, (error) => {
