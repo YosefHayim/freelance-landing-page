@@ -39,7 +39,7 @@ const servePage = async (request: Request, env: Env) => {
 
 const serveNotFound = async (request: Request, env: Env) => {
   const notFoundUrl = new URL(notFoundPagePath, request.url);
-  const notFoundRequest = new Request(notFoundUrl);
+  const notFoundRequest = new Request(notFoundUrl, request);
   const notFoundPage = await serveFile(notFoundRequest, env);
   if (notFoundPage.status !== 200) return notFoundPage;
   return new Response(notFoundPage.body, { status: 404, headers: notFoundPage.headers });

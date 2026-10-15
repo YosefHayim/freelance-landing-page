@@ -103,7 +103,8 @@ names or CSS classes.
   `unsafe-inline` for scripts. Custom HTML tags and Custom JavaScript variables need
   `unsafe-inline` and `unsafe-eval`, so they do not run here: use the built-in tag templates.
 - Outside scripts (pixel, container, chat widget) start through `runAfterFirstInteraction`:
-  after the first pointer, key or scroll event and once the page settles (`runAfterPageSettles`:
+  after the first pointer, key or scroll event (at once if the visitor scrolled or tapped before
+  the code ran) and once the page settles (`runAfterPageSettles`:
   the wait after `load`, no running CSS transition, a last frame to paint). The pixel queue and
   `dataLayer` start at once, so no event is lost. Lighthouse counts an outside request that
   starts before the largest paint, even a blocked one. A test calls `letPageSettle` from
@@ -119,7 +120,8 @@ names or CSS classes.
 Most visitors come from Facebook ads on a phone, so the mobile Lighthouse score stays at 100.
 
 - The build prerenders both pages (`index.html`, `index.he.html`) from `src/renderPage.tsx`,
-  with the CSS inlined. The first paint needs only the page, the photo and one font.
+  with the CSS inlined and each language's title and description from `pageHead.text.ts`. The
+  first paint needs only the page, the photo and one font.
 - `main.ts` loads the app (`startApp.tsx`, which hydrates the page) only after the first
   contentful paint, and `prerender.ts` gives its script `fetchpriority="low"` (Vite strips the
   attribute from `index.html`). A request that starts before the largest paint delays it in

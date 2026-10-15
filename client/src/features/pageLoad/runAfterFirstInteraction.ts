@@ -4,6 +4,11 @@ const firstInteractionEvents = ['pointerdown', 'pointermove', 'keydown', 'scroll
 
 const waitForFirstInteraction = () =>
   new Promise<void>((interacted) => {
+    const hasInteracted = window.scrollY > 0 || navigator.userActivation.hasBeenActive;
+    if (hasInteracted) {
+      interacted();
+      return;
+    }
     const listeners = new AbortController();
     const stopListening = () => {
       listeners.abort();

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { introText } from '../src/features/intro/intro.text';
 import { languageText } from '../src/features/language/language.text';
-import { pageTitleText } from '../src/features/language/pageTitle.text';
+import { pageHeadText } from '../src/features/language/pageHead.text';
 import { waitForAppStart } from './letAppStart';
 import { openSite, revealEverySection, standInForOutsideScripts } from './openSite';
 
@@ -14,13 +14,13 @@ test('a Hebrew browser opens in Hebrew, and the flag switch is remembered', asyn
   const html = page.locator('html');
   await expect(html).toHaveAttribute('lang', 'he');
   await expect(html).toHaveAttribute('dir', 'rtl');
-  await expect(page).toHaveTitle(pageTitleText.he.title);
+  await expect(page).toHaveTitle(pageHeadText.he.title);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(introText.he.headline);
 
   await page.getByRole('button', { name: languageText.he.switchLabel }).click();
   await expect(html).toHaveAttribute('lang', 'en');
   await expect(html).toHaveAttribute('dir', 'ltr');
-  await expect(page).toHaveTitle(pageTitleText.en.title);
+  await expect(page).toHaveTitle(pageHeadText.en.title);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(introText.en.headline);
 
   await page.reload();
@@ -34,7 +34,7 @@ test('an English browser opens in English', async ({ browser }) => {
   await standInForOutsideScripts(page);
   await page.goto('/');
   await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
-  await expect(page).toHaveTitle(pageTitleText.en.title);
+  await expect(page).toHaveTitle(pageHeadText.en.title);
   await context.close();
 });
 
