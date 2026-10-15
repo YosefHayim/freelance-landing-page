@@ -2,9 +2,13 @@ import { expect, type Page, test } from '@playwright/test';
 import { introText } from '../src/features/intro/intro.text';
 import type { WorkTypeName } from '../src/features/intro/workTypes';
 import type { Language } from '../src/features/language/savedLanguage';
-import { languages, openSite } from './openSite';
+import { languages, openSite, visitSite } from './openSite';
+import { removeUserActivation } from './removeUserActivation';
 
 const rotationDelay = 2800;
+
+// Trace snapshots count as a user gesture, which a real first visit never has.
+test.use({ trace: 'off' });
 
 const findShowcase = (page: Page, language: Language) => {
   const text = introText[language];
@@ -43,6 +47,35 @@ for (const language of languages) {
     await expect(workTypeButton('extension')).toHaveAttribute('aria-pressed', 'true');
   });
 }
+
+test('the showcase holds still until the visitor interacts', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.clock.install();
+  await visitSite(page, 'en');
+  await page.waitForLoadState('networkidle');
+  const { panel, workTypeButton } = findShowcase(page, 'en');
+  await expect(panel).toHaveClass(/is-visible/);
+  await page.clock.runFor(rotationDelay * 3);
+  await expect(workTypeButton('website')).toHaveAttribute('aria-pressed', 'true');
+
+  await page.keyboard.press('Shift');
+  await page.clock.runFor(rotationDelay);
+  await expect(workTypeButton('app')).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('the showcase still rotates where the browser cannot report user activation', async ({
+  page,
+}) => {
+  await page.addInitScript(removeUserActivation);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.clock.install();
+  await openSite(page, 'en');
+  const { panel, workTypeButton } = findShowcase(page, 'en');
+  await expect(panel).toHaveClass(/is-visible/);
+  await page.keyboard.press('Shift');
+  await page.clock.runFor(rotationDelay);
+  await expect(workTypeButton('app')).toHaveAttribute('aria-pressed', 'true');
+});
 
 test('the showcase pauses while the next section covers it and resumes after', async ({ page }) => {
   await page.clock.install();

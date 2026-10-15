@@ -2,6 +2,7 @@ import { expect, type Page, test } from '@playwright/test';
 import { letAppStart } from './letAppStart';
 import { letPageSettle } from './letPageSettle';
 import { chooseLanguage, standInForOutsideScripts, visitSite } from './openSite';
+import { removeUserActivation } from './removeUserActivation';
 
 const googleTagManagerHost = 'https://www.googletagmanager.com/';
 const containerScriptAddress = `${googleTagManagerHost}gtm.js?id=GTM-5KKTTCRT`;
@@ -48,6 +49,19 @@ test('a scroll made before the page code runs still loads the container', async 
   await page.goto('/', { waitUntil: 'commit' });
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.locator('#contact').scrollIntoViewIfNeeded();
+  await expect.poll(() => responseAddresses).toEqual([containerScriptAddress]);
+});
+
+test('the container still loads where the browser cannot report user activation', async ({
+  page,
+}) => {
+  const responseAddresses = collectGoogleTagManagerResponses(page);
+  await page.addInitScript(removeUserActivation);
+  await page.clock.install();
+  await visitSite(page, 'en');
+  await letAppStart(page);
+  await letPageSettle(page);
+  await page.keyboard.press('Shift');
   await expect.poll(() => responseAddresses).toEqual([containerScriptAddress]);
 });
 

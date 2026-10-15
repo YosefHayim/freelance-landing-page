@@ -109,6 +109,10 @@ names or CSS classes.
   `dataLayer` start at once, so no event is lost. Lighthouse counts an outside request that
   starts before the largest paint, even a blocked one. A test calls `letPageSettle` from
   `e2e/letPageSettle.ts`, then presses a key before it expects the scripts.
+- The work showcase also starts rotating on the first interaction (`listenForFirstInteraction`).
+  Lighthouse never interacts, so its contrast check never lands on a button mid-fade.
+  `navigator.userActivation` is read only where it exists: Safari before 16.4 lacks it, and a
+  throw there stops the trackers and crashes the page.
 - Checks never reach Meta or Google: Playwright serves stand-ins from `e2e/openSite.ts` and
   Lighthouse blocks `connect.facebook.net` and `www.googletagmanager.com`. The Lighthouse gate
   measures the site's own code: Meta's script adds main-thread work that only Meta can change.
@@ -134,6 +138,9 @@ Most visitors come from Facebook ads on a phone, so the mobile Lighthouse score 
   file is another request before the first paint.
 - `openSite` in `e2e/openSite.ts` waits for the app to start. A test that pauses the clock
   first calls `visitSite`, then `letAppStart` from `e2e/letAppStart.ts`.
+- Playwright's `evaluate`, locator checks and trace snapshots count as a user gesture
+  (`navigator.userActivation`). A test of the page before the first interaction turns tracing
+  off for its file and waits for `networkidle` before it touches the page.
 
 ## Caching and routes
 
