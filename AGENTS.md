@@ -111,6 +111,8 @@ names or CSS classes.
   `e2e/letPageSettle.ts`, then presses a key before it expects the scripts.
 - The work showcase also starts rotating on the first interaction (`listenForFirstInteraction`).
   Lighthouse never interacts, so its contrast check never lands on a button mid-fade.
+  `navigator.userActivation` is read only where it exists: Safari before 16.4 lacks it, and a
+  throw there stops the trackers and crashes the page.
 - Checks never reach Meta or Google: Playwright serves stand-ins from `e2e/openSite.ts` and
   Lighthouse blocks `connect.facebook.net` and `www.googletagmanager.com`. The Lighthouse gate
   measures the site's own code: Meta's script adds main-thread work that only Meta can change.

@@ -3,7 +3,9 @@ const firstInteractionEvents = ['pointerdown', 'pointermove', 'keydown', 'scroll
 export const listenForFirstInteraction = (interacted: () => void) => {
   const listeners = new AbortController();
   const stopListening = () => listeners.abort();
-  const hasInteracted = window.scrollY > 0 || navigator.userActivation.hasBeenActive;
+  const canReadActivation = 'userActivation' in navigator;
+  const hasBeenActive = canReadActivation && navigator.userActivation.hasBeenActive;
+  const hasInteracted = window.scrollY > 0 || hasBeenActive;
   if (hasInteracted) {
     interacted();
     return stopListening;
