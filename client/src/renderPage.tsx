@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { prerender } from 'react-dom/static';
 import { App } from './App';
-import { pageTitleText } from './features/language/pageTitle.text';
+import { pageHeadText } from './features/language/pageHead.text';
 import { type Language, languageDirection } from './features/language/savedLanguage';
 
 export const renderPage = async (template: string, language: Language) => {
@@ -12,9 +12,11 @@ export const renderPage = async (template: string, language: Language) => {
   );
   const appHtml = await new Response(prelude).text();
   const htmlTag = `<html lang="${language}" dir="${languageDirection[language]}">`;
-  const titleTag = `<title>${pageTitleText[language].title}</title>`;
+  const titleTag = `<title>${pageHeadText[language].title}</title>`;
+  const descriptionStart = `<meta name="description" content="${pageHeadText[language].description}"`;
   return template
     .replace('<html lang="en" dir="ltr">', () => htmlTag)
     .replace(/<title>.*<\/title>/, () => titleTag)
+    .replace(/<meta name="description" content="[^"]*"/, () => descriptionStart)
     .replace('<div id="root"></div>', () => `<div id="root">${appHtml}</div>`);
 };

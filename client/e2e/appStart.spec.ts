@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { introText } from '../src/features/intro/intro.text';
+import { pageHeadText } from '../src/features/language/pageHead.text';
 import { waitForAppStart } from './letAppStart';
 import { languages, openSite, visitSite } from './openSite';
 
@@ -37,6 +38,8 @@ test.describe('without JavaScript', () => {
       const headline = page.getByRole('heading', { level: 1 });
       await expect(headline).toContainText(introText[language].headline);
       await expect(page.locator('html')).toHaveAttribute('lang', language);
+      const description = page.locator('meta[name="description"]');
+      await expect(description).toHaveAttribute('content', pageHeadText[language].description);
       await expect(page.locator('#contact')).toBeAttached();
       for (const revealed of await page.locator('.reveal-on-scroll').all()) {
         await expect(revealed).toHaveCSS('opacity', '1');

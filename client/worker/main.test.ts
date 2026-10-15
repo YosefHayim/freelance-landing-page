@@ -83,6 +83,15 @@ describe('site worker', () => {
     const page = await response.text();
     expect(page).toBe('Not found page');
   });
+  it('compresses the 404 page it shows for the Hebrew page path', async () => {
+    const env = siteServing(fileAtPath);
+    const request = new Request('https://joseph-tech-solutions.dev/index.he', {
+      headers: { 'Accept-Encoding': 'gzip, br' },
+    });
+    const response = await site.fetch(request, env);
+    expect(response.status).toBe(404);
+    expect(response.headers.get('Content-Encoding')).toBe('br');
+  });
   it('still serves files whose names only start like the Hebrew page', async () => {
     const env = siteServing(fileAtPath);
     const request = new Request('https://joseph-tech-solutions.dev/index.health.png');

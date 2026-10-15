@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
-import { pageTitleText } from './pageTitle.text';
+import { pageHeadText } from './pageHead.text';
 import { type Language, languageDirection, saveLanguage } from './savedLanguage';
 
 export const useLanguage = (initialLanguage: Language) => {
@@ -8,7 +8,9 @@ export const useLanguage = (initialLanguage: Language) => {
   useLayoutEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = languageDirection[language];
-    document.title = pageTitleText[language].title;
+    document.title = pageHeadText[language].title;
+    const description = document.querySelector('meta[name="description"]');
+    description?.setAttribute('content', pageHeadText[language].description);
   }, [language]);
 
   const toggleLanguage = () => {

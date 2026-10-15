@@ -1,7 +1,7 @@
 import { expect, type Page, test } from '@playwright/test';
 import { letAppStart } from './letAppStart';
 import { letPageSettle } from './letPageSettle';
-import { visitSite } from './openSite';
+import { chooseLanguage, standInForOutsideScripts, visitSite } from './openSite';
 
 const googleTagManagerHost = 'https://www.googletagmanager.com/';
 const containerScriptAddress = `${googleTagManagerHost}gtm.js?id=GTM-5KKTTCRT`;
@@ -34,6 +34,20 @@ test('the container queues its start and loads on the first interaction after th
   expect(responseAddresses).toEqual([]);
 
   await page.keyboard.press('Shift');
+  await expect.poll(() => responseAddresses).toEqual([containerScriptAddress]);
+});
+
+test('a scroll made before the page code runs still loads the container', async ({ page }) => {
+  const responseAddresses = collectGoogleTagManagerResponses(page);
+  await standInForOutsideScripts(page);
+  await chooseLanguage(page, 'en');
+  await page.route('**/assets/index-*.js', async (route) => {
+    await page.waitForFunction(() => window.scrollY > 0);
+    await route.continue();
+  });
+  await page.goto('/', { waitUntil: 'commit' });
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.locator('#contact').scrollIntoViewIfNeeded();
   await expect.poll(() => responseAddresses).toEqual([containerScriptAddress]);
 });
 
