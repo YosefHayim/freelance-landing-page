@@ -56,6 +56,8 @@ pnpm --dir client types
 
 - [React effect cleanup](https://react.dev/learn/synchronizing-with-effects)
 - [Vite static build](https://vite.dev/guide/static-deploy.html)
+- [Vite server-side rendering](https://vite.dev/guide/ssr.html)
+- [React hydrateRoot](https://react.dev/reference/react-dom/client/hydrateRoot)
 - [Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/)
 - [Worker-first routing](https://developers.cloudflare.com/workers/static-assets/routing/worker-script/)
 - [Lighthouse CI](https://googlechrome.github.io/lighthouse-ci/docs/configuration.html)

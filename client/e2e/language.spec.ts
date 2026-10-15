@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { introText } from '../src/features/intro/intro.text';
 import { languageText } from '../src/features/language/language.text';
-import { pageTitleText } from '../src/pageTitle.text';
+import { pageTitleText } from '../src/features/language/pageTitle.text';
+import { waitForAppStart } from './letAppStart';
 import { openSite, revealEverySection, standInForOutsideScripts } from './openSite';
 
 test('a Hebrew browser opens in Hebrew, and the flag switch is remembered', async ({ browser }) => {
@@ -9,6 +10,7 @@ test('a Hebrew browser opens in Hebrew, and the flag switch is remembered', asyn
   const page = await context.newPage();
   await standInForOutsideScripts(page);
   await page.goto('/');
+  await waitForAppStart(page);
   const html = page.locator('html');
   await expect(html).toHaveAttribute('lang', 'he');
   await expect(html).toHaveAttribute('dir', 'rtl');

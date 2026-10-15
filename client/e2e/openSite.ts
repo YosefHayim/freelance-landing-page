@@ -1,5 +1,6 @@
-import { expect, type Page } from '@playwright/test';
-import type { Language } from '../src/features/language/savedLanguage';
+import { expect, type Page, test } from '@playwright/test';
+import { type Language, languageCookieName } from '../src/features/language/savedLanguage';
+import { waitForAppStart } from './letAppStart';
 
 export const languages: Language[] = ['en', 'he'];
 
@@ -25,10 +26,23 @@ export const standInForOutsideScripts = async (page: Page) => {
   );
 };
 
-export const openSite = async (page: Page, language: Language) => {
+export const chooseLanguage = async (page: Page, language: Language) => {
+  const siteAddress = test.info().project.use.baseURL;
+  if (!siteAddress) throw new Error('Missing baseURL');
+  const languageCookie = { name: languageCookieName, value: language, url: siteAddress };
+  await page.context().addCookies([languageCookie]);
+};
+
+export const visitSite = async (page: Page, language: Language) => {
   await standInForOutsideScripts(page);
-  await page.addInitScript((saved) => localStorage.setItem('jts-language', saved), language);
+  await chooseLanguage(page, language);
   return page.goto('/');
+};
+
+export const openSite = async (page: Page, language: Language) => {
+  const response = await visitSite(page, language);
+  await waitForAppStart(page);
+  return response;
 };
 
 export const revealEverySection = async (page: Page) => {

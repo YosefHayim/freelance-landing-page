@@ -1,4 +1,4 @@
-import type { Language } from './features/language/savedLanguage';
+import type { Language } from './savedLanguage';
 
 type PageTitleText = {
   title: string;

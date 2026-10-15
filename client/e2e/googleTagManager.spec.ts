@@ -1,6 +1,7 @@
 import { expect, type Page, test } from '@playwright/test';
+import { letAppStart } from './letAppStart';
 import { letPageSettle } from './letPageSettle';
-import { openSite } from './openSite';
+import { visitSite } from './openSite';
 
 const googleTagManagerHost = 'https://www.googletagmanager.com/';
 const containerScriptAddress = `${googleTagManagerHost}gtm.js?id=GTM-5KKTTCRT`;
@@ -18,15 +19,21 @@ const collectGoogleTagManagerResponses = (page: Page) => {
   return responseAddresses;
 };
 
-test('the container queues its start and loads once the page has settled', async ({ page }) => {
+test('the container queues its start and loads on the first interaction after the page settles', async ({
+  page,
+}) => {
   const responseAddresses = collectGoogleTagManagerResponses(page);
   await page.clock.install({ time: clockStart });
   await page.clock.pauseAt(visitStart);
-  await openSite(page, 'en');
+  await visitSite(page, 'en');
   const queuedEvents = await page.evaluate('window.dataLayer');
   expect(queuedEvents).toEqual([{ 'gtm.start': visitStart.getTime(), event: 'gtm.js' }]);
-  expect(responseAddresses).toEqual([]);
+  await letAppStart(page);
   await letPageSettle(page);
+  await page.clock.runFor(60000);
+  expect(responseAddresses).toEqual([]);
+
+  await page.keyboard.press('Shift');
   await expect.poll(() => responseAddresses).toEqual([containerScriptAddress]);
 });
 
@@ -35,7 +42,7 @@ test.describe('without JavaScript', () => {
 
   test('the no-script frame opens right after the body starts', async ({ page }) => {
     const responseAddresses = collectGoogleTagManagerResponses(page);
-    await openSite(page, 'en');
+    await visitSite(page, 'en');
     const noScriptFrame = page.locator('body > noscript:first-child > iframe');
     await expect(noScriptFrame).toHaveAttribute('src', noScriptFrameAddress);
     expect(responseAddresses).toEqual([noScriptFrameAddress]);

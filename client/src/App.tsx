@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { AboutSection } from './features/about/AboutSection';
 import { ContactSection } from './features/contact/ContactSection';
 import { IntroSection } from './features/intro/IntroSection';
+import type { Language } from './features/language/savedLanguage';
 import { useLanguage } from './features/language/useLanguage';
 import { ProblemsSection } from './features/problems/ProblemsSection';
 import { useRevealOnScroll } from './features/scrollEffects/useRevealOnScroll';
@@ -10,10 +11,13 @@ import { useStackOnScroll } from './features/scrollEffects/useStackOnScroll';
 import { TopBar } from './features/topBar/TopBar';
 import { useVisitorTracking } from './features/visitorTracking/useVisitorTracking';
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion';
-import { pageTitleText } from './pageTitle.text';
 
-export const App = () => {
-  const { language, toggleLanguage } = useLanguage();
+interface AppProps {
+  initialLanguage: Language;
+}
+
+export const App = ({ initialLanguage }: AppProps) => {
+  const { language, toggleLanguage } = useLanguage(initialLanguage);
   const prefersReducedMotion = usePrefersReducedMotion();
   const stackRef = useRef<HTMLElement>(null);
   const coveredSectionCount = useStackOnScroll(stackRef, prefersReducedMotion);
@@ -22,7 +26,6 @@ export const App = () => {
 
   return (
     <>
-      <title>{pageTitleText[language].title}</title>
       <TopBar language={language} onToggleLanguage={toggleLanguage} />
       <main ref={stackRef} className="section-stack">
         <IntroSection

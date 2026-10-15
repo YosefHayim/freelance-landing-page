@@ -12,13 +12,14 @@ Code is split by where it runs, then by feature. Imports go one way.
 
 ```txt
 client/
+  prerender.ts          runs at build: writes both language pages with the CSS inlined
   src/                  runs in the browser (React 19 + Vite)
-    main.tsx  App.tsx  globalStyles.css  pageTitle.text.ts
+    main.ts  startApp.tsx  renderPage.tsx  App.tsx  globalStyles.css
     assets/             images Vite hashes
     components/         UI used by 2+ features
     hooks/              hooks used by 2+ features
     features/<feature>/ everything one feature needs
-  worker/               runs on Cloudflare: redirects, security and cache headers, 404s
+  worker/               runs on Cloudflare: page language, redirects, headers, 404s
   e2e/                  runs in Node: Playwright against the production build
   public/               copied as is: 404 page, favicon, robots, sitemap
 ```
@@ -52,8 +53,9 @@ names or CSS classes.
 - Inline named exports, direct imports, `import type`. Default exports only where a tool
   requires one (configs, the Worker entry).
 - `interface XProps` for props, `type` for domain shapes.
-- React owns UI state. Effect owns browser storage, the clipboard and Worker asset I/O, with
-  failures logged. Decode outside values with Effect Schema.
+- React owns UI state. Browser code stays plain TypeScript so the first load stays small.
+  Effect runs in the Worker only: asset I/O with failures logged, and outside values decoded
+  with Effect Schema.
 - Effects return cleanup. Loops stop offscreen, while covered by the next section, and under
   reduced motion. No animation may block reading or selecting text.
 - Plain CSS per feature. Colors are custom properties in the `:root` of `globalStyles.css`.
@@ -64,8 +66,8 @@ names or CSS classes.
 
 ## Words and languages
 
-- English (`ltr`) and Hebrew (`rtl`) are equal. The first visit uses Hebrew when the browser's
-  main language is Hebrew. A manual choice is saved in `localStorage` and wins later.
+- English (`ltr`) and Hebrew (`rtl`) are equal. The Worker picks the page for `/`: the
+  `jts-language` cookie (a manual choice) wins, else the browser's first `Accept-Language`.
 - Every visible word and accessible label lives in a `<feature>.text.ts` in both languages.
 - Voice: spoken and specific. Open on the visitor's problem in their own words, then give the
   fix. The visitor is the one acting, so keep "I" rare. Hebrew talks to the visitor in plural
@@ -76,8 +78,8 @@ names or CSS classes.
 ## Visitor tracking
 
 - The Meta Pixel in `features/visitorTracking/` runs for every visitor, with no consent banner.
-  It exists only in the production build, and Meta's script loads only after the page
-  settles, so it never delays the first paint.
+  It exists only in the production build, and Meta's script loads only after the first
+  interaction, so it never delays the first paint.
 - It reports the page view, a WhatsApp click as `Contact`, and the custom events `Click`,
   `Hover`, `Hold`, `SectionView`, `ScrollDepth`, `TimeOnPage`, `TextSelect`, `TextCopy`,
   `ChatOpen` and `ChatClick`. Names and values are the same in both languages.
@@ -91,7 +93,7 @@ names or CSS classes.
   Events Manager: if they change there, the browser console names the blocked host.
 - Google Tag Manager (container `GTM-5KKTTCRT`) in `features/visitorTracking/` runs for every
   visitor. It exists only in the production build, and Google's script loads only after the
-  page settles, so it never delays the first paint. `index.html` keeps Google's no-script
+  first interaction, so it never delays the first paint. `index.html` keeps Google's no-script
   frame right after `<body>`.
 - Google Analytics (`G-FGK25F36RF`) is a Google tag inside the container. Do not paste the
   gtag.js snippet into the code as well: every visit would be counted twice.
@@ -100,15 +102,36 @@ names or CSS classes.
 - The container loads from a module, not from Google's inline snippet, so the CSP keeps no
   `unsafe-inline` for scripts. Custom HTML tags and Custom JavaScript variables need
   `unsafe-inline` and `unsafe-eval`, so they do not run here: use the built-in tag templates.
-- Outside scripts start through `runAfterPageSettles`: after the wait that follows `load`, once
-  no CSS transition is still running and the last frame had time to paint. Lighthouse counts an
-  outside request that starts before the largest paint, even a blocked one. A test that needs
-  the settled page calls `letPageSettle` from `e2e/letPageSettle.ts`.
+- Outside scripts (pixel, container, chat widget) start through `runAfterFirstInteraction`:
+  after the first pointer, key or scroll event and once the page settles (`runAfterPageSettles`:
+  the wait after `load`, no running CSS transition, a last frame to paint). The pixel queue and
+  `dataLayer` start at once, so no event is lost. Lighthouse counts an outside request that
+  starts before the largest paint, even a blocked one. A test calls `letPageSettle` from
+  `e2e/letPageSettle.ts`, then presses a key before it expects the scripts.
 - Checks never reach Meta or Google: Playwright serves stand-ins from `e2e/openSite.ts` and
   Lighthouse blocks `connect.facebook.net` and `www.googletagmanager.com`. The Lighthouse gate
   measures the site's own code: Meta's script adds main-thread work that only Meta can change.
 - An outside host works only after it is added to the CSP in `worker/securityHeaders.ts`.
   A tag added in the container needs its hosts there first.
+
+## Loading speed
+
+Most visitors come from Facebook ads on a phone, so the mobile Lighthouse score stays at 100.
+
+- The build prerenders both pages (`index.html`, `index.he.html`) from `src/renderPage.tsx`,
+  with the CSS inlined. The first paint needs only the page, the photo and one font.
+- `main.ts` loads the app (`startApp.tsx`, which hydrates the page) only after the first
+  contentful paint, and `prerender.ts` gives its script `fetchpriority="low"` (Vite strips the
+  attribute from `index.html`). A request that starts before the largest paint delays it in
+  Lighthouse's mobile simulation.
+- Entrance motion that runs on load is CSS (`.enter-on-load`), never JavaScript. It only moves
+  and never fades in from opacity 0, so the intro text counts as the largest paint at once.
+- Text that JavaScript reveals on scroll (`.reveal-on-scroll`) shows under
+  `@media (scripting: none)`, so the prerendered page reads in full without JavaScript.
+- Fonts are Inter and the Hebrew subset of Heebo. Mono text uses system fonts. Each extra font
+  file is another request before the first paint.
+- `openSite` in `e2e/openSite.ts` waits for the app to start. A test that pauses the clock
+  first calls `visitSite`, then `letAppStart` from `e2e/letAppStart.ts`.
 
 ## Caching and routes
 
@@ -119,6 +142,8 @@ names or CSS classes.
   injecting its analytics script but also turns off its compression, so the Worker compresses
   pages itself through `Content-Encoding`. Other files never get `no-transform`, so Cloudflare
   compresses them.
+- `/` adds `Accept-Language, Cookie` to `Vary`. The Hebrew page lives only at `/`; `/index.he`
+  returns 404.
 - Former domains and `www` redirect with 308 to the canonical apex, keeping path and query.
 - Unknown and retired paths return 404, never the home page. Do not bring back the old
   versioned sites, chat, blog, product or legal pages.
@@ -127,8 +152,8 @@ names or CSS classes.
 
 `pnpm check` runs Biome, `tsc -b`, Vitest, the build, Playwright (Chromium and WebKit, both
 languages, 320 to 1440px, on the local Worker at 127.0.0.1:4173) and a mobile Lighthouse gate
-(performance 0.9+, LCP 2.5s or less, CLS 0.1 or less, TBT 200ms or less). Port 4173 must be
-free.
+(performance 0.98+, FCP 1.5s or less, LCP 2s or less, CLS 0.05 or less, TBT 100ms or less).
+Port 4173 must be free.
 
 CI runs the same checks as parallel jobs behind one required `CI Gate` job. Before opening a
 PR, run them locally with `act workflow_dispatch -W .github/workflows/ci.yml`; the root
