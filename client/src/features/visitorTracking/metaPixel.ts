@@ -1,4 +1,4 @@
-import { runAfterPageSettles } from '../pageLoad/runAfterPageSettles';
+import { loadOutsideScript } from './loadOutsideScript';
 
 const pixelId = '4662982497316102';
 const pixelScriptAddress = 'https://connect.facebook.net/en_US/fbevents.js';
@@ -37,13 +37,6 @@ const createPixel = () => {
   return pixel;
 };
 
-const addPixelScript = () => {
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = pixelScriptAddress;
-  document.head.append(script);
-};
-
 export const loadMetaPixel = () => {
   if (window.fbq || !import.meta.env.PROD) return;
   const pixel = createPixel();
@@ -51,7 +44,7 @@ export const loadMetaPixel = () => {
   window._fbq = pixel;
   pixel('init', pixelId);
   pixel('track', 'PageView');
-  runAfterPageSettles(addPixelScript);
+  loadOutsideScript(pixelScriptAddress);
 };
 
 const sendEvent = (method: 'track' | 'trackCustom', eventName: string, details: EventDetails) => {

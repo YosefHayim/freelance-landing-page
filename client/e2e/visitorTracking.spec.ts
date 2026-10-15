@@ -1,6 +1,6 @@
 import { expect, type Page, test } from '@playwright/test';
 import type { Language } from '../src/features/language/savedLanguage';
-import { letPageSettle } from './letPageSettle';
+import { outsideScriptDelay } from '../src/features/visitorTracking/loadOutsideScript';
 import { openSite, pixelCallLogPrefix } from './openSite';
 
 const clockStart = new Date('2026-01-01T09:00:00');
@@ -28,7 +28,7 @@ const detailsNamed = (pixelCalls: unknown[][], eventName: string) => {
 const openSiteWithPixel = async (page: Page, language: Language) => {
   const pixelCalls = collectPixelCalls(page);
   await openSite(page, language);
-  await letPageSettle(page);
+  await page.clock.runFor(outsideScriptDelay);
   await expect.poll(() => pixelCalls).toContainEqual(['track', 'PageView']);
   return pixelCalls;
 };
@@ -214,7 +214,7 @@ test('scrolling reports each depth once and the sections the visitor stops on', 
 
 test('time on the page is reported at each milestone', async ({ page }) => {
   const pixelCalls = await openSiteWithPixel(page, 'en');
-  await page.clock.runFor(7000);
+  await page.clock.runFor(4000);
   expect(callsNamed(pixelCalls, 'TimeOnPage')).toHaveLength(0);
   await page.clock.runFor(125000);
   await expect

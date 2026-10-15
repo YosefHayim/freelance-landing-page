@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import site from './main';
 
-const siteServing = (fetchFile: () => Promise<Response>): Env => ({
+const siteServing = (fetchFile: (file: RequestInfo | URL) => Promise<Response>): Env => ({
   ASSETS: {
     fetch: fetchFile,
     connect: () => {
@@ -50,6 +50,20 @@ describe('site worker', () => {
       'public, max-age=0, must-revalidate, no-transform',
     );
     expect(response.headers.get('Content-Encoding')).toBe('br');
+  });
+  it('serves the Hebrew page to a Hebrew browser', async () => {
+    const requestedFiles: string[] = [];
+    const env = siteServing((file) => {
+      const fileRequest = new Request(file);
+      requestedFiles.push(fileRequest.url);
+      return revalidatingPage();
+    });
+    const request = new Request('https://joseph-tech-solutions.dev/', {
+      headers: { 'Accept-Language': 'he-IL,he;q=0.9' },
+    });
+    const response = await site.fetch(request, env);
+    expect(requestedFiles).toEqual(['https://joseph-tech-solutions.dev/he/']);
+    expect(response.headers.get('Vary')).toBe('Accept-Encoding, Accept-Language');
   });
   it('answers 503 when the file store fails', async () => {
     const env = siteServing(() => Promise.reject(new Error('asset store down')));

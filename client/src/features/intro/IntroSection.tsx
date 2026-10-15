@@ -42,7 +42,7 @@ export const IntroSection = ({ language, prefersReducedMotion, isCovered }: Intr
         isCovered={isCovered}
       />
       <div className="section-content">
-        <h1 className="display-heading intro-headline reveal-on-scroll">
+        <h1 className="display-heading intro-headline">
           {text.greeting}{' '}
           <span className="headline-photo">
             <img
@@ -58,10 +58,8 @@ export const IntroSection = ({ language, prefersReducedMotion, isCovered }: Intr
           <br />
           <span className="muted-line">{text.mutedLine}</span>
         </h1>
-        <p className="intro-summary reveal-on-scroll">{text.summary}</p>
-        <div className="reveal-on-scroll" style={{ transitionDelay: '.15s' }}>
-          <IntroCallButton language={language} />
-        </div>
+        <p className="intro-summary">{text.summary}</p>
+        <IntroCallButton language={language} />
         <WorkShowcase
           language={language}
           prefersReducedMotion={prefersReducedMotion}

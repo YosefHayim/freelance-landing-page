@@ -25,10 +25,17 @@ export const standInForOutsideScripts = async (page: Page) => {
   );
 };
 
+export const waitForAppStart = async (page: Page, language: Language) => {
+  await expect(page.locator('.reveal-on-scroll').first()).toHaveAttribute('style', /--reveal-x/);
+  await expect(page.locator('html')).toHaveAttribute('lang', language);
+};
+
 export const openSite = async (page: Page, language: Language) => {
   await standInForOutsideScripts(page);
   await page.addInitScript((saved) => localStorage.setItem('jts-language', saved), language);
-  return page.goto('/');
+  const response = await page.goto('/');
+  await waitForAppStart(page, language);
+  return response;
 };
 
 export const revealEverySection = async (page: Page) => {

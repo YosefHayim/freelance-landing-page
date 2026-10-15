@@ -23,7 +23,7 @@ export const WorkShowcase = ({ language, prefersReducedMotion, isCovered }: Work
   const text = introText[language];
 
   return (
-    <figure className="work-showcase reveal-on-scroll" aria-label={text.showcaseLabel}>
+    <figure className="work-showcase" aria-label={text.showcaseLabel}>
       <div
         ref={panelRef}
         className={isVisible ? 'work-showcase-panel is-visible' : 'work-showcase-panel'}

@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/renderPage.tsx --outDir dist-ssr && node prerender.ts",
     "preview": "wrangler dev --local --local-upstream localhost --ip 127.0.0.1 --port 4173",
     "lint": "biome check .",
     "format": "biome check --write .",

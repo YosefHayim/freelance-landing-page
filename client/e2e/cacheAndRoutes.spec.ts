@@ -22,6 +22,7 @@ test('the page revalidates on every visit and repeat visits get a 304', async ({
   const headers = response.headers();
   expect(headers['cache-control']).toBe('public, max-age=0, must-revalidate, no-transform');
   expect(headers['content-encoding']).toMatch(/^(br|gzip)$/);
+  expect(headers.vary).toContain('Accept-Language');
   expect(headers['x-content-type-options']).toBe('nosniff');
   expect(headers['x-frame-options']).toBe('DENY');
   expect(headers['content-security-policy']).toContain("frame-ancestors 'none'");

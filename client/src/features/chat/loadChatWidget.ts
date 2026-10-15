@@ -1,8 +1,6 @@
-import { runAfterPageSettles } from '../pageLoad/runAfterPageSettles';
+import { runOnFirstInteraction } from '../pageLoad/runOnFirstInteraction';
 
 export const chatWidgetTag = 'ai-chat-widget';
-
-const firstInteractionEvents = ['pointerdown', 'pointermove', 'keydown', 'scroll'] as const;
 
 const mountChatWidget = () => {
   const widgetTemplate = document.getElementById('replybase-widget');
@@ -11,10 +9,4 @@ const mountChatWidget = () => {
   widgetTemplate.replaceWith(widget);
 };
 
-const mountOnFirstInteraction = () => {
-  firstInteractionEvents.forEach((eventName) => {
-    window.addEventListener(eventName, mountChatWidget, { once: true, passive: true });
-  });
-};
-
-export const loadChatWidget = () => runAfterPageSettles(mountOnFirstInteraction);
+export const loadChatWidget = () => runOnFirstInteraction(mountChatWidget);

@@ -2,13 +2,15 @@ import { Effect } from 'effect';
 import { cacheControlFor } from './cacheHeaders';
 import { redirectDestination } from './domainRedirects';
 import { addPageHeaders } from './pageHeaders';
+import { addLanguageVary, localizedPageRequest } from './pageLanguage';
 import { addSecurityHeaders } from './securityHeaders';
 
 const defaultCacheControl = 'public, max-age=0, must-revalidate';
 
 const serveFile = (request: Request, env: Env) => {
   const { pathname } = new URL(request.url);
-  const fetchFile = Effect.tryPromise(() => env.ASSETS.fetch(request));
+  const pageRequest = localizedPageRequest(request);
+  const fetchFile = Effect.tryPromise(() => env.ASSETS.fetch(pageRequest));
   const withHeaders = Effect.map(fetchFile, (file) => {
     const response = new Response(file.body, file);
     const current = response.headers.get('Cache-Control') || defaultCacheControl;
@@ -16,6 +18,7 @@ const serveFile = (request: Request, env: Env) => {
     response.headers.set('Cache-Control', cacheControl);
     addSecurityHeaders(response.headers);
     addPageHeaders(response.headers, request);
+    addLanguageVary(response.headers, request);
     return response;
   });
   const handleFailure = Effect.catchAll(withHeaders, (error) => {

@@ -1,12 +1,14 @@
-import { useLayoutEffect, useState } from 'react';
-import { loadLanguage, saveLanguage } from './savedLanguage';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { type Language, loadLanguage, saveLanguage, textDirection } from './savedLanguage';
 
-export const useLanguage = () => {
-  const [language, setLanguage] = useState(loadLanguage);
+export const useLanguage = (initialLanguage: Language) => {
+  const [language, setLanguage] = useState(initialLanguage);
+
+  useEffect(() => setLanguage(loadLanguage(initialLanguage)), [initialLanguage]);
 
   useLayoutEffect(() => {
     document.documentElement.lang = language;
-    document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr';
+    document.documentElement.dir = textDirection(language);
   }, [language]);
 
   const toggleLanguage = () => {

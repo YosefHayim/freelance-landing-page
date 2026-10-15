@@ -12,8 +12,9 @@ Code is split by where it runs, then by feature. Imports go one way.
 
 ```txt
 client/
+  prerender.ts          runs in Node after the build: writes the English and Hebrew pages
   src/                  runs in the browser (React 19 + Vite)
-    main.tsx  App.tsx  globalStyles.css  pageTitle.text.ts
+    main.tsx  startApp.tsx  App.tsx  renderPage.tsx  globalStyles.css  pageTitle.text.ts
     assets/             images Vite hashes
     components/         UI used by 2+ features
     hooks/              hooks used by 2+ features
@@ -64,8 +65,10 @@ names or CSS classes.
 
 ## Words and languages
 
-- English (`ltr`) and Hebrew (`rtl`) are equal. The first visit uses Hebrew when the browser's
-  main language is Hebrew. A manual choice is saved in `localStorage` and wins later.
+- English (`ltr`) and Hebrew (`rtl`) are equal. The Worker answers `/` with the Hebrew page when
+  the browser's first language is Hebrew (`worker/pageLanguage.ts`), so the first paint is
+  already in the right language. A manual choice is saved in `localStorage` and wins once the
+  app starts.
 - Every visible word and accessible label lives in a `<feature>.text.ts` in both languages.
 - Voice: spoken and specific. Open on the visitor's problem in their own words, then give the
   fix. The visitor is the one acting, so keep "I" rare. Hebrew talks to the visitor in plural
@@ -76,8 +79,8 @@ names or CSS classes.
 ## Visitor tracking
 
 - The Meta Pixel in `features/visitorTracking/` runs for every visitor, with no consent banner.
-  It exists only in the production build, and Meta's script loads only after the page
-  settles, so it never delays the first paint.
+  It exists only in the production build, and Meta's script loads only after the first
+  interaction, so it never delays the first paint.
 - It reports the page view, a WhatsApp click as `Contact`, and the custom events `Click`,
   `Hover`, `Hold`, `SectionView`, `ScrollDepth`, `TimeOnPage`, `TextSelect`, `TextCopy`,
   `ChatOpen` and `ChatClick`. Names and values are the same in both languages.
@@ -91,7 +94,7 @@ names or CSS classes.
   Events Manager: if they change there, the browser console names the blocked host.
 - Google Tag Manager (container `GTM-5KKTTCRT`) in `features/visitorTracking/` runs for every
   visitor. It exists only in the production build, and Google's script loads only after the
-  page settles, so it never delays the first paint. `index.html` keeps Google's no-script
+  first interaction, so it never delays the first paint. `index.html` keeps Google's no-script
   frame right after `<body>`.
 - Google Analytics (`G-FGK25F36RF`) is a Google tag inside the container. Do not paste the
   gtag.js snippet into the code as well: every visit would be counted twice.
@@ -100,15 +103,30 @@ names or CSS classes.
 - The container loads from a module, not from Google's inline snippet, so the CSP keeps no
   `unsafe-inline` for scripts. Custom HTML tags and Custom JavaScript variables need
   `unsafe-inline` and `unsafe-eval`, so they do not run here: use the built-in tag templates.
-- Outside scripts start through `runAfterPageSettles`: after the wait that follows `load`, once
-  no CSS transition is still running and the last frame had time to paint. Lighthouse counts an
-  outside request that starts before the largest paint, even a blocked one. A test that needs
-  the settled page calls `letPageSettle` from `e2e/letPageSettle.ts`.
+- Outside scripts start through `loadOutsideScript`: on the first scroll, tap, pointer move or
+  key press, or 5 seconds after the page starts, whichever comes first. The chat widget waits
+  for the first interaction only. Lighthouse counts an outside request that starts before the
+  largest paint, even a blocked one.
 - Checks never reach Meta or Google: Playwright serves stand-ins from `e2e/openSite.ts` and
   Lighthouse blocks `connect.facebook.net` and `www.googletagmanager.com`. The Lighthouse gate
   measures the site's own code: Meta's script adds main-thread work that only Meta can change.
 - An outside host works only after it is added to the CSP in `worker/securityHeaders.ts`.
   A tag added in the container needs its hosts there first.
+
+## Page load
+
+Most visitors come cold from a Facebook ad on a phone, so the first screen must paint fast.
+
+- The build prerenders `App` once per language (`src/renderPage.tsx`, run by `prerender.ts`)
+  into `dist/index.html` and `dist/he/index.html`. Each page preloads only its own fonts.
+- `main.tsx` is a small entry. The app (`startApp.tsx`) hydrates the rendered page only after
+  `load` and the first paint (`runAfterFirstPaint`). DM Mono loads with it (`loadMonoFont`),
+  since nothing on the first screen shows it.
+- All CSS is one linked file (`cssCodeSplit: false`). Inlining it made the largest paint later.
+- The first screen must not wait for the app: no reveal or other script-driven state on the
+  headline, the call button or the work showcase. Speed Index counts every late change there.
+- A click before hydration is lost, so `openSite` in `e2e/openSite.ts` waits for the app to
+  start (`waitForAppStart`).
 
 ## Caching and routes
 
@@ -119,6 +137,7 @@ names or CSS classes.
   injecting its analytics script but also turns off its compression, so the Worker compresses
   pages itself through `Content-Encoding`. Other files never get `no-transform`, so Cloudflare
   compresses them.
+- `/` sends `Vary: Accept-Language`, since the Worker picks its language from that header.
 - Former domains and `www` redirect with 308 to the canonical apex, keeping path and query.
 - Unknown and retired paths return 404, never the home page. Do not bring back the old
   versioned sites, chat, blog, product or legal pages.
@@ -127,8 +146,8 @@ names or CSS classes.
 
 `pnpm check` runs Biome, `tsc -b`, Vitest, the build, Playwright (Chromium and WebKit, both
 languages, 320 to 1440px, on the local Worker at 127.0.0.1:4173) and a mobile Lighthouse gate
-(performance 0.9+, LCP 2.5s or less, CLS 0.1 or less, TBT 200ms or less). Port 4173 must be
-free.
+on both language pages (performance 0.95+, LCP 2s or less, CLS 0.1 or less, TBT 200ms or
+less). Port 4173 must be free.
 
 CI runs the same checks as parallel jobs behind one required `CI Gate` job. Before opening a
 PR, run them locally with `act workflow_dispatch -W .github/workflows/ci.yml`; the root
