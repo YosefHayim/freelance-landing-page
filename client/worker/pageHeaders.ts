@@ -1,13 +1,25 @@
 const clientAcceptEncoding = (request: Request) => {
   const original =
     request.cf && 'clientAcceptEncoding' in request.cf && request.cf.clientAcceptEncoding;
-  if (typeof original === 'string' && original) return original;
+  if (typeof original === 'string') return original;
   return request.headers.get('Accept-Encoding') || '';
 };
 
+const isRefused = (parameters: string[]) =>
+  parameters.some((parameter) => /^\s*q=0(\.0*)?\s*$/.test(parameter));
+
+const acceptedEncodings = (acceptEncoding: string) =>
+  acceptEncoding
+    .toLowerCase()
+    .split(',')
+    .map((entry) => entry.split(';'))
+    .filter(([, ...parameters]) => !isRefused(parameters))
+    .map(([name]) => name.trim());
+
 const encodingFor = (acceptEncoding: string) => {
-  if (acceptEncoding.includes('br')) return 'br';
-  if (acceptEncoding.includes('gzip')) return 'gzip';
+  const accepted = acceptedEncodings(acceptEncoding);
+  if (accepted.includes('br')) return 'br';
+  if (accepted.includes('gzip')) return 'gzip';
   return null;
 };
 
