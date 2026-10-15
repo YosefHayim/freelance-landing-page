@@ -9,6 +9,8 @@ export const useLanguage = (initialLanguage: Language) => {
     document.documentElement.lang = language;
     document.documentElement.dir = languageDirection[language];
     document.title = pageHeadText[language].title;
+    const description = document.querySelector('meta[name="description"]');
+    description?.setAttribute('content', pageHeadText[language].description);
   }, [language]);
 
   const toggleLanguage = () => {

@@ -21,6 +21,8 @@ test('a Hebrew browser opens in Hebrew, and the flag switch is remembered', asyn
   await expect(html).toHaveAttribute('lang', 'en');
   await expect(html).toHaveAttribute('dir', 'ltr');
   await expect(page).toHaveTitle(pageHeadText.en.title);
+  const description = page.locator('meta[name="description"]');
+  await expect(description).toHaveAttribute('content', pageHeadText.en.description);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(introText.en.headline);
 
   await page.reload();
