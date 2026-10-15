@@ -2,7 +2,8 @@ const firstContentfulPaint = 'first-contentful-paint';
 
 const waitForFirstContentfulPaint = () =>
   new Promise<void>((painted) => {
-    const canObservePaint = PerformanceObserver.supportedEntryTypes.includes('paint');
+    const canObservePaint =
+      'PerformanceObserver' in window && PerformanceObserver.supportedEntryTypes.includes('paint');
     if (!canObservePaint) {
       painted();
       return;

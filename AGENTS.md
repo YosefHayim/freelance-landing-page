@@ -126,6 +126,8 @@ Most visitors come from Facebook ads on a phone, so the mobile Lighthouse score 
   Lighthouse's mobile simulation.
 - Entrance motion that runs on load is CSS (`.enter-on-load`), never JavaScript. It only moves
   and never fades in from opacity 0, so the intro text counts as the largest paint at once.
+- Text that JavaScript reveals on scroll (`.reveal-on-scroll`) shows under
+  `@media (scripting: none)`, so the prerendered page reads in full without JavaScript.
 - Fonts are Inter and the Hebrew subset of Heebo. Mono text uses system fonts. Each extra font
   file is another request before the first paint.
 - `openSite` in `e2e/openSite.ts` waits for the app to start. A test that pauses the clock

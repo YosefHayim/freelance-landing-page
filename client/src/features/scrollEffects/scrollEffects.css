@@ -48,6 +48,13 @@
   }
 }
 
+@media (scripting: none) {
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .enter-on-load {
     animation: none;
