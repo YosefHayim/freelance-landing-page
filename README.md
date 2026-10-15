@@ -10,7 +10,6 @@ Use Node 24 and pnpm 10.33.2.
 
 ```sh
 pnpm install --frozen-lockfile
-cp .env.example .env
 cp client/.env.example client/.env
 pnpm dev
 ```
