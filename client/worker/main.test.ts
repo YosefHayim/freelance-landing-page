@@ -29,6 +29,7 @@ const fileBodies: Record<string, string> = {
   '/': 'English page',
   '/index.he': 'Hebrew page',
   '/404': 'Not found page',
+  '/index.health.png': 'Health image',
 };
 
 const fileAtPath = (input: RequestInfo | URL) => {
@@ -81,6 +82,13 @@ describe('site worker', () => {
     expect(response.status).toBe(404);
     const page = await response.text();
     expect(page).toBe('Not found page');
+  });
+  it('still serves files whose names only start like the Hebrew page', async () => {
+    const env = siteServing(fileAtPath);
+    const request = new Request('https://joseph-tech-solutions.dev/index.health.png');
+    const response = await site.fetch(request, env);
+    const file = await response.text();
+    expect(file).toBe('Health image');
   });
   it('answers 503 when the file store fails', async () => {
     const env = siteServing(() => Promise.reject(new Error('asset store down')));

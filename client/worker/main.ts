@@ -50,7 +50,8 @@ const serveSite = (request: Request, env: Env) => {
   if (destination) return Response.redirect(destination, 308);
   const { pathname } = new URL(request.url);
   if (pathname === '/') return servePage(request, env);
-  if (pathname.startsWith(hebrewPagePath)) return serveNotFound(request, env);
+  const isHebrewPageFile = pathname === hebrewPagePath || pathname === `${hebrewPagePath}.html`;
+  if (isHebrewPageFile) return serveNotFound(request, env);
   return serveFile(request, env);
 };
 
