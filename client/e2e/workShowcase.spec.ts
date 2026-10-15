@@ -48,6 +48,7 @@ for (const language of languages) {
 }
 
 test('the showcase holds still until the visitor interacts', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.clock.install();
   await visitSite(page, 'en');
   await page.waitForLoadState('networkidle');
