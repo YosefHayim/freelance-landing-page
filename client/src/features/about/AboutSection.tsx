@@ -1,7 +1,7 @@
 import './about.css';
 import { useRef } from 'react';
 import type { Language } from '../language/savedLanguage';
-import { aboutText } from './about.text';
+import { aboutParagraphNames, aboutText } from './about.text';
 import { Iceberg } from './Iceberg';
 
 interface AboutSectionProps {
@@ -31,9 +31,9 @@ export const AboutSection = ({ language, prefersReducedMotion, isCovered }: Abou
               </span>
             ))}
           </h2>
-          {text.paragraphs.map((paragraph) => (
-            <p key={paragraph} className="about-paragraph reveal-on-scroll">
-              {paragraph}
+          {aboutParagraphNames.map((paragraphName) => (
+            <p key={paragraphName} className="about-paragraph reveal-on-scroll">
+              {text.paragraphs[paragraphName]}
             </p>
           ))}
         </div>
