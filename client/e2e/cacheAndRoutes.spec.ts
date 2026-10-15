@@ -21,6 +21,7 @@ test('the page revalidates on every visit and repeat visits get a 304', async ({
   expect(response.status()).toBe(200);
   const headers = response.headers();
   expect(headers['cache-control']).toBe('public, max-age=0, must-revalidate, no-transform');
+  expect(headers['content-encoding']).toMatch(/^(br|gzip)$/);
   expect(headers['x-content-type-options']).toBe('nosniff');
   expect(headers['x-frame-options']).toBe('DENY');
   expect(headers['content-security-policy']).toContain("frame-ancestors 'none'");
@@ -29,7 +30,10 @@ test('the page revalidates on every visit and repeat visits get a 304', async ({
   expect(repeatVisit.status()).toBe(304);
 });
 
-test('hashed files are cached for a year', async ({ page, request }) => {
+test('hashed files are cached for a year and left for Cloudflare to compress', async ({
+  page,
+  request,
+}) => {
   await openSite(page, 'en');
   const assetUrls = await page.evaluate(() =>
     performance
@@ -41,9 +45,7 @@ test('hashed files are cached for a year', async ({ page, request }) => {
   for (const assetUrl of assetUrls) {
     const asset = await request.get(assetUrl);
     expect(asset.status(), assetUrl).toBe(200);
-    expect(asset.headers()['cache-control'], assetUrl).toBe(
-      'public, max-age=31536000, immutable, no-transform',
-    );
+    expect(asset.headers()['cache-control'], assetUrl).toBe('public, max-age=31536000, immutable');
   }
 });
 

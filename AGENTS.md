@@ -115,6 +115,10 @@ names or CSS classes.
 - `worker/cacheHeaders.ts` sets them (Cloudflare ignores `_headers` when the Worker runs
   first): hashed `/assets/*` are immutable for a year; everything else is
   `max-age=0, must-revalidate` with an ETag, so a reload gets a cheap 304.
+- `worker/pageHeaders.ts` gives HTML pages `no-transform`, which stops Cloudflare from
+  injecting its analytics script but also turns off its compression, so the Worker compresses
+  pages itself through `Content-Encoding`. Other files never get `no-transform`, so Cloudflare
+  compresses them.
 - Former domains and `www` redirect with 308 to the canonical apex, keeping path and query.
 - Unknown and retired paths return 404, never the home page. Do not bring back the old
   versioned sites, chat, blog, product or legal pages.
