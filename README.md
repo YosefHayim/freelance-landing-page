@@ -45,7 +45,7 @@ It uses localhost as its upstream, so the production domain redirects cannot loo
 ## Release
 
 Deploying needs explicit approval after a mobile screenshot review; CI never deploys. The steps
-are in `AGENTS.md`. After changing `wrangler.jsonc`, regenerate the binding types:
+are in `AGENTS.md`. After changing `wrangler.jsonc`, regenerate the Worker types:
 
 ```sh
 pnpm types
