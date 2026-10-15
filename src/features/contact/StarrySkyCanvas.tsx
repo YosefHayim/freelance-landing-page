@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { paintWhileOnScreen } from '../../components/paintWhileOnScreen';
 
 type Star = {
   x: number;
@@ -16,9 +17,8 @@ type StarrySky = {
   nextShootingStarAt: number;
   width: number;
   height: number;
-  frame: number;
-  isOnScreen: boolean;
 };
+type SkyColors = { star: string; fadedStar: string };
 
 const areaPerStar = 2200;
 const fullCircle = 6.283;
@@ -60,9 +60,9 @@ const starAlpha = (star: Star, height: number, now: number, prefersReducedMotion
   return fade * twinkle * (0.35 + star.depth * 0.65);
 };
 
-const drawStar = (context: CanvasRenderingContext2D, star: Star, alpha: number) => {
+const drawStar = (context: CanvasRenderingContext2D, star: Star, alpha: number, color: string) => {
   context.globalAlpha = alpha;
-  context.fillStyle = '#fff';
+  context.fillStyle = color;
   context.beginPath();
   context.arc(star.x, star.y, star.radius, 0, fullCircle);
   context.fill();
@@ -83,6 +83,7 @@ const drawShootingStar = (
   context: CanvasRenderingContext2D,
   shootingStar: ShootingStar,
   width: number,
+  colors: SkyColors,
 ) => {
   const progress = shootingStar.age / shootingStarLifetime;
   const headX = shootingStar.x - progress * width * 0.35;
@@ -91,7 +92,7 @@ const drawShootingStar = (
   const tailY = headY - shootingStar.length * 0.4;
   const trail = context.createLinearGradient(headX, headY, tailX, tailY);
   trail.addColorStop(0, 'rgba(255,255,255,.95)');
-  trail.addColorStop(1, 'rgba(255,255,255,0)');
+  trail.addColorStop(1, colors.fadedStar);
   const visibleProgress = Math.min(progress, 1);
   context.globalAlpha = Math.sin(visibleProgress * Math.PI);
   context.strokeStyle = trail;
@@ -100,27 +101,34 @@ const drawShootingStar = (
   context.moveTo(headX, headY);
   context.lineTo(tailX, tailY);
   context.stroke();
-  context.fillStyle = '#fff';
+  context.fillStyle = colors.star;
   context.beginPath();
   context.arc(headX, headY, 1.6, 0, fullCircle);
   context.fill();
 };
 
-export const StarrySkyCanvas = ({ prefersReducedMotion }: { prefersReducedMotion: boolean }) => {
+interface StarrySkyCanvasProps {
+  prefersReducedMotion: boolean;
+}
+
+export const StarrySkyCanvas = ({ prefersReducedMotion }: StarrySkyCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas?.getContext('2d');
     if (!canvas || !context) return;
+    const canvasStyle = getComputedStyle(canvas);
+    const colors: SkyColors = {
+      star: canvasStyle.getPropertyValue('--white').trim(),
+      fadedStar: canvasStyle.getPropertyValue('--white-clear').trim(),
+    };
     const sky: StarrySky = {
       stars: [],
       shootingStar: undefined,
       nextShootingStarAt: performance.now() + 2500,
       width: 0,
       height: 0,
-      frame: 0,
-      isOnScreen: false,
     };
 
     const moveShootingStar = (now: number) => {
@@ -130,7 +138,7 @@ export const StarrySkyCanvas = ({ prefersReducedMotion }: { prefersReducedMotion
       }
       if (!sky.shootingStar) return;
       sky.shootingStar.age += 1 / 60;
-      drawShootingStar(context, sky.shootingStar, sky.width);
+      drawShootingStar(context, sky.shootingStar, sky.width, colors);
       if (sky.shootingStar.age >= shootingStarLifetime) sky.shootingStar = undefined;
     };
 
@@ -140,54 +148,25 @@ export const StarrySkyCanvas = ({ prefersReducedMotion }: { prefersReducedMotion
         if (!prefersReducedMotion) driftStar(star, sky.width, sky.height);
         const alpha = starAlpha(star, sky.height, now, prefersReducedMotion);
         if (alpha < 0.02) return;
-        drawStar(context, star, alpha);
+        drawStar(context, star, alpha, colors.star);
       });
       if (!prefersReducedMotion) moveShootingStar(now);
       context.globalAlpha = 1;
     };
 
-    const animate = (now: number) => {
-      drawSky(now);
-      sky.frame = requestAnimationFrame(animate);
+    const fillSky = (width: number, height: number) => {
+      sky.width = width;
+      sky.height = height;
+      sky.stars = scatterStars(width, height);
     };
 
-    const startDrawing = () => {
-      cancelAnimationFrame(sky.frame);
-      if (prefersReducedMotion) {
-        sky.frame = requestAnimationFrame(drawSky);
-        return;
-      }
-      sky.frame = requestAnimationFrame(animate);
-    };
-
-    const resizeSky = () => {
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-      sky.width = canvas.offsetWidth;
-      sky.height = canvas.offsetHeight;
-      canvas.width = sky.width * pixelRatio;
-      canvas.height = sky.height * pixelRatio;
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      sky.stars = scatterStars(sky.width, sky.height);
-      if (sky.isOnScreen) startDrawing();
-    };
-
-    const observer = new IntersectionObserver((entries) =>
-      entries.forEach((entry) => {
-        sky.isOnScreen = entry.isIntersecting;
-        if (sky.isOnScreen) startDrawing();
-        if (!sky.isOnScreen) cancelAnimationFrame(sky.frame);
-      }),
-    );
-
-    resizeSky();
-    observer.observe(canvas);
-    window.addEventListener('resize', resizeSky);
-
-    return () => {
-      observer.disconnect();
-      cancelAnimationFrame(sky.frame);
-      window.removeEventListener('resize', resizeSky);
-    };
+    return paintWhileOnScreen({
+      canvas,
+      context,
+      prefersReducedMotion,
+      fill: fillSky,
+      draw: drawSky,
+    });
   }, [prefersReducedMotion]);
 
   return <canvas ref={canvasRef} className="starry-sky-canvas" />;

@@ -18,9 +18,9 @@ export const SlowSiteAnimation = ({ isActive, language }: ProblemAnimationProps)
         <svg viewBox="0 0 200 120" aria-hidden="true">
           <defs>
             <linearGradient id="load-gauge-gradient" x1="0" x2="1">
-              <stop offset="0" stopColor="#34C759" />
-              <stop offset=".55" stopColor="#FFD54A" />
-              <stop offset="1" stopColor="#E5484D" />
+              <stop offset="0" stopColor="var(--green-bright)" />
+              <stop offset=".55" stopColor="var(--yellow)" />
+              <stop offset="1" stopColor="var(--red)" />
             </linearGradient>
           </defs>
           <path className="gauge-track" d={gaugeArc} />

@@ -72,7 +72,7 @@ export const SocialLinks = ({ language, onHandleCopied }: SocialLinksProps) => {
         data-track="footer_copy_x_handle"
         aria-label={text.copyHandleLabel}
         data-tooltip={text.copyHandleTooltip}
-        style={{ '--brand': '#000' }}
+        style={{ '--brand': 'var(--black)' }}
         onClick={() => copyText(xHandle, onHandleCopied)}
       >
         <span className="social-icon">

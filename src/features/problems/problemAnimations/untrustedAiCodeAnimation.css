@@ -19,7 +19,7 @@
   gap: 0.9cqw;
   height: 5cqw;
   padding: 0 2cqw;
-  background: #1a1e26;
+  background: var(--code-background);
   font-size: 1.8cqw;
   color: #8a94a3;
 }
@@ -95,7 +95,7 @@
 
 .code-issue .is-bad {
   background: rgba(229, 72, 77, 0.18);
-  color: #ff8a8d;
+  color: var(--code-red);
 }
 
 .untrusted-ai-code-animation.is-active .code-issue .is-bad {
@@ -110,7 +110,7 @@
 
 .code-issue .is-good {
   background: rgba(52, 199, 89, 0.16);
-  color: #6be495;
+  color: var(--code-green);
 }
 
 .code-issue svg {
@@ -155,16 +155,16 @@
   display: flex;
   align-items: center;
   padding: 0 2.4cqw;
-  background: #1a1e26;
+  background: var(--code-background);
   font-size: 1.8cqw;
 }
 
 .code-status-bar .is-bad {
-  color: #ff8a8d;
+  color: var(--code-red);
 }
 
 .code-status-bar .is-good {
-  color: #6be495;
+  color: var(--code-green);
 }
 
 @media (prefers-reduced-motion: reduce) {

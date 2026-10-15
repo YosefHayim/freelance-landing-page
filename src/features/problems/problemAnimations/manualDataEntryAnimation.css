@@ -5,9 +5,9 @@
   top: 9cqw;
   border-radius: 2cqw;
   overflow: hidden;
-  background: #fff;
-  border: 1px solid #e3e8ef;
-  box-shadow: 0 2cqw 5cqw -2cqw rgba(20, 40, 80, 0.3);
+  background: var(--white);
+  border: 1px solid var(--gray-line);
+  box-shadow: 0 2cqw 5cqw -2cqw var(--card-shadow);
 }
 
 .order-table-header,
@@ -22,7 +22,7 @@
   font-weight: 600;
   color: var(--muted-dark);
   background: #f6f8fb;
-  border-bottom: 1px solid #e3e8ef;
+  border-bottom: 1px solid var(--gray-line);
 }
 
 .order-cell {
@@ -30,8 +30,8 @@
   padding: 0 1.8cqw;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #f0f2f5;
-  border-inline-end: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--cell-line);
+  border-inline-end: 1px solid var(--cell-line);
 }
 
 .order-cell b {
@@ -93,11 +93,11 @@
 }
 
 .time-spent .is-bad {
-  background: #ffecec;
+  background: var(--red-wash);
 }
 
 .time-spent .is-good {
-  background: #e8f8ee;
+  background: var(--green-pale);
 }
 
 @media (prefers-reduced-motion: reduce) {

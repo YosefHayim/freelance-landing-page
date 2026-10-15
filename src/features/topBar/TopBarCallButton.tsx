@@ -4,7 +4,11 @@ import type { Language } from '../language/savedLanguage';
 import { whatsappLink } from '../whatsapp/whatsappLink';
 import { topBarText } from './topBar.text';
 
-export const TopBarCallButton = ({ language }: { language: Language }) => {
+interface TopBarCallButtonProps {
+  language: Language;
+}
+
+export const TopBarCallButton = ({ language }: TopBarCallButtonProps) => {
   const text = topBarText[language];
   return (
     <a

@@ -50,7 +50,7 @@
 .work-type-button[aria-pressed="true"] {
   background: var(--blue-dark);
   border-color: var(--blue-dark);
-  color: #fff;
+  color: var(--white);
   transform: translateY(-2px);
 }
 
@@ -133,7 +133,7 @@
   place-items: center;
   border-radius: 50%;
   background: var(--blue-dark);
-  color: #fff;
+  color: var(--white);
 }
 
 .mini-extension-badge svg {
@@ -254,7 +254,7 @@
   border: 1px solid var(--hairline);
   border-radius: 10px;
   background: var(--section-color);
-  box-shadow: 0 8px 20px -12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 20px -12px var(--shadow);
 }
 
 .data-flow-title {
@@ -326,7 +326,7 @@ html[dir="rtl"] .data-flow-track {
   justify-self: end;
   border-end-end-radius: 4px;
   background: var(--text);
-  color: #fff;
+  color: var(--white);
 }
 
 .example-chat-message.is-answer {
@@ -346,7 +346,7 @@ html[dir="rtl"] .data-flow-track {
   border: 1px solid var(--hairline);
   border-radius: 10px;
   background: var(--section-color);
-  box-shadow: 0 10px 22px -12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 22px -12px var(--shadow);
 }
 
 .extension-popup-title {

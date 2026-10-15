@@ -28,19 +28,21 @@ const serveFile = (request: Request, env: Env) => {
   return Effect.runPromise(handleFailure);
 };
 
+const serveFileAt = (path: string, request: Request, env: Env) => {
+  const fileUrl = new URL(path, request.url);
+  const fileRequest = new Request(fileUrl, request);
+  return serveFile(fileRequest, env);
+};
+
 const servePage = async (request: Request, env: Env) => {
   const pagePath = pagePathFor(request.headers);
-  const pageUrl = new URL(pagePath, request.url);
-  const pageRequest = new Request(pageUrl, request);
-  const page = await serveFile(pageRequest, env);
+  const page = await serveFileAt(pagePath, request, env);
   page.headers.append('Vary', 'Accept-Language, Cookie');
   return page;
 };
 
 const serveNotFound = async (request: Request, env: Env) => {
-  const notFoundUrl = new URL(notFoundPagePath, request.url);
-  const notFoundRequest = new Request(notFoundUrl, request);
-  const notFoundPage = await serveFile(notFoundRequest, env);
+  const notFoundPage = await serveFileAt(notFoundPagePath, request, env);
   if (notFoundPage.status !== 200) return notFoundPage;
   return new Response(notFoundPage.body, { status: 404, headers: notFoundPage.headers });
 };

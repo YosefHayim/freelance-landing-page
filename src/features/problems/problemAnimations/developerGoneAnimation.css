@@ -18,7 +18,7 @@
   align-items: center;
   gap: 1.8cqw;
   padding: 1.8cqw 2.4cqw;
-  background: #fff;
+  background: var(--white);
   border-bottom: 1px solid #e6e1d8;
 }
 
@@ -28,7 +28,7 @@
   height: 5.6cqw;
   border-radius: 50%;
   background: #d7dce3;
-  color: #fff;
+  color: var(--white);
   font-weight: 700;
   font-size: 2.4cqw;
   place-items: center;
@@ -40,7 +40,7 @@
 }
 
 .problem-animation-panel.is-showing-fix .developer-gone-animation .chat-avatar {
-  background: linear-gradient(180deg, #3bb2ff, #1e86ff);
+  background: linear-gradient(180deg, var(--blue-light), var(--blue));
 }
 
 .chat-contact {
@@ -73,7 +73,7 @@
   border-radius: 2cqw;
   font-size: 2.05cqw;
   line-height: 1.35;
-  box-shadow: 0 0.3cqw 0.6cqw rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0.3cqw 0.6cqw var(--shadow-faint);
 }
 
 .chat-message small {
@@ -92,7 +92,7 @@
 
 .chat-message.is-received {
   align-self: flex-start;
-  background: #fff;
+  background: var(--white);
   border-end-start-radius: 0.6cqw;
 }
 

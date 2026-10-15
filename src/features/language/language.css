@@ -7,9 +7,9 @@
   height: 40px;
   padding: 4px;
   border-radius: 999px;
-  background: #fff;
-  border: 1px solid #e2e2e2;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  box-shadow: 0 4px 16px var(--shadow-faint);
 }
 
 .language-flag-button .language-flag {

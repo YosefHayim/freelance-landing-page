@@ -5,15 +5,19 @@ import { whatsappLink } from '../whatsapp/whatsappLink';
 import { introText } from './intro.text';
 
 const confettiPieces = [
-  { x: '-70px', y: '-34px', color: '#FFD54A' },
-  { x: '-30px', y: '-46px', color: '#FF7A9A' },
-  { x: '20px', y: '-48px', color: '#34C759' },
-  { x: '64px', y: '-30px', color: '#3BB2FF' },
-  { x: '74px', y: '20px', color: '#FFD54A' },
-  { x: '-74px', y: '22px', color: '#9B7BFF' },
+  { x: '-70px', y: '-34px', color: 'var(--yellow)' },
+  { x: '-30px', y: '-46px', color: 'var(--pink)' },
+  { x: '20px', y: '-48px', color: 'var(--green-bright)' },
+  { x: '64px', y: '-30px', color: 'var(--blue-light)' },
+  { x: '74px', y: '20px', color: 'var(--yellow)' },
+  { x: '-74px', y: '22px', color: 'var(--purple)' },
 ];
 
-export const IntroCallButton = ({ language }: { language: Language }) => {
+interface IntroCallButtonProps {
+  language: Language;
+}
+
+export const IntroCallButton = ({ language }: IntroCallButtonProps) => {
   const text = introText[language];
   return (
     <a

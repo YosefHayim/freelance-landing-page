@@ -13,7 +13,16 @@ const toolLinkEnds = [
 ];
 
 const toolTiles = [
-  { name: 'crm', icon: 'C', x: -34, y: -16, linkedX: 0, linkedY: -15, tilt: -4, color: '#1E86FF' },
+  {
+    name: 'crm',
+    icon: 'C',
+    x: -34,
+    y: -16,
+    linkedX: 0,
+    linkedY: -15,
+    tilt: -4,
+    color: 'var(--blue)',
+  },
   {
     name: 'sheets',
     icon: 'S',
@@ -22,10 +31,28 @@ const toolTiles = [
     linkedX: 21,
     linkedY: -4.6,
     tilt: 5,
-    color: '#1F9D55',
+    color: 'var(--green-mid)',
   },
-  { name: 'email', icon: 'E', x: -20, y: 15, linkedX: 13, linkedY: 12, tilt: -6, color: '#E5484D' },
-  { name: 'shop', icon: 'S', x: 30, y: 12, linkedX: -13, linkedY: 12, tilt: 7, color: '#9B7BFF' },
+  {
+    name: 'email',
+    icon: 'E',
+    x: -20,
+    y: 15,
+    linkedX: 13,
+    linkedY: 12,
+    tilt: -6,
+    color: 'var(--red)',
+  },
+  {
+    name: 'shop',
+    icon: 'S',
+    x: 30,
+    y: 12,
+    linkedX: -13,
+    linkedY: 12,
+    tilt: 7,
+    color: 'var(--purple)',
+  },
   {
     name: 'invoices',
     icon: 'I',
@@ -34,7 +61,7 @@ const toolTiles = [
     linkedX: -21,
     linkedY: -4.6,
     tilt: -8,
-    color: '#F59E0B',
+    color: 'var(--amber)',
   },
 ] as const;
 

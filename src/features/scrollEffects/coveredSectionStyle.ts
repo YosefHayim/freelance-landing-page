@@ -11,7 +11,8 @@ export const stickyTop = (viewportHeight: number, sectionHeight: number) =>
 
 export const coveredProgress = (viewportHeight: number, nextSectionTop: number) => {
   const progress = (viewportHeight - nextSectionTop) / (viewportHeight - sectionGap);
-  return Math.min(1, Math.max(0, progress));
+  const progressFromZero = Math.max(0, progress);
+  return Math.min(1, progressFromZero);
 };
 
 export const coveredSectionStyle = (

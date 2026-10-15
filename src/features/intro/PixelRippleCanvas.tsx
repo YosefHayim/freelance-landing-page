@@ -1,16 +1,10 @@
 import { type RefObject, useEffect, useRef } from 'react';
+import { paintWhileOnScreen } from '../../components/paintWhileOnScreen';
 
 type Pixel = { x: number; y: number; alpha: number; phase: number; speed: number };
 type Ripple = { x: number; y: number; startedAt: number };
 type RipplePush = { alpha: number; offsetX: number; offsetY: number; size: number };
-type PixelField = {
-  pixels: Pixel[];
-  ripples: Ripple[];
-  width: number;
-  height: number;
-  frame: number;
-  isOnScreen: boolean;
-};
+type PixelField = { pixels: Pixel[]; ripples: Ripple[]; width: number; height: number };
 
 const gridStep = 7;
 const rippleLifetime = 1600;
@@ -71,14 +65,9 @@ export const PixelRippleCanvas = ({
     const area = areaRef.current;
     const context = canvas?.getContext('2d');
     if (!canvas || !area || !context || isCovered) return;
-    const field: PixelField = {
-      pixels: [],
-      ripples: [],
-      width: 0,
-      height: 0,
-      frame: 0,
-      isOnScreen: false,
-    };
+    const canvasStyle = getComputedStyle(canvas);
+    const brightPixelColor = canvasStyle.getPropertyValue('--blue').trim();
+    const field: PixelField = { pixels: [], ripples: [], width: 0, height: 0 };
 
     const drawPixels = (now: number) => {
       context.clearRect(0, 0, field.width, field.height);
@@ -90,35 +79,16 @@ export const PixelRippleCanvas = ({
         const push = pushFromRipples(pixel, field.ripples, now);
         const alpha = pixel.alpha * shimmer + push.alpha;
         context.globalAlpha = Math.min(1, alpha);
-        context.fillStyle = alpha > 0.8 ? '#1E86FF' : '#7CC8FF';
+        context.fillStyle = alpha > 0.8 ? brightPixelColor : '#7CC8FF';
         context.fillRect(pixel.x + push.offsetX, pixel.y + push.offsetY, push.size, push.size);
       });
       context.globalAlpha = 1;
     };
 
-    const animate = (now: number) => {
-      drawPixels(now);
-      field.frame = requestAnimationFrame(animate);
-    };
-
-    const startDrawing = () => {
-      cancelAnimationFrame(field.frame);
-      if (prefersReducedMotion) {
-        field.frame = requestAnimationFrame(drawPixels);
-        return;
-      }
-      field.frame = requestAnimationFrame(animate);
-    };
-
-    const resizeField = () => {
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-      field.width = canvas.offsetWidth;
-      field.height = canvas.offsetHeight;
-      canvas.width = field.width * pixelRatio;
-      canvas.height = field.height * pixelRatio;
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      field.pixels = scatterPixels(field.width, field.height);
-      if (field.isOnScreen) startDrawing();
+    const fillField = (width: number, height: number) => {
+      field.width = width;
+      field.height = height;
+      field.pixels = scatterPixels(width, height);
     };
 
     const addRipple = (event: PointerEvent) => {
@@ -134,23 +104,17 @@ export const PixelRippleCanvas = ({
       field.ripples = [...field.ripples, ripple].slice(-maxRipples);
     };
 
-    const observer = new IntersectionObserver((entries) =>
-      entries.forEach((entry) => {
-        field.isOnScreen = entry.isIntersecting;
-        if (field.isOnScreen) startDrawing();
-        if (!field.isOnScreen) cancelAnimationFrame(field.frame);
-      }),
-    );
-
-    resizeField();
-    observer.observe(canvas);
-    window.addEventListener('resize', resizeField);
+    const stopPainting = paintWhileOnScreen({
+      canvas,
+      context,
+      prefersReducedMotion,
+      fill: fillField,
+      draw: drawPixels,
+    });
     if (!prefersReducedMotion) area.addEventListener('pointermove', addRipple);
 
     return () => {
-      observer.disconnect();
-      cancelAnimationFrame(field.frame);
-      window.removeEventListener('resize', resizeField);
+      stopPainting();
       area.removeEventListener('pointermove', addRipple);
     };
   }, [areaRef, prefersReducedMotion, isCovered]);

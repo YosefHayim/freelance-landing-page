@@ -15,7 +15,7 @@
 }
 
 .about-paragraph {
-  color: #3a3a3a;
+  color: var(--charcoal);
   max-width: 34em;
   margin-bottom: 16px;
   font-size: 17px;
@@ -36,9 +36,9 @@
   transition: transform 0.5s var(--soft-ease);
   background: linear-gradient(
     180deg,
-    #f4f9ff 0%,
+    var(--blue-pale) 0%,
     #e6f2ff 34%,
-    #0f3e7e 36%,
+    var(--navy) 36%,
     #0a2a5c 70%,
     #061a3c 100%
   );
@@ -89,10 +89,10 @@
   position: absolute;
   height: 3.4cqw;
   border-radius: 99px;
-  background: #fff;
+  background: var(--white);
   box-shadow:
-    2cqw -1.4cqw 0 0.4cqw #fff,
-    -2cqw -0.6cqw 0 0 #fff;
+    2cqw -1.4cqw 0 0.4cqw var(--white),
+    -2cqw -0.6cqw 0 0 var(--white);
   opacity: 0.95;
   animation: cloud-sway 24s linear infinite;
 }
@@ -145,8 +145,8 @@
   width: 30cqw;
   padding: 2.2cqw;
   border-radius: 2.4cqw;
-  background: #fff;
-  border: 1px solid #dce6f2;
+  background: var(--white);
+  border: 1px solid var(--ice-line);
   box-shadow: 0 3cqw 5cqw -3cqw rgba(15, 62, 126, 0.4);
   display: flex;
   flex-direction: column;
@@ -170,7 +170,7 @@
 .demo-window-line {
   height: 1.8cqw;
   border-radius: 1cqw;
-  background: #e9edf2;
+  background: var(--gray-wash);
 }
 
 .demo-label {
@@ -185,12 +185,12 @@
   width: 38cqw;
   height: 9cqw;
   margin-top: -2cqw;
-  fill: #fff;
-  filter: drop-shadow(0 -1px 0 #dce6f2);
+  fill: var(--white);
+  filter: drop-shadow(0 -1px 0 var(--ice-line));
 }
 
 .iceberg-peak path {
-  stroke: #dce6f2;
+  stroke: var(--ice-line);
   stroke-width: 1;
 }
 
@@ -341,8 +341,8 @@
   padding-inline: 1.3cqw 2.6cqw;
   border-radius: 99px;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  color: #fff;
+  border: 1px solid var(--glass-border);
+  color: var(--white);
   font-size: 2.8cqw;
   font-weight: 500;
   white-space: nowrap;
@@ -388,7 +388,7 @@
 .hidden-layers li svg {
   width: 3cqw;
   height: 3cqw;
-  color: #6be495;
+  color: var(--code-green);
 }
 
 .air-bubble {
@@ -433,7 +433,7 @@
   top: 0;
   width: 200%;
   height: 100%;
-  fill: #0f3e7e;
+  fill: var(--navy);
   animation: wave-roll 7s linear infinite;
 }
 

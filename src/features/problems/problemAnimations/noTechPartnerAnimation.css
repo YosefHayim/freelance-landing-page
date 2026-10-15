@@ -5,9 +5,13 @@
   width: 40cqw;
   padding: 2.4cqw;
   border-radius: 2.4cqw;
-  background: repeating-linear-gradient(180deg, #fff 0 3.6cqw, #eef2f7 3.6cqw calc(3.6cqw + 1px));
-  border: 1px solid #e6ebf2;
-  box-shadow: 0 2cqw 4cqw -2cqw rgba(20, 40, 80, 0.25);
+  background: repeating-linear-gradient(
+    180deg,
+    var(--white) 0 3.6cqw,
+    #eef2f7 3.6cqw calc(3.6cqw + 1px)
+  );
+  border: 1px solid var(--card-border);
+  box-shadow: 0 2cqw 4cqw -2cqw var(--card-shadow-soft);
   transform: rotate(-3deg);
 }
 
@@ -31,12 +35,12 @@
   width: 38cqw;
   padding: 2.4cqw;
   border-radius: 2.4cqw;
-  background: #fff;
-  border: 1px solid #e6ebf2;
+  background: var(--white);
+  border: 1px solid var(--card-border);
   display: flex;
   flex-direction: column;
   gap: 0.8cqw;
-  box-shadow: 0 2cqw 4cqw -2cqw rgba(20, 40, 80, 0.25);
+  box-shadow: 0 2cqw 4cqw -2cqw var(--card-shadow-soft);
 }
 
 .cofounder-post b {
@@ -52,7 +56,7 @@
 
 .cofounder-post .is-bad {
   font-weight: 600;
-  color: #e5484d;
+  color: var(--red);
 }
 
 .no-tech-partner-animation.is-active .cofounder-post {
@@ -83,20 +87,20 @@
   place-items: center;
   font-weight: 700;
   font-size: 3cqw;
-  box-shadow: 0 2cqw 5cqw -2cqw rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2cqw 5cqw -2cqw var(--shadow);
   transition: transform 1.2s var(--spring-ease);
 }
 
 .partner-avatar.is-visitor {
-  background: #fff;
-  border: 1px solid #e2e2e2;
+  background: var(--white);
+  border: 1px solid var(--gray-border);
   color: var(--text);
   transform: translateX(-14cqw);
 }
 
 .partner-avatar.is-joseph {
-  background: linear-gradient(180deg, #3bb2ff, #1e86ff);
-  color: #fff;
+  background: linear-gradient(180deg, var(--blue-light), var(--blue));
+  color: var(--white);
   font-size: 5cqw;
   transform: translateX(14cqw);
 }
@@ -132,8 +136,8 @@ html[dir="rtl"] .partner-avatar.is-joseph {
 .deal-options span {
   padding: 1.4cqw 2.8cqw;
   border-radius: 99px;
-  background: #fff;
-  border: 1px solid #bfdbff;
+  background: var(--white);
+  border: 1px solid var(--blue-border);
   color: #1e5fc8;
   font-size: 2.1cqw;
   font-weight: 600;

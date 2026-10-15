@@ -26,11 +26,11 @@ export const LanguageFlagButton = ({ language, onToggle }: LanguageFlagButtonPro
           <rect width="30" height="30" fill="#B22234" />
           <path
             d="M0 3.5h30M0 8h30M0 12.5h30M0 17h30M0 21.5h30M0 26h30"
-            stroke="#fff"
+            stroke="var(--white)"
             strokeWidth="2.3"
           />
           <rect width="15" height="15" fill="#3C3B6E" />
-          <g fill="#fff">
+          <g fill="var(--white)">
             <circle cx="4" cy="4" r=".9" />
             <circle cx="8" cy="4" r=".9" />
             <circle cx="12" cy="4" r=".9" />
@@ -51,13 +51,13 @@ export const LanguageFlagButton = ({ language, onToggle }: LanguageFlagButtonPro
           </clipPath>
         </defs>
         <g clipPath="url(#hebrew-flag-circle)">
-          <rect width="30" height="30" fill="#fff" />
-          <rect y="4" width="30" height="3.6" fill="#0038B8" />
-          <rect y="22.4" width="30" height="3.6" fill="#0038B8" />
+          <rect width="30" height="30" fill="var(--white)" />
+          <rect y="4" width="30" height="3.6" fill="var(--israel-blue)" />
+          <rect y="22.4" width="30" height="3.6" fill="var(--israel-blue)" />
           <path
             d="M15 9.6l4.7 8.1h-9.4zM15 20.4l-4.7-8.1h9.4z"
             fill="none"
-            stroke="#0038B8"
+            stroke="var(--israel-blue)"
             strokeWidth="1.1"
             strokeLinejoin="round"
           />

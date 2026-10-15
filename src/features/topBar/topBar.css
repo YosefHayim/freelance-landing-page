@@ -20,7 +20,7 @@ html[dir="rtl"] .top-bar {
   padding: 0 16px 0 14px;
   border-radius: 999px;
   background: var(--text);
-  color: #fff;
+  color: var(--white);
   font-size: 14px;
   font-weight: 500;
   display: inline-flex;
@@ -32,7 +32,7 @@ html[dir="rtl"] .top-bar {
 }
 
 .top-bar-call-button:hover {
-  color: #fff;
+  color: var(--white);
 }
 
 .top-bar-call-button::after {
@@ -69,7 +69,7 @@ html[dir="rtl"] .top-bar {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #34c759;
+  background: var(--green-bright);
   flex: none;
 }
 
@@ -78,7 +78,7 @@ html[dir="rtl"] .top-bar {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: #34c759;
+  background: var(--green-bright);
   animation: online-pulse 1.8s ease-out infinite;
 }
 

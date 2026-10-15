@@ -3,7 +3,7 @@
   min-height: calc(100svh - 16px);
   display: flex;
   flex-direction: column;
-  color: #fff;
+  color: var(--white);
   background: #1a0f3d;
   border-radius: 24px;
   overflow: hidden;
@@ -19,13 +19,13 @@
   background: linear-gradient(
     180deg,
     #140c33 0%,
-    #2b1660 22%,
-    #5a2477 38%,
+    var(--dusk-indigo) 22%,
+    var(--dusk-plum) 38%,
     #a8396b 52%,
-    #e8664a 66%,
+    var(--dusk-coral) 66%,
     #f7a55a 78%,
-    #e8664a 88%,
-    #5a2477 100%
+    var(--dusk-coral) 88%,
+    var(--dusk-plum) 100%
   );
   animation: sky-move 26s ease-in-out infinite alternate;
   will-change: transform;
@@ -88,7 +88,7 @@
 
 .contact-heading {
   font-size: clamp(36px, 5vw, 72px);
-  color: #fff;
+  color: var(--white);
   max-width: 14em;
 }
 
@@ -114,7 +114,7 @@
   height: 52px;
   padding: 0 26px;
   border-radius: 999px;
-  background: #fff;
+  background: var(--white);
   color: var(--text);
   font-weight: 500;
   box-shadow: 0 10px 30px -8px rgba(40, 10, 60, 0.5);
@@ -127,7 +127,7 @@
 }
 
 .contact-call-button:focus-visible {
-  outline-color: #fff;
+  outline-color: var(--white);
 }
 
 .site-footer {
@@ -143,11 +143,11 @@
 
 .site-footer a,
 .site-footer button {
-  color: #fff;
+  color: var(--white);
 }
 
 .site-footer :focus-visible {
-  outline-color: #fff;
+  outline-color: var(--white);
 }
 
 .social-links {
@@ -164,7 +164,7 @@
   display: grid;
   place-items: center;
   background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid var(--glass-border);
   transition: transform 0.5s var(--spring-ease);
 }
 
@@ -173,7 +173,7 @@
   position: absolute;
   inset: -1px;
   border-radius: 50%;
-  background: var(--brand, #fff);
+  background: var(--brand, var(--white));
   transform: scale(0);
   transition: transform 0.45s var(--spring-ease);
   z-index: -1;
@@ -187,8 +187,8 @@
   transform: translate(-50%, 8px) scale(0.6);
   transform-origin: 50% 100%;
   opacity: 0;
-  background: #fff;
-  color: var(--brand, #2b1660);
+  background: var(--white);
+  color: var(--brand, var(--dusk-indigo));
   font-family: var(--body-font);
   font-size: 12.5px;
   font-weight: 600;
@@ -229,7 +229,7 @@
 }
 
 .social-link:is(:hover, :focus-visible) .social-icon {
-  color: #fff;
+  color: var(--white);
   transform: rotate(360deg) scale(1.1);
 }
 
@@ -244,7 +244,7 @@
     opacity 0.3s,
     transform 0.5s var(--spring-ease);
   background: var(--text);
-  color: #fff;
+  color: var(--white);
   padding: 10px 18px;
   border-radius: 999px;
   font-size: 14px;

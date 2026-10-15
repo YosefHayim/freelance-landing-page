@@ -17,7 +17,7 @@ export const NoTechPartnerAnimation = ({ isActive, language }: ProblemAnimationP
           <path
             d="M12 60c10-24 22-30 30-14s20 10 26-6 18-22 28-4"
             fill="none"
-            stroke="#1A1F27"
+            stroke="var(--ink)"
             strokeWidth="2"
             strokeLinecap="round"
           />
@@ -28,11 +28,18 @@ export const NoTechPartnerAnimation = ({ isActive, language }: ProblemAnimationP
             height="18"
             rx="3"
             fill="none"
-            stroke="#9AA3AF"
+            stroke="var(--gray)"
             strokeWidth="1.6"
             strokeDasharray="3 3"
           />
-          <circle cx="96" cy="20" r="8" fill="#FFF4D6" stroke="#F59E0B" strokeWidth="1.6" />
+          <circle
+            cx="96"
+            cy="20"
+            r="8"
+            fill="var(--amber-wash)"
+            stroke="var(--amber)"
+            strokeWidth="1.6"
+          />
         </svg>
         <span>{text.idea}</span>
       </div>

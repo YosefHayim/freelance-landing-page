@@ -6,7 +6,7 @@
 }
 
 .tool-links line {
-  stroke: #9cc8ff;
+  stroke: var(--blue-soft);
   stroke-width: 0.45;
   stroke-dasharray: 1.4 1.4;
   opacity: 0;
@@ -32,8 +32,8 @@
   height: 14cqw;
   margin: -7cqw 0 0 -7cqw;
   border-radius: 50%;
-  background: linear-gradient(180deg, #3bb2ff, #1e86ff);
-  color: #fff;
+  background: linear-gradient(180deg, var(--blue-light), var(--blue));
+  color: var(--white);
   display: grid;
   place-items: center;
   font-size: 2cqw;
@@ -45,7 +45,7 @@
   position: absolute;
   inset: -1.6cqw;
   border-radius: 50%;
-  border: 0.4cqw dashed #9cc8ff;
+  border: 0.4cqw dashed var(--blue-soft);
   animation: hub-spin 8s linear infinite;
 }
 
@@ -67,9 +67,9 @@
   gap: 0.6cqw;
   padding: 1.4cqw 0;
   border-radius: 2.2cqw;
-  background: #fff;
-  border: 1px solid #e6ebf2;
-  box-shadow: 0 2cqw 4cqw -2cqw rgba(20, 40, 80, 0.3);
+  background: var(--white);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 2cqw 4cqw -2cqw var(--card-shadow);
   transform: translate(var(--tile-x), var(--tile-y)) rotate(var(--tile-tilt));
   transition: transform 1.3s var(--spring-ease);
   z-index: 2;
@@ -95,7 +95,7 @@
   height: 4.4cqw;
   border-radius: 1.2cqw;
   background: var(--tile-color);
-  color: #fff;
+  color: var(--white);
   display: grid;
   place-items: center;
   font-size: 2cqw;
@@ -114,8 +114,8 @@
   width: 3.4cqw;
   height: 3.4cqw;
   border-radius: 50%;
-  background: #e5484d;
-  color: #fff;
+  background: var(--red);
+  color: var(--white);
   display: grid;
   place-items: center;
   font-size: 1.7cqw;
