@@ -21,7 +21,7 @@ client/
     features/<feature>/ everything one feature needs
   worker/               runs on Cloudflare: page language, redirects, headers, 404s
   e2e/                  runs in Node: Playwright against the production build
-  public/               copied as is: 404 page, favicon, robots, sitemap
+  public/               copied as is: 404 page, robots, sitemap
 ```
 
 - `src/**` never imports `worker/**` and the reverse (Biome `noRestrictedImports`).
