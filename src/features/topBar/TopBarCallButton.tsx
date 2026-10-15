@@ -1,6 +1,6 @@
 import { PhoneIcon } from '../../components/PhoneIcon';
 import { RollingLabel } from '../../components/RollingLabel';
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import { whatsappLink } from '../whatsapp/whatsappLink';
 import { topBarText } from './topBar.text';
 

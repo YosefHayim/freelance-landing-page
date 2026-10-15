@@ -1,7 +1,7 @@
 import { expect, type Page, test } from '@playwright/test';
 import { introText } from '../src/features/intro/intro.text';
 import type { WorkTypeName } from '../src/features/intro/workTypes';
-import type { Language } from '../src/features/language/savedLanguage';
+import type { Language } from '../src/features/language/language';
 import { languages, openSite, visitSite } from './openSite';
 import { removeUserActivation } from './removeUserActivation';
 

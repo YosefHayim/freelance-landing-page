@@ -13,8 +13,8 @@ const serveFile = (request: Request, env: Env) => {
   const fetchFile = Effect.tryPromise(() => env.ASSETS.fetch(request));
   const withHeaders = Effect.map(fetchFile, (file) => {
     const response = new Response(file.body, file);
-    const current = response.headers.get('Cache-Control') || defaultCacheControl;
-    const cacheControl = cacheControlFor(pathname, response.status, current);
+    const assetCacheControl = response.headers.get('Cache-Control') || defaultCacheControl;
+    const cacheControl = cacheControlFor(pathname, response.status, assetCacheControl);
     response.headers.set('Cache-Control', cacheControl);
     addSecurityHeaders(response.headers);
     addPageHeaders(response.headers, request);

@@ -1,4 +1,4 @@
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import { whatsappLink } from '../whatsapp/whatsappLink';
 import { contactText } from './contact.text';
 import { copyText } from './copyText';

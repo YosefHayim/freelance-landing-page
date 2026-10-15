@@ -1,4 +1,4 @@
-import type { Language } from '../../language/savedLanguage';
+import type { Language } from '../../language/language';
 
 export interface ProblemAnimationProps {
   isActive: boolean;

@@ -1,7 +1,7 @@
 import './intro.css';
 import { useRef } from 'react';
 import profilePhoto from '../../assets/profilePhoto.webp';
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import { IntroCallButton } from './IntroCallButton';
 import { introText } from './intro.text';
 import { PixelRippleCanvas } from './PixelRippleCanvas';

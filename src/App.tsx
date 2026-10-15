@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { AboutSection } from './features/about/AboutSection';
 import { ContactSection } from './features/contact/ContactSection';
 import { IntroSection } from './features/intro/IntroSection';
-import type { Language } from './features/language/savedLanguage';
+import type { Language } from './features/language/language';
 import { useLanguage } from './features/language/useLanguage';
 import { ProblemsSection } from './features/problems/ProblemsSection';
 import { useRevealOnScroll } from './features/scrollEffects/useRevealOnScroll';

@@ -1,6 +1,6 @@
 import './about.css';
 import { useRef } from 'react';
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import { aboutParagraphNames, aboutText } from './about.text';
 import { Iceberg } from './Iceberg';
 

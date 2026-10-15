@@ -1,7 +1,7 @@
 import './problems.css';
 import { useRef } from 'react';
 import { useIsOnScreen } from '../../hooks/useIsOnScreen';
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import { ProblemAnimationPanel } from './ProblemAnimationPanel';
 import { ProblemCarousel } from './ProblemCarousel';
 import { problemsText } from './problems.text';

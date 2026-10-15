@@ -1,5 +1,5 @@
 import './contact.css';
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import { whatsappLink } from '../whatsapp/whatsappLink';
 import { CopiedNotice } from './CopiedNotice';
 import { contactText } from './contact.text';

@@ -1,5 +1,5 @@
 import { type KeyboardEvent, useLayoutEffect, useRef } from 'react';
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import { problemCount } from './problemRotation';
 import { problemsText } from './problems.text';
 

@@ -1,14 +1,14 @@
 import type { ComponentType } from 'react';
-import type { Language } from '../language/savedLanguage';
-import { DeveloperGoneAnimation } from './problemAnimations/DeveloperGoneAnimation';
-import { DisconnectedToolsAnimation } from './problemAnimations/DisconnectedToolsAnimation';
-import { ManualDataEntryAnimation } from './problemAnimations/ManualDataEntryAnimation';
-import { MissedDeadlineAnimation } from './problemAnimations/MissedDeadlineAnimation';
-import { NoTechPartnerAnimation } from './problemAnimations/NoTechPartnerAnimation';
-import type { ProblemAnimationProps } from './problemAnimations/problemAnimation';
-import { SlowSiteAnimation } from './problemAnimations/SlowSiteAnimation';
-import { StuckOnLocalhostAnimation } from './problemAnimations/StuckOnLocalhostAnimation';
-import { UntrustedAiCodeAnimation } from './problemAnimations/UntrustedAiCodeAnimation';
+import type { Language } from '../../language/language';
+import { DeveloperGoneAnimation } from './DeveloperGoneAnimation';
+import { DisconnectedToolsAnimation } from './DisconnectedToolsAnimation';
+import { ManualDataEntryAnimation } from './ManualDataEntryAnimation';
+import { MissedDeadlineAnimation } from './MissedDeadlineAnimation';
+import { NoTechPartnerAnimation } from './NoTechPartnerAnimation';
+import type { ProblemAnimationProps } from './problemAnimation';
+import { SlowSiteAnimation } from './SlowSiteAnimation';
+import { StuckOnLocalhostAnimation } from './StuckOnLocalhostAnimation';
+import { UntrustedAiCodeAnimation } from './UntrustedAiCodeAnimation';
 
 const problemAnimations: { name: string; Animation: ComponentType<ProblemAnimationProps> }[] = [
   { name: 'stuckOnLocalhost', Animation: StuckOnLocalhostAnimation },

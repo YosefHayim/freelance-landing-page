@@ -1,6 +1,6 @@
 import './language.css';
+import type { Language } from './language';
 import { languageText } from './language.text';
-import type { Language } from './savedLanguage';
 
 interface LanguageFlagButtonProps {
   language: Language;

@@ -1,7 +1,7 @@
 import './workShowcase.css';
 import { useRef } from 'react';
 import { useIsOnScreen } from '../../hooks/useIsOnScreen';
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import { introText } from './intro.text';
 import { useWorkTypeRotation } from './useWorkTypeRotation';
 import { workTypeNames } from './workTypes';

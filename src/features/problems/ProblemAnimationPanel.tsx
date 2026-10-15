@@ -1,8 +1,8 @@
 import { lazy, type Ref, Suspense } from 'react';
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 
 const loadAnimations = async () => {
-  const animationModule = await import('./ProblemAnimations');
+  const animationModule = await import('./problemAnimations/ProblemAnimations');
   return { default: animationModule.ProblemAnimations };
 };
 

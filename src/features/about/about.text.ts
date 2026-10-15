@@ -1,4 +1,4 @@
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import type { IcebergLayerName } from './icebergLayers';
 
 export const aboutParagraphNames = ['unfinished', 'finishing', 'yourTurn'] as const;

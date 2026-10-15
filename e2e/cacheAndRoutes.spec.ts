@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { introText } from '../src/features/intro/intro.text';
-import { languageCookieName } from '../src/features/language/savedLanguage';
+import { languageCookieName } from '../src/features/language/language';
 import { openSite } from './openSite';
 
 const retiredPaths = [

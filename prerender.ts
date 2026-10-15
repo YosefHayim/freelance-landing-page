@@ -1,5 +1,5 @@
 import { readFile, rm, writeFile } from 'node:fs/promises';
-import type { Language } from './src/features/language/savedLanguage';
+import type { Language } from './src/features/language/language';
 
 type RenderPage = (template: string, language: Language) => Promise<string>;
 

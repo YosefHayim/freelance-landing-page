@@ -1,4 +1,4 @@
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import { whatsappText } from './whatsapp.text';
 
 const whatsappAddress = 'https://wa.me/';

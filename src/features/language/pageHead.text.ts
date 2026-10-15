@@ -1,4 +1,4 @@
-import type { Language } from './savedLanguage';
+import type { Language } from './language';
 
 type PageHeadText = {
   title: string;

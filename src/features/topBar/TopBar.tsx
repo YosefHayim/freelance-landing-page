@@ -1,6 +1,6 @@
 import './topBar.css';
 import { LanguageFlagButton } from '../language/LanguageFlagButton';
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import { TopBarCallButton } from './TopBarCallButton';
 import { topBarText } from './topBar.text';
 

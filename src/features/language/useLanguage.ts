@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
+import { type Language, languageDirection, saveLanguage } from './language';
 import { pageHeadText } from './pageHead.text';
-import { type Language, languageDirection, saveLanguage } from './savedLanguage';
 
 export const useLanguage = (initialLanguage: Language) => {
   const [language, setLanguage] = useState(initialLanguage);

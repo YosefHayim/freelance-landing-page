@@ -1,4 +1,4 @@
-import type { Language } from '../../language/savedLanguage';
+import type { Language } from '../../language/language';
 
 type Notification = { title: string; detail: string };
 type SentMessage = { text: string; day: string };

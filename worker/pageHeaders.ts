@@ -1,7 +1,7 @@
 const clientAcceptEncoding = (request: Request) => {
-  const original =
+  const sentByClient =
     request.cf && 'clientAcceptEncoding' in request.cf && request.cf.clientAcceptEncoding;
-  if (typeof original === 'string') return original;
+  if (typeof sentByClient === 'string') return sentByClient;
   return request.headers.get('Accept-Encoding') || '';
 };
 

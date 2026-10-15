@@ -1,7 +1,7 @@
 import { StrictMode, startTransition } from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import { App } from './App';
-import { pageLanguage } from './features/language/savedLanguage';
+import { pageLanguage } from './features/language/language';
 
 export const startApp = () => {
   const rootElement = document.getElementById('root');

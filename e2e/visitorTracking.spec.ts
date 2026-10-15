@@ -1,5 +1,5 @@
 import { expect, type Page, test } from '@playwright/test';
-import type { Language } from '../src/features/language/savedLanguage';
+import type { Language } from '../src/features/language/language';
 import { letAppStart } from './letAppStart';
 import { letPageSettle } from './letPageSettle';
 import { pixelCallLogPrefix, visitSite } from './openSite';

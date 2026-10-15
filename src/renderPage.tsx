@@ -1,8 +1,8 @@
 import { StrictMode } from 'react';
 import { prerender } from 'react-dom/static';
 import { App } from './App';
+import { type Language, languageDirection } from './features/language/language';
 import { pageHeadText } from './features/language/pageHead.text';
-import { type Language, languageDirection } from './features/language/savedLanguage';
 
 export const renderPage = async (template: string, language: Language) => {
   const { prelude } = await prerender(

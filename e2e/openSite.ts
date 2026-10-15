@@ -1,5 +1,5 @@
 import { expect, type Page, test } from '@playwright/test';
-import { type Language, languageCookieName } from '../src/features/language/savedLanguage';
+import { type Language, languageCookieName } from '../src/features/language/language';
 import { waitForAppStart } from './letAppStart';
 
 export const languages: Language[] = ['en', 'he'];

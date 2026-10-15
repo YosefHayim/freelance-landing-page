@@ -1,5 +1,5 @@
 import { type RefObject, useRef } from 'react';
-import type { Language } from '../language/savedLanguage';
+import type { Language } from '../language/language';
 import { aboutText } from './about.text';
 import { icebergLayers } from './icebergLayers';
 import { useIcebergToggle } from './useIcebergToggle';
