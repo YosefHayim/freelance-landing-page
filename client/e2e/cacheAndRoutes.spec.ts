@@ -1,4 +1,6 @@
 import { expect, test } from '@playwright/test';
+import { introText } from '../src/features/intro/intro.text';
+import { languageCookieName } from '../src/features/language/savedLanguage';
 import { openSite } from './openSite';
 
 const retiredPaths = [
@@ -14,6 +16,13 @@ const retiredPaths = [
   '/api/chat',
   '/missing.png',
   '/assets/missing.js',
+  '/index.he',
+  '/index.he.html',
+];
+
+const hebrewRequests: Record<string, string>[] = [
+  { 'Accept-Language': 'he-IL,he;q=0.9,en;q=0.8' },
+  { 'Accept-Language': 'en-US', Cookie: `${languageCookieName}=he` },
 ];
 
 test('the page revalidates on every visit and repeat visits get a 304', async ({ request }) => {
@@ -22,6 +31,7 @@ test('the page revalidates on every visit and repeat visits get a 304', async ({
   const headers = response.headers();
   expect(headers['cache-control']).toBe('public, max-age=0, must-revalidate, no-transform');
   expect(headers['content-encoding']).toMatch(/^(br|gzip)$/);
+  expect(headers.vary).toBe('Accept-Encoding, Accept-Language, Cookie');
   expect(headers['x-content-type-options']).toBe('nosniff');
   expect(headers['x-frame-options']).toBe('DENY');
   expect(headers['content-security-policy']).toContain("frame-ancestors 'none'");
@@ -59,4 +69,19 @@ test('retired and unknown routes are real 404s that are never cached for long', 
     const body = await response.text();
     expect(body, path).not.toContain('<div id="root">');
   }
+});
+
+test('the page comes in the saved language, else in the browser language', async ({ request }) => {
+  for (const headers of hebrewRequests) {
+    const response = await request.get('/', { headers });
+    const page = await response.text();
+    const requestLabel = JSON.stringify(headers);
+    expect(page, requestLabel).toContain('<html lang="he" dir="rtl">');
+    expect(page, requestLabel).toContain(introText.he.headline);
+  }
+  const savedEnglish = { 'Accept-Language': 'he-IL', Cookie: `${languageCookieName}=en` };
+  const englishResponse = await request.get('/', { headers: savedEnglish });
+  const englishPage = await englishResponse.text();
+  expect(englishPage).toContain('<html lang="en" dir="ltr">');
+  expect(englishPage).toContain(introText.en.headline);
 });

@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
+    "build": "vite build --outDir dist/client && vite build --ssr src/renderPage.tsx --outDir dist/server && node prerender.ts",
     "preview": "wrangler dev --local --local-upstream localhost --ip 127.0.0.1 --port 4173",
     "lint": "biome check .",
     "format": "biome check --write .",
@@ -18,7 +18,6 @@
   "dependencies": {
     "@fontsource-variable/heebo": "^5.2.0",
     "@fontsource-variable/inter": "^5.2.0",
-    "@fontsource/dm-mono": "^5.2.0",
     "effect": "^3.19.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

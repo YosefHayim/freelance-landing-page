@@ -19,15 +19,16 @@
   --body-font:
     -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter Variable", "Heebo Variable", system-ui,
     sans-serif;
-  --mono-font: "DM Mono", ui-monospace, monospace;
+  --mono-font: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --spring-ease: cubic-bezier(0.34, 1.45, 0.64, 1);
   --soft-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html[dir="rtl"] {
-  --heading-font: -apple-system, BlinkMacSystemFont, "Heebo Variable", sans-serif;
-  --body-font: -apple-system, BlinkMacSystemFont, "Heebo Variable", sans-serif;
-  --mono-font: "DM Mono", "Heebo Variable", ui-monospace, monospace;
+  --heading-font:
+    -apple-system, BlinkMacSystemFont, "Heebo Variable", Roboto, "Segoe UI", sans-serif;
+  --body-font: -apple-system, BlinkMacSystemFont, "Heebo Variable", Roboto, "Segoe UI", sans-serif;
+  --mono-font: ui-monospace, SFMono-Regular, Menlo, Consolas, "Heebo Variable", monospace;
 }
 
 * {

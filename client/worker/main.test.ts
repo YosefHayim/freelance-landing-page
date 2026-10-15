@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import site from './main';
 
-const siteServing = (fetchFile: () => Promise<Response>): Env => ({
+const siteServing = (fetchFile: (input: RequestInfo | URL) => Promise<Response>): Env => ({
   ASSETS: {
     fetch: fetchFile,
     connect: () => {
@@ -24,6 +24,19 @@ const revalidatingPage = () =>
       },
     }),
   );
+
+const fileBodies: Record<string, string> = {
+  '/': 'English page',
+  '/index.he': 'Hebrew page',
+  '/404': 'Not found page',
+};
+
+const fileAtPath = (input: RequestInfo | URL) => {
+  const fileRequest = new Request(input);
+  const { pathname } = new URL(fileRequest.url);
+  const file = new Response(fileBodies[pathname], { headers: { 'Content-Type': 'text/html' } });
+  return Promise.resolve(file);
+};
 
 describe('site worker', () => {
   it('sends former domains to the canonical site', async () => {
@@ -50,6 +63,24 @@ describe('site worker', () => {
       'public, max-age=0, must-revalidate, no-transform',
     );
     expect(response.headers.get('Content-Encoding')).toBe('br');
+  });
+  it('serves the page in the visitor language and varies on what chose it', async () => {
+    const env = siteServing(fileAtPath);
+    const request = new Request('https://joseph-tech-solutions.dev/?fbclid=ad', {
+      headers: { 'Accept-Language': 'he-IL,he;q=0.9' },
+    });
+    const response = await site.fetch(request, env);
+    const page = await response.text();
+    expect(page).toBe('Hebrew page');
+    expect(response.headers.get('Vary')).toBe('Accept-Encoding, Accept-Language, Cookie');
+  });
+  it.each(['/index.he', '/index.he.html'])('hides %s behind the 404 page', async (pathname) => {
+    const env = siteServing(fileAtPath);
+    const request = new Request(`https://joseph-tech-solutions.dev${pathname}`);
+    const response = await site.fetch(request, env);
+    expect(response.status).toBe(404);
+    const page = await response.text();
+    expect(page).toBe('Not found page');
   });
   it('answers 503 when the file store fails', async () => {
     const env = siteServing(() => Promise.reject(new Error('asset store down')));

@@ -1,12 +1,14 @@
 import { useLayoutEffect, useState } from 'react';
-import { loadLanguage, saveLanguage } from './savedLanguage';
+import { pageTitleText } from './pageTitle.text';
+import { type Language, languageDirection, saveLanguage } from './savedLanguage';
 
-export const useLanguage = () => {
-  const [language, setLanguage] = useState(loadLanguage);
+export const useLanguage = (initialLanguage: Language) => {
+  const [language, setLanguage] = useState(initialLanguage);
 
   useLayoutEffect(() => {
     document.documentElement.lang = language;
-    document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr';
+    document.documentElement.dir = languageDirection[language];
+    document.title = pageTitleText[language].title;
   }, [language]);
 
   const toggleLanguage = () => {

@@ -3,7 +3,8 @@ import {
   lastPaintDuration,
   pageSettleDuration,
 } from '../src/features/pageLoad/runAfterPageSettles';
-import { openSite } from './openSite';
+import { letAppStart } from './letAppStart';
+import { visitSite } from './openSite';
 
 const clockStart = new Date('2026-01-01T09:00:00');
 const visitStart = new Date('2026-01-01T10:00:00');
@@ -34,7 +35,9 @@ const finishTransitionsOutside = (page: Page, boxId: string) =>
 test('outside scripts wait for every running transition and its last paint', async ({ page }) => {
   await page.clock.install({ time: clockStart });
   await page.clock.pauseAt(visitStart);
-  await openSite(page, 'en');
+  await visitSite(page, 'en');
+  await letAppStart(page);
+  await page.keyboard.press('Shift');
   const tagManagerScript = page.locator('script[src^="https://www.googletagmanager.com/gtm.js"]');
   await startSlowTransition(page, 'first-box');
   await page.clock.runFor(pageSettleDuration);

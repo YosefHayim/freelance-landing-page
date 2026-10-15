@@ -1,31 +1,13 @@
-import { Effect, Schema } from 'effect';
+export type Language = 'en' | 'he';
 
-const LanguageSchema = Schema.Literal('en', 'he');
-const decodeLanguage = Schema.decodeUnknownOption(LanguageSchema);
-const languageStorageKey = 'jts-language';
+export const languageCookieName = 'jts-language';
+const cookieLifetimeSeconds = 31536000;
 
-export type Language = typeof LanguageSchema.Type;
+export const languageDirection: Record<Language, 'ltr' | 'rtl'> = { en: 'ltr', he: 'rtl' };
 
-export const browserLanguage = (locale: string): Language => {
-  const normalized = locale.toLowerCase();
-  return normalized === 'he' || normalized.startsWith('he-') ? 'he' : 'en';
-};
-
-export const loadLanguage = (): Language => {
-  const readPreference = Effect.try(() => localStorage.getItem(languageStorageKey));
-  const readOrWarn = Effect.catchAll(readPreference, (error) =>
-    Effect.as(Effect.logWarning('language_storage_unavailable', error), null),
-  );
-  const saved = Effect.runSync(readOrWarn);
-  const decoded = decodeLanguage(saved);
-  if (decoded._tag === 'Some') return decoded.value;
-  return browserLanguage(navigator.language);
-};
+export const pageLanguage = (): Language => (document.documentElement.lang === 'he' ? 'he' : 'en');
 
 export const saveLanguage = (language: Language) => {
-  const writePreference = Effect.try(() => localStorage.setItem(languageStorageKey, language));
-  const writeOrWarn = Effect.catchAll(writePreference, (error) =>
-    Effect.logWarning('language_storage_unavailable', error),
-  );
-  Effect.runSync(writeOrWarn);
+  // biome-ignore lint/suspicious/noDocumentCookie: the Cookie Store API needs Safari 18.4 or later
+  document.cookie = `${languageCookieName}=${language}; Path=/; Max-Age=${cookieLifetimeSeconds}; SameSite=Lax`;
 };

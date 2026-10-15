@@ -38,7 +38,21 @@
   transform: none;
 }
 
+.enter-on-load {
+  animation: enter-on-load 0.9s var(--soft-ease) both;
+}
+
+@keyframes enter-on-load {
+  from {
+    transform: translateY(24px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .enter-on-load {
+    animation: none;
+  }
+
   .reveal-on-scroll {
     transform: none;
     transition: none;

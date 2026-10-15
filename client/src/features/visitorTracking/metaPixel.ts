@@ -1,4 +1,4 @@
-import { runAfterPageSettles } from '../pageLoad/runAfterPageSettles';
+import { runAfterFirstInteraction } from '../pageLoad/runAfterFirstInteraction';
 
 const pixelId = '4662982497316102';
 const pixelScriptAddress = 'https://connect.facebook.net/en_US/fbevents.js';
@@ -51,7 +51,7 @@ export const loadMetaPixel = () => {
   window._fbq = pixel;
   pixel('init', pixelId);
   pixel('track', 'PageView');
-  runAfterPageSettles(addPixelScript);
+  runAfterFirstInteraction(addPixelScript);
 };
 
 const sendEvent = (method: 'track' | 'trackCustom', eventName: string, details: EventDetails) => {

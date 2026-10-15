@@ -1,4 +1,4 @@
-import { runAfterPageSettles } from '../pageLoad/runAfterPageSettles';
+import { runAfterFirstInteraction } from '../pageLoad/runAfterFirstInteraction';
 
 const containerScriptAddress = 'https://www.googletagmanager.com/gtm.js?id=GTM-5KKTTCRT';
 
@@ -19,5 +19,5 @@ export const loadGoogleTagManager = () => {
   if (!import.meta.env.PROD) return;
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
-  runAfterPageSettles(addContainerScript);
+  runAfterFirstInteraction(addContainerScript);
 };
