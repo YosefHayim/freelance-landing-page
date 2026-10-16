@@ -2,7 +2,17 @@
 
 A one-page bilingual (English and Hebrew) business site, live at
 https://joseph-tech-solutions.dev/. React 19, TypeScript, Vite and plain CSS, served by a
-Cloudflare Worker with static assets. Everything lives in `client/`.
+Cloudflare Worker with static assets.
+
+## Project structure
+
+```txt
+src/          the page: React components, CSS and words, one folder per feature
+worker/       the Cloudflare Worker: page language, redirects, headers, 404s
+e2e/          Playwright tests against the production build
+public/       files copied as is: 404 page, robots, sitemap
+prerender.ts  writes both language pages at build time
+```
 
 ## Local development
 
@@ -11,7 +21,6 @@ Use Node 24 and pnpm 10.33.2.
 ```sh
 pnpm install --frozen-lockfile
 cp .env.example .env
-cp client/.env.example client/.env
 pnpm dev
 ```
 
@@ -21,7 +30,7 @@ follows the browser language; a manual choice is remembered.
 ## Checks
 
 ```sh
-pnpm --dir client exec playwright install chromium webkit
+pnpm exec playwright install chromium webkit
 pnpm check
 ```
 
@@ -37,7 +46,7 @@ uses it there ([Playwright issue](https://github.com/microsoft/playwright/issues
 
 ```sh
 pnpm build
-pnpm --dir client preview
+pnpm preview
 ```
 
 Preview runs the real Worker locally at http://127.0.0.1:4173, including cache headers and 404s.
@@ -46,10 +55,10 @@ It uses localhost as its upstream, so the production domain redirects cannot loo
 ## Release
 
 Deploying needs explicit approval after a mobile screenshot review; CI never deploys. The steps
-are in `AGENTS.md`. After changing `client/wrangler.jsonc`, regenerate the binding types:
+are in `AGENTS.md`. After changing `wrangler.jsonc`, regenerate the Worker types:
 
 ```sh
-pnpm --dir client types
+pnpm types
 ```
 
 ## References

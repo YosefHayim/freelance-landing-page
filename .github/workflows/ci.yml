@@ -1,4 +1,4 @@
-name: Client checks
+name: Checks
 'on':
   pull_request: null
   push:
@@ -11,14 +11,22 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  lint:
-    uses: ./.github/workflows/lint.yml
-  typecheck:
-    uses: ./.github/workflows/typecheck.yml
-  test:
-    uses: ./.github/workflows/test.yml
-  build:
-    uses: ./.github/workflows/build.yml
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        command:
+        - lint
+        - typecheck
+        - test
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - name: Setup workspace
+      uses: ./.github/actions/setup
+    - name: Run check
+      run: pnpm ${{ matrix.command }}
   browser:
     uses: ./.github/workflows/browser.yml
   vitals:
@@ -29,10 +37,7 @@ jobs:
     runs-on: ubuntu-slim
     timeout-minutes: 5
     needs:
-    - lint
-    - typecheck
-    - test
-    - build
+    - check
     - browser
     - vitals
     if: always()

@@ -1,20 +1,44 @@
 {
-  "name": "business-portfolio",
+  "name": "freelance-landing-page",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.33.2",
   "scripts": {
-    "dev": "pnpm --dir client dev",
-    "build": "pnpm --dir client build",
-    "lint": "pnpm --dir client lint",
-    "format": "pnpm --dir client format",
-    "typecheck": "pnpm --dir client typecheck",
-    "test": "pnpm --dir client test",
-    "test:browser": "pnpm --dir client test:browser",
-    "test:vitals": "pnpm --dir client test:vitals",
-    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm test:browser && pnpm test:vitals"
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build --outDir dist/client && vite build --ssr src/renderPage.tsx --outDir dist/server && node prerender.ts",
+    "preview": "wrangler dev --local --local-upstream localhost --ip 127.0.0.1 --port 4173",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "test:vitals": "lhci collect && lhci assert",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm test:browser && pnpm test:vitals",
+    "deploy": "pnpm build && wrangler deploy",
+    "types": "wrangler types worker/cloudflareBindings.d.ts"
   },
   "engines": {
     "node": ">=24"
+  },
+  "dependencies": {
+    "@fontsource-variable/heebo": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "effect": "^3.22.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@biomejs/biome": "^2.5.15",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "1.63.0",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.7",
+    "vitest": "^3.2.7",
+    "wrangler": "^4.151.0"
   }
 }
