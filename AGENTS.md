@@ -166,6 +166,11 @@ languages, 320 to 1440px, on the local Worker at 127.0.0.1:4173) and a mobile Li
 (performance 0.98+, FCP 1.5s or less, LCP 2s or less, CLS 0.05 or less, TBT 100ms or less).
 Port 4173 must be free.
 
+Playwright stays at 1.63.0. The WebKit in 1.64.0 and 1.64.1 paints almost no frames on Linux
+where the page uses `backdrop-filter`, so the browser job times out
+([playwright#43426](https://github.com/microsoft/playwright/issues/43426)). Update once a
+release ships WebKit r2373 or newer.
+
 CI runs the same checks as parallel jobs behind one required `CI Gate` job: one `check` matrix
 (lint, typecheck, test), and the browser and vitals jobs, which each build first. Actions are
 pinned to commit SHAs with the version in a comment; update both together. Before opening a
