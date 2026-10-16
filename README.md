@@ -4,6 +4,16 @@ A one-page bilingual (English and Hebrew) business site, live at
 https://joseph-tech-solutions.dev/. React 19, TypeScript, Vite and plain CSS, served by a
 Cloudflare Worker with static assets.
 
+## Project structure
+
+```txt
+src/          the page: React components, CSS and words, one folder per feature
+worker/       the Cloudflare Worker: page language, redirects, headers, 404s
+e2e/          Playwright tests against the production build
+public/       files copied as is: 404 page, robots, sitemap
+prerender.ts  writes both language pages at build time
+```
+
 ## Local development
 
 Use Node 24 and pnpm 10.33.2.

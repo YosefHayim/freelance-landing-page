@@ -2,9 +2,9 @@
 
 A one-page bilingual (English and Hebrew) business site for Joseph Sabag, served at
 https://joseph-tech-solutions.dev/ by one Cloudflare Worker named `freelance-landing-page`. The
-look and motion follow the design file `03-sheets-v6.html` one to one; only the words were
-rewritten. Every call button opens WhatsApp at +972546187549 with a localized draft message.
-There are no forms, accounts, business API, database or secrets.
+look and motion are final; change them only when asked. Every call button opens WhatsApp at
++972546187549 with a localized draft message. There are no forms, accounts, business API,
+database or secrets.
 
 ## Structure
 
@@ -15,7 +15,7 @@ prerender.ts          runs at build: writes both language pages with the CSS inl
 src/                  runs in the browser (React 19 + Vite)
   main.ts  startApp.tsx  renderPage.tsx  App.tsx  globalStyles.css
   assets/             images Vite hashes
-  components/         UI used by 2+ features
+  components/         UI and canvas helpers used by 2+ features
   hooks/              hooks used by 2+ features
   features/<feature>/ everything one feature needs
 worker/               runs on Cloudflare: page language, redirects, headers, 404s
@@ -24,14 +24,16 @@ public/               copied as is: 404 page, robots, sitemap
 ```
 
 - `src/**` never imports `worker/**` and the reverse (Biome `noRestrictedImports`).
-  One tsconfig per runtime (`tsconfig.app.json`, `tsconfig.worker.json`, `tsconfig.node.json`).
+  One tsconfig per runtime (`tsconfig.app.json`, `tsconfig.worker.json`, `tsconfig.node.json`),
+  each extending `tsconfig.base.json`.
 - No `shared/`, `utils/`, `docs/`, barrels, re-exports or index files.
 
 Where a new file goes:
 
 1. Where does it run? Browser `src/`, Cloudflare `worker/`, browser test `e2e/`.
 2. Which feature? `src/features/<feature>/`.
-3. Used by 2+ features? A component goes in `src/components/`, a hook in `src/hooks/`.
+3. Used by 2+ features? A component or canvas helper goes in `src/components/`, a hook in
+   `src/hooks/`.
 4. Unsure? The feature folder.
 
 Name patterns: `<Name>Section.tsx` (a full-screen section), `<Name>Canvas.tsx` (a canvas
@@ -57,7 +59,8 @@ names or CSS classes.
   with Effect Schema.
 - Effects return cleanup. Loops stop offscreen, while covered by the next section, and under
   reduced motion. No animation may block reading or selecting text.
-- Plain CSS per feature. Colors are custom properties in the `:root` of `globalStyles.css`.
+- Plain CSS per feature. A color used in 2+ places is a custom property in the `:root` of
+  `globalStyles.css`.
   No Tailwind, no `!important`.
 - Every interactive element has an accessible name, visible focus and a usable touch area.
 - No narrating comments or TSDoc. Biome formats: single quotes, semicolons, 100 columns,
@@ -154,7 +157,7 @@ Most visitors come from Facebook ads on a phone, so the mobile Lighthouse score 
   returns 404.
 - Former domains and `www` redirect with 308 to the canonical apex, keeping path and query.
 - Unknown and retired paths return 404, never the home page. Do not bring back the old
-  versioned sites, chat, blog, product or legal pages.
+  versioned sites, the AI chat assistant, blog, product or legal pages.
 
 ## Checks
 
@@ -163,7 +166,9 @@ languages, 320 to 1440px, on the local Worker at 127.0.0.1:4173) and a mobile Li
 (performance 0.98+, FCP 1.5s or less, LCP 2s or less, CLS 0.05 or less, TBT 100ms or less).
 Port 4173 must be free.
 
-CI runs the same checks as parallel jobs behind one required `CI Gate` job. Before opening a
+CI runs the same checks as parallel jobs behind one required `CI Gate` job: one `check` matrix
+(lint, typecheck, test), and the browser and vitals jobs, which each build first. Actions are
+pinned to commit SHAs with the version in a comment; update both together. Before opening a
 PR, run them locally with `act workflow_dispatch -W .github/workflows/ci.yml`; the root
 `.actrc` picks the Docker runner, keeps the pnpm store outside the workspace and gives each
 job its own copy of an action, so parallel jobs cannot break each other's setup. act skips the
