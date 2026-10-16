@@ -36,7 +36,7 @@ test('keyboard reaches the top bar and arrow keys move through the problems', as
     .getByRole('link', { name: topBarText.en.callLabel });
   await expect(callLink).toBeFocused();
 
-  const activeTab = page.locator('.problem-tab[aria-selected="true"]');
+  const activeTab = page.getByRole('tab', { selected: true });
   await page.locator('#problem-animation-panel').scrollIntoViewIfNeeded();
   await expect(page.locator('.problem-progress-bar.is-running')).toHaveCount(1);
   await activeTab.focus();

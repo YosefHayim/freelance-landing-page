@@ -7,7 +7,7 @@ const cycleDuration = 10600;
 const fixTextStep = 300;
 
 const activeProblemTitle = (page: Page) =>
-  page.locator('.problem-tab[aria-selected="true"] .problem-tab-title');
+  page.getByRole('tab', { selected: true }).locator('.problem-tab-title');
 
 const runUntilFixTextShows = (page: Page, fix: string) =>
   expect(async () => {
@@ -75,7 +75,7 @@ test('with reduced motion every problem still reaches its fix', async ({ page })
   await openSite(page, 'en');
   const text = problemsText.en;
   const panel = page.locator('#problem-animation-panel');
-  await page.locator('.problem-tab[aria-selected="true"]').focus();
+  await page.getByRole('tab', { selected: true }).focus();
   for (const [problem, details] of text.problems.entries()) {
     if (problem > 0) await page.keyboard.press('ArrowDown');
     await expect(activeProblemTitle(page)).toHaveText(details.title);

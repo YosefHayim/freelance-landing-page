@@ -1,5 +1,7 @@
 import { expect, type Page, test } from '@playwright/test';
+import { introText } from '../src/features/intro/intro.text';
 import type { Language } from '../src/features/language/language';
+import { languageText } from '../src/features/language/language.text';
 import { letAppStart } from './letAppStart';
 import { letPageSettle } from './letPageSettle';
 import { pixelCallLogPrefix, visitSite } from './openSite';
@@ -51,6 +53,9 @@ const scrollToEdge = (page: Page, edge: 'top' | 'bottom') =>
     edge === 'bottom',
   );
 
+const introCallLink = (page: Page, language: Language) =>
+  page.getByRole('main').getByRole('link', { name: introText[language].callLabel });
+
 const keepClicksOnPage = (page: Page) =>
   page.evaluate(() => {
     for (const eventType of ['click', 'auxclick', 'contextmenu']) {
@@ -77,8 +82,8 @@ test('the pixel starts with the page view', async ({ page }) => {
 test('a WhatsApp click is a contact and other clicks name their button', async ({ page }) => {
   const pixelCalls = await openSiteWithPixel(page, 'he');
   await keepClicksOnPage(page);
-  await page.locator('.intro-call-button').click();
-  await page.locator('.work-type-button').nth(1).click();
+  await introCallLink(page, 'he').click();
+  await page.getByRole('button', { name: introText.he.workTypes.app.label, exact: true }).click();
   await page.locator('.intro-summary').click();
   await expect
     .poll(() => pixelCalls)
@@ -113,7 +118,7 @@ test('every WhatsApp button and the top bar report under their own names', async
   for (const link of await page.locator('a[href^="https://wa.me/"]').all()) {
     await link.dispatchEvent('click');
   }
-  await page.locator('.language-flag-button').click();
+  await page.getByRole('button', { name: languageText.en.switchLabel }).click();
   await expect.poll(() => callsNamed(pixelCalls, 'WhatsAppClick')).toHaveLength(4);
   const whatsappButtons = [
     { target: 'top_bar_call', section: 'page', language: 'en' },
@@ -134,7 +139,7 @@ test('a middle click counts as a click and a right click does not', async ({ pag
   const pixelCalls = await openSiteWithPixel(page, 'en');
   await keepClicksOnPage(page);
   await page.locator('.intro-summary').click({ button: 'right' });
-  await page.locator('.intro-call-button').click({ button: 'middle' });
+  await introCallLink(page, 'en').click({ button: 'middle' });
   await expect
     .poll(() => callsNamed(pixelCalls, 'Contact'))
     .toEqual([['track', 'Contact', { target: 'intro_call', section: 'intro', language: 'en' }]]);
@@ -144,17 +149,17 @@ test('a middle click counts as a click and a right click does not', async ({ pag
 
 test('resting the mouse on a button reports one hover', async ({ page }) => {
   const pixelCalls = await openSiteWithPixel(page, 'en');
-  const callButton = page.locator('.intro-call-button');
-  await callButton.hover();
+  const callLink = introCallLink(page, 'en');
+  await callLink.hover();
   await page.clock.runFor(500);
   await page.locator('.intro-summary').hover();
   await page.clock.runFor(1500);
   expect(callsNamed(pixelCalls, 'Hover')).toHaveLength(0);
 
-  await callButton.hover();
+  await callLink.hover();
   await page.clock.runFor(1100);
   await page.locator('.intro-summary').hover();
-  await callButton.hover();
+  await callLink.hover();
   await page.clock.runFor(1100);
   await expect
     .poll(() => callsNamed(pixelCalls, 'Hover'))
