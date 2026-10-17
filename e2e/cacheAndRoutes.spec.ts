@@ -85,3 +85,18 @@ test('the page comes in the saved language, else in the browser language', async
   expect(englishPage).toContain('<html lang="en" dir="ltr">');
   expect(englishPage).toContain(introText.en.headline);
 });
+
+test('an ad link picks the page language over the browser language', async ({ request }) => {
+  const hebrewResponse = await request.get('/?lang=he&utm_source=facebook', {
+    headers: { 'Accept-Language': 'en-US' },
+  });
+  const hebrewPage = await hebrewResponse.text();
+  expect(hebrewPage).toContain('<html lang="he" dir="rtl">');
+  expect(hebrewPage).toContain(introText.he.headline);
+  const englishResponse = await request.get('/?lang=en', {
+    headers: { 'Accept-Language': 'he-IL' },
+  });
+  const englishPage = await englishResponse.text();
+  expect(englishPage).toContain('<html lang="en" dir="ltr">');
+  expect(englishPage).toContain(introText.en.headline);
+});

@@ -1,9 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { pagePathFor } from './pageLanguage';
 
-const pagePathForVisitor = (acceptLanguage: string, cookie = '') => {
+const siteAddress = 'https://joseph-tech-solutions.dev/';
+
+const pagePathForVisitor = (acceptLanguage: string, cookie = '', query = '') => {
   const headers = new Headers({ 'Accept-Language': acceptLanguage, Cookie: cookie });
-  return pagePathFor(headers);
+  const request = new Request(`${siteAddress}${query}`, { headers });
+  return pagePathFor(request);
 };
 
 describe('page language', () => {
@@ -29,4 +32,20 @@ describe('page language', () => {
     'ignores the unknown choice %s',
     (cookie) => expect(pagePathForVisitor('he-IL', cookie)).toBe('/index.he'),
   );
+
+  it.each([
+    ['en-US', '?lang=he', '/index.he'],
+    ['he-IL', '?lang=en', '/'],
+    ['en-US', '?utm_source=facebook&lang=he&fbclid=abc', '/index.he'],
+  ])('lets a link win over %s (%s)', (acceptLanguage, query, pagePath) =>
+    expect(pagePathForVisitor(acceptLanguage, '', query)).toBe(pagePath),
+  );
+
+  it.each(['?lang=fr', '?lang=', '?lang=HE', '?language=en'])(
+    'ignores the unknown link language %s',
+    (query) => expect(pagePathForVisitor('he-IL', '', query)).toBe('/index.he'),
+  );
+
+  it('keeps a saved choice over the link', () =>
+    expect(pagePathForVisitor('he-IL', 'jts-language=en', '?lang=he')).toBe('/'));
 });

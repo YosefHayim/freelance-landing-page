@@ -35,7 +35,7 @@ const serveFileAt = (path: string, request: Request, env: Env) => {
 };
 
 const servePage = async (request: Request, env: Env) => {
-  const pagePath = pagePathFor(request.headers);
+  const pagePath = pagePathFor(request);
   const page = await serveFileAt(pagePath, request, env);
   page.headers.append('Vary', 'Accept-Language, Cookie');
   return page;
