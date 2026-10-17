@@ -6,6 +6,14 @@ import { legalDocuments, legalPageAt } from './features/legal/legalPages';
 import { SitePage } from './SitePage';
 
 const siteAddress = 'https://joseph-tech-solutions.dev';
+const htmlEscapes: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+};
+
+const escapeHtml = (text: string) => text.replace(/[&<>"]/g, (character) => htmlEscapes[character]);
 
 const headTextAt = (pagePath: string, language: Language) => {
   const legalPageName = legalPageAt(pagePath);
@@ -22,8 +30,10 @@ export const renderPage = async (template: string, language: Language, pagePath:
   const appHtml = await new Response(prelude).text();
   const headText = headTextAt(pagePath, language);
   const htmlTag = `<html lang="${language}" dir="${languageDirection[language]}">`;
-  const titleTag = `<title>${headText.title}</title>`;
-  const descriptionStart = `<meta name="description" content="${headText.description}"`;
+  const title = escapeHtml(headText.title);
+  const description = escapeHtml(headText.description);
+  const titleTag = `<title>${title}</title>`;
+  const descriptionStart = `<meta name="description" content="${description}"`;
   const canonicalStart = `<link rel="canonical" href="${siteAddress}${pagePath}"`;
   return template
     .replace('<html lang="en" dir="ltr">', () => htmlTag)

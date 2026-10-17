@@ -3,7 +3,7 @@ import { whatsappLink, whatsappNumber } from '../whatsapp/whatsappLink';
 import { legalText } from './legal.text';
 
 const businessEmail = 'hello@joseph-tech-solutions.dev';
-const localPhoneNumber = '054-618-7549';
+const localPhoneNumber = whatsappNumber.replace(/^972(\d{2})(\d{3})(\d{4})$/, '0$1-$2-$3');
 
 interface LegalContactProps {
   language: Language;
