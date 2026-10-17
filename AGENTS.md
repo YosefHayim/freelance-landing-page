@@ -69,7 +69,8 @@ names or CSS classes.
 ## Words and languages
 
 - English (`ltr`) and Hebrew (`rtl`) are equal. The Worker picks the page for `/`: the
-  `jts-language` cookie (a manual choice) wins, else the browser's first `Accept-Language`.
+  `jts-language` cookie (a manual choice) wins, else the link's `?lang=he` or `?lang=en` (ad
+  links set it to match the ad), else the browser's first `Accept-Language`.
 - Every visible word and accessible label lives in a `<feature>.text.ts` in both languages.
 - Voice: spoken and specific. Open on the visitor's problem in their own words, then give the
   fix. The visitor is the one acting, so keep "I" rare. Hebrew talks to the visitor in plural
