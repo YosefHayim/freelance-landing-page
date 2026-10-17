@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { introText } from '../src/features/intro/intro.text';
 import { languageCookieName } from '../src/features/language/language';
-import { openSite } from './openSite';
+import { legalDocuments, legalPageNames, legalPagePath } from '../src/features/legal/legalPages';
+import { languages, openSite } from './openSite';
 
 const retiredPaths = [
   '/v1/',
@@ -12,12 +13,15 @@ const retiredPaths = [
   '/jts',
   '/sorqa',
   '/prompt-queue',
-  '/privacy',
   '/api/chat',
   '/missing.png',
   '/assets/missing.js',
   '/index.he',
   '/index.he.html',
+  '/privacy.he',
+  '/privacy.he.html',
+  '/terms.he',
+  '/terms.he.html',
 ];
 
 const hebrewRequests: Record<string, string>[] = [
@@ -99,4 +103,20 @@ test('an ad link picks the page language over the browser language', async ({ re
   const englishPage = await englishResponse.text();
   expect(englishPage).toContain('<html lang="en" dir="ltr">');
   expect(englishPage).toContain(introText.en.headline);
+});
+
+test('the privacy and terms pages come in both languages', async ({ request }) => {
+  for (const legalPageName of legalPageNames) {
+    for (const language of languages) {
+      const address = `${legalPagePath(legalPageName)}?lang=${language}`;
+      const response = await request.get(address);
+      expect(response.status(), address).toBe(200);
+      expect(response.headers().vary, address).toBe('Accept-Encoding, Accept-Language, Cookie');
+      const page = await response.text();
+      const canonical = `https://joseph-tech-solutions.dev${legalPagePath(legalPageName)}`;
+      expect(page, address).toContain(`<html lang="${language}"`);
+      expect(page, address).toContain(`<link rel="canonical" href="${canonical}"`);
+      expect(page, address).toContain(legalDocuments[legalPageName][language].heading);
+    }
+  }
 });

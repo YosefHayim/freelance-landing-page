@@ -1,6 +1,6 @@
 import type { Language } from './language';
 
-type PageHeadText = {
+export type PageHeadText = {
   title: string;
   description: string;
 };

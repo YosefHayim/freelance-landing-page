@@ -1,5 +1,6 @@
 import './contact.css';
 import type { Language } from '../language/language';
+import { LegalLinks } from '../legal/LegalLinks';
 import { whatsappLink } from '../whatsapp/whatsappLink';
 import { CopiedNotice } from './CopiedNotice';
 import { contactText } from './contact.text';
@@ -76,6 +77,7 @@ export const ContactSection = ({ language, prefersReducedMotion }: ContactSectio
         </div>
       </div>
       <footer className="site-footer">
+        <LegalLinks language={language} />
         <SocialLinks language={language} onHandleCopied={showNotice} />
       </footer>
       <CopiedNotice

@@ -33,14 +33,14 @@ export const chooseLanguage = async (page: Page, language: Language) => {
   await page.context().addCookies([languageCookie]);
 };
 
-export const visitSite = async (page: Page, language: Language) => {
+export const visitSite = async (page: Page, language: Language, pagePath = '/') => {
   await standInForOutsideScripts(page);
   await chooseLanguage(page, language);
-  return page.goto('/');
+  return page.goto(pagePath);
 };
 
-export const openSite = async (page: Page, language: Language) => {
-  const response = await visitSite(page, language);
+export const openSite = async (page: Page, language: Language, pagePath = '/') => {
+  const response = await visitSite(page, language, pagePath);
   await waitForAppStart(page);
   return response;
 };

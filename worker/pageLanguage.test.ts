@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { pagePathFor } from './pageLanguage';
+import { isHebrewPageFile, pagePathFor } from './pageLanguage';
 
 const siteAddress = 'https://joseph-tech-solutions.dev/';
 
-const pagePathForVisitor = (acceptLanguage: string, cookie = '', query = '') => {
+const pagePathForVisitor = (acceptLanguage: string, cookie = '', pathAndQuery = '') => {
   const headers = new Headers({ 'Accept-Language': acceptLanguage, Cookie: cookie });
-  const request = new Request(`${siteAddress}${query}`, { headers });
+  const request = new Request(`${siteAddress}${pathAndQuery}`, { headers });
   return pagePathFor(request);
 };
 
@@ -48,4 +48,28 @@ describe('page language', () => {
 
   it('keeps a saved choice over the link', () =>
     expect(pagePathForVisitor('he-IL', 'jts-language=en', '?lang=he')).toBe('/'));
+
+  it.each([
+    ['privacy', 'he-IL', '', '/privacy.he'],
+    ['privacy', 'en-US', '', '/privacy'],
+    ['terms?lang=he', 'en-US', '', '/terms.he'],
+    ['terms', 'en-US', 'jts-language=he', '/terms.he'],
+  ])('opens /%s for %s (%s) at %s', (pathAndQuery, acceptLanguage, cookie, pagePath) =>
+    expect(pagePathForVisitor(acceptLanguage, cookie, pathAndQuery)).toBe(pagePath),
+  );
+
+  it.each(['blog', 'privacy/', 'privacy.html', 'index.he', 'terms.he'])(
+    'leaves /%s to the file store',
+    (pathAndQuery) => expect(pagePathForVisitor('he-IL', '', pathAndQuery)).toBeNull(),
+  );
+
+  it.each([
+    ['/index.he', true],
+    ['/privacy.he.html', true],
+    ['/terms.he', true],
+    ['/privacy', false],
+    ['/index.health.png', false],
+  ])('treats %s as a Hebrew page file: %s', (pathname, isHidden) =>
+    expect(isHebrewPageFile(pathname)).toBe(isHidden),
+  );
 });
