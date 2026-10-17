@@ -5,9 +5,17 @@ const decodeLanguage = Schema.decodeUnknownOption(LanguageSchema);
 const savedLanguagePattern = /(?:^|;\s*)jts-language=([^;]*)/;
 const linkLanguageParameter = 'lang';
 
-export const hebrewPagePath = '/index.he';
+const sitePages = new Map<string, Record<typeof LanguageSchema.Type, string>>([
+  ['/', { en: '/', he: '/index.he' }],
+  ['/privacy', { en: '/privacy', he: '/privacy.he' }],
+  ['/terms', { en: '/terms', he: '/terms.he' }],
+]);
 
-const pagePaths: Record<typeof LanguageSchema.Type, string> = { en: '/', he: hebrewPagePath };
+const sitePagePaths = Array.from(sitePages.values());
+const hebrewPageFilePaths = sitePagePaths.flatMap(({ he }) => [he, `${he}.html`]);
+const hebrewPageFiles = new Set(hebrewPageFilePaths);
+
+export const isHebrewPageFile = (pathname: string) => hebrewPageFiles.has(pathname);
 
 const browserLanguage = (acceptLanguage: string) => {
   const [firstLanguage] = acceptLanguage.split(/[,;]/);
@@ -30,6 +38,9 @@ const visitorLanguage = (request: Request) => {
 };
 
 export const pagePathFor = (request: Request) => {
+  const { pathname } = new URL(request.url);
+  const pagePaths = sitePages.get(pathname);
+  if (!pagePaths) return null;
   const language = visitorLanguage(request);
   return pagePaths[language];
 };

@@ -1,7 +1,8 @@
 # Joseph Sabag
 
 A one-page bilingual (English and Hebrew) business site, live at
-https://joseph-tech-solutions.dev/. React 19, TypeScript, Vite and plain CSS, served by a
+https://joseph-tech-solutions.dev/, with a privacy policy at `/privacy` and terms of use at
+`/terms`. React 19, TypeScript, Vite and plain CSS, served by a
 Cloudflare Worker with static assets.
 
 ## Project structure
@@ -11,7 +12,7 @@ src/          the page: React components, CSS and words, one folder per feature
 worker/       the Cloudflare Worker: page language, redirects, headers, 404s
 e2e/          Playwright tests against the production build
 public/       files copied as is: 404 page, robots, sitemap
-prerender.ts  writes both language pages at build time
+prerender.ts  writes every page in both languages at build time
 ```
 
 ## Local development
@@ -37,7 +38,7 @@ pnpm check
 This runs Biome, TypeScript, Vitest, the production build, Playwright in Chromium and WebKit,
 and a mobile Lighthouse gate. The browser tests cover both languages at 320 to 1440px,
 overflow and clipped text, accessibility, keyboard use, reduced motion, the problem and iceberg
-animations, WhatsApp links, the Meta Pixel events, cache headers and 404s.
+animations, WhatsApp links, the Meta Pixel events, the legal pages, cache headers and 404s.
 
 On macOS, WebKit moves focus with Option+Tab when full keyboard access is off, so the suite
 uses it there ([Playwright issue](https://github.com/microsoft/playwright/issues/41808)).

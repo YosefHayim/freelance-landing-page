@@ -1,8 +1,9 @@
 # Agent guide
 
 A one-page bilingual (English and Hebrew) business site for Joseph Sabag, served at
-https://joseph-tech-solutions.dev/ by one Cloudflare Worker named `freelance-landing-page`. The
-look and motion are final; change them only when asked. Every call button opens WhatsApp at
+https://joseph-tech-solutions.dev/ by one Cloudflare Worker named `freelance-landing-page`, plus
+a privacy policy at `/privacy` and terms of use at `/terms`. The look and motion are final;
+change them only when asked. Every call button opens WhatsApp at
 +972546187549 with a localized draft message. There are no forms, accounts, business API,
 database or secrets.
 
@@ -11,9 +12,9 @@ database or secrets.
 Code is split by where it runs, then by feature. Imports go one way.
 
 ```txt
-prerender.ts          runs at build: writes both language pages with the CSS inlined
+prerender.ts          runs at build: writes every page in both languages with the CSS inlined
 src/                  runs in the browser (React 19 + Vite)
-  main.ts  startApp.tsx  renderPage.tsx  App.tsx  globalStyles.css
+  main.ts  startApp.tsx  renderPage.tsx  SitePage.tsx  App.tsx  globalStyles.css
   assets/             images Vite hashes
   components/         UI and canvas helpers used by 2+ features
   hooks/              hooks used by 2+ features
@@ -68,7 +69,8 @@ names or CSS classes.
 
 ## Words and languages
 
-- English (`ltr`) and Hebrew (`rtl`) are equal. The Worker picks the page for `/`: the
+- English (`ltr`) and Hebrew (`rtl`) are equal. The Worker picks the language for `/`,
+  `/privacy` and `/terms`: the
   `jts-language` cookie (a manual choice) wins, else the link's `?lang=he` or `?lang=en` (ad
   links set it to match the ad), else the browser's first `Accept-Language`.
 - Every visible word and accessible label lives in a `<feature>.text.ts` in both languages.
@@ -77,6 +79,9 @@ names or CSS classes.
   and sounds spoken, not written. No em dashes, no revenue promises, no claims beyond the
   facts already in the text. Do not mention military service.
 - Use CSS logical properties. Mirror directional animations under `html[dir="rtl"]`.
+- The privacy policy and terms (`features/legal/`) cover this site and the project form at
+  start.joseph-tech-solutions.dev (the `project-brief` repo). When tracking, a stored field or an
+  outside service changes in either repo, update both languages and the date in `legal.text.ts`.
 
 ## Visitor tracking
 
@@ -126,8 +131,9 @@ names or CSS classes.
 
 Most visitors come from Facebook ads on a phone, so the mobile Lighthouse score stays at 100.
 
-- The build prerenders both pages (`index.html`, `index.he.html`) from `src/renderPage.tsx`,
-  with the CSS inlined and each language's title and description from `pageHead.text.ts`. The
+- The build prerenders every page in both languages (`index.html`, `privacy.html`,
+  `terms.html`, each with a `.he.html` twin) from `src/renderPage.tsx`, with the CSS inlined and
+  each page's title and description from `pageHead.text.ts` or its legal document. The
   first paint needs only the page, the photo and one font.
 - `main.ts` loads the app (`startApp.tsx`, which hydrates the page) only after the first
   contentful paint, and `prerender.ts` gives its script `fetchpriority="low"` (Vite strips the
@@ -154,11 +160,11 @@ Most visitors come from Facebook ads on a phone, so the mobile Lighthouse score 
   injecting its analytics script but also turns off its compression, so the Worker compresses
   pages itself through `Content-Encoding`. Other files never get `no-transform`, so Cloudflare
   compresses them.
-- `/` adds `Accept-Language, Cookie` to `Vary`. The Hebrew page lives only at `/`; `/index.he`
-  returns 404.
+- `/`, `/privacy` and `/terms` add `Accept-Language, Cookie` to `Vary`. The Hebrew pages live
+  only at those paths; `/index.he`, `/privacy.he`, `/terms.he` and their `.html` return 404.
 - Former domains and `www` redirect with 308 to the canonical apex, keeping path and query.
 - Unknown and retired paths return 404, never the home page. Do not bring back the old
-  versioned sites, the AI chat assistant, blog, product or legal pages.
+  versioned sites, the AI chat assistant, blog or product pages.
 
 ## Checks
 

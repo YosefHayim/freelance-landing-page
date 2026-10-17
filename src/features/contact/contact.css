@@ -134,7 +134,8 @@
   position: relative;
   z-index: 2;
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
   gap: 16px;
   padding: 18px clamp(20px, 3vw, 40px);

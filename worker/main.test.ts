@@ -28,6 +28,10 @@ const revalidatingPage = () =>
 const fileBodies: Record<string, string> = {
   '/': 'English page',
   '/index.he': 'Hebrew page',
+  '/privacy': 'English privacy page',
+  '/privacy.he': 'Hebrew privacy page',
+  '/terms': 'English terms page',
+  '/terms.he': 'Hebrew terms page',
   '/404': 'Not found page',
   '/index.health.png': 'Health image',
 };
@@ -75,7 +79,29 @@ describe('site worker', () => {
     expect(page).toBe('Hebrew page');
     expect(response.headers.get('Vary')).toBe('Accept-Encoding, Accept-Language, Cookie');
   });
-  it.each(['/index.he', '/index.he.html'])('hides %s behind the 404 page', async (pathname) => {
+  it.each([
+    ['/privacy', 'he-IL', 'Hebrew privacy page'],
+    ['/privacy?lang=en', 'he-IL', 'English privacy page'],
+    ['/terms', 'en-US', 'English terms page'],
+    ['/terms?lang=he', 'en-US', 'Hebrew terms page'],
+  ])('serves %s to a %s browser as the %s', async (pathAndQuery, acceptLanguage, expectedPage) => {
+    const env = siteServing(fileAtPath);
+    const request = new Request(`https://joseph-tech-solutions.dev${pathAndQuery}`, {
+      headers: { 'Accept-Language': acceptLanguage },
+    });
+    const response = await site.fetch(request, env);
+    const page = await response.text();
+    expect(page).toBe(expectedPage);
+    expect(response.headers.get('Vary')).toBe('Accept-Encoding, Accept-Language, Cookie');
+  });
+  it.each([
+    '/index.he',
+    '/index.he.html',
+    '/privacy.he',
+    '/privacy.he.html',
+    '/terms.he',
+    '/terms.he.html',
+  ])('hides %s behind the 404 page', async (pathname) => {
     const env = siteServing(fileAtPath);
     const request = new Request(`https://joseph-tech-solutions.dev${pathname}`);
     const response = await site.fetch(request, env);

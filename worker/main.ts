@@ -2,7 +2,7 @@ import { Effect } from 'effect';
 import { cacheControlFor } from './cacheHeaders';
 import { redirectDestination } from './domainRedirects';
 import { addPageHeaders } from './pageHeaders';
-import { hebrewPagePath, pagePathFor } from './pageLanguage';
+import { isHebrewPageFile, pagePathFor } from './pageLanguage';
 import { addSecurityHeaders } from './securityHeaders';
 
 const defaultCacheControl = 'public, max-age=0, must-revalidate';
@@ -34,8 +34,7 @@ const serveFileAt = (path: string, request: Request, env: Env) => {
   return serveFile(fileRequest, env);
 };
 
-const servePage = async (request: Request, env: Env) => {
-  const pagePath = pagePathFor(request);
+const servePage = async (pagePath: string, request: Request, env: Env) => {
   const page = await serveFileAt(pagePath, request, env);
   page.headers.append('Vary', 'Accept-Language, Cookie');
   return page;
@@ -50,10 +49,10 @@ const serveNotFound = async (request: Request, env: Env) => {
 const serveSite = (request: Request, env: Env) => {
   const destination = redirectDestination(request.url);
   if (destination) return Response.redirect(destination, 308);
+  const pagePath = pagePathFor(request);
+  if (pagePath) return servePage(pagePath, request, env);
   const { pathname } = new URL(request.url);
-  if (pathname === '/') return servePage(request, env);
-  const isHebrewPageFile = pathname === hebrewPagePath || pathname === `${hebrewPagePath}.html`;
-  if (isHebrewPageFile) return serveNotFound(request, env);
+  if (isHebrewPageFile(pathname)) return serveNotFound(request, env);
   return serveFile(request, env);
 };
 

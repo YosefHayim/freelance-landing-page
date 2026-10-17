@@ -1,0 +1,23 @@
+.legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.legal-links a {
+  color: var(--white);
+  text-shadow: 0 1px 3px rgba(40, 10, 60, 0.5);
+  text-underline-offset: 3px;
+}
+
+.legal-links a:is(:hover, [aria-current="page"]) {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+.legal-links :focus-visible {
+  outline-color: var(--white);
+}

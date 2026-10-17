@@ -4,6 +4,7 @@ import { AboutSection } from './features/about/AboutSection';
 import { ContactSection } from './features/contact/ContactSection';
 import { IntroSection } from './features/intro/IntroSection';
 import type { Language } from './features/language/language';
+import { pageHeadText } from './features/language/pageHead.text';
 import { useLanguage } from './features/language/useLanguage';
 import { ProblemsSection } from './features/problems/ProblemsSection';
 import { useRevealOnScroll } from './features/scrollEffects/useRevealOnScroll';
@@ -17,7 +18,7 @@ interface AppProps {
 }
 
 export const App = ({ initialLanguage }: AppProps) => {
-  const { language, toggleLanguage } = useLanguage(initialLanguage);
+  const { language, toggleLanguage } = useLanguage(initialLanguage, pageHeadText);
   const prefersReducedMotion = usePrefersReducedMotion();
   const stackRef = useRef<HTMLElement>(null);
   const coveredSectionCount = useStackOnScroll(stackRef, prefersReducedMotion);
