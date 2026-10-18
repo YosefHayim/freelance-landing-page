@@ -102,6 +102,12 @@ names or CSS classes.
 - The pixel copies each event to its Conversions API Gateway. The CSP `connect-src` lists the
   gateway's two exact hosts, never a wildcard. The hosts come from the pixel's settings in Meta
   Events Manager: if they change there, the browser console names the blocked host.
+- The TikTok Pixel (`DBAFOH3C77UBBA28G6QG`) in `features/visitorTracking/` runs the same way:
+  production build only, TikTok's script after the first interaction. It reports the page view,
+  `ViewContent` for each section view and `Contact` for each WhatsApp click, with the same values
+  as the Meta events. The site has no forms, accounts or products, so it sends no `ttq.identify`
+  and no shop events. The CSP lists `analytics.tiktok.com` (script and events) and
+  `analytics-ipv6.tiktokw.us` (its IPv6 lookup).
 - Google Tag Manager (container `GTM-5KKTTCRT`) in `features/visitorTracking/` runs for every
   visitor. It exists only in the production build, and Google's script loads only after the
   first interaction, so it never delays the first paint. `index.html` keeps Google's no-script
@@ -113,10 +119,10 @@ names or CSS classes.
 - The container loads from a module, not from Google's inline snippet, so the CSP keeps no
   `unsafe-inline` for scripts. Custom HTML tags and Custom JavaScript variables need
   `unsafe-inline` and `unsafe-eval`, so they do not run here: use the built-in tag templates.
-- Outside scripts (pixel, container, chat widget) start through `runAfterFirstInteraction`:
+- Outside scripts (pixels, container, chat widget) start through `runAfterFirstInteraction`:
   after the first pointer, key or scroll event (at once if the visitor scrolled or tapped before
   the code ran) and once the page settles (`runAfterPageSettles`:
-  the wait after `load`, no running CSS transition, a last frame to paint). The pixel queue and
+  the wait after `load`, no running CSS transition, a last frame to paint). The pixel queues and
   `dataLayer` start at once, so no event is lost. Lighthouse counts an outside request that
   starts before the largest paint, even a blocked one. A test calls `letPageSettle` from
   `e2e/letPageSettle.ts`, then presses a key before it expects the scripts.
@@ -124,9 +130,10 @@ names or CSS classes.
   Lighthouse never interacts, so its contrast check never lands on a button mid-fade.
   `navigator.userActivation` is read only where it exists: Safari before 16.4 lacks it, and a
   throw there stops the trackers and crashes the page.
-- Checks never reach Meta or Google: Playwright serves stand-ins from `e2e/openSite.ts` and
-  Lighthouse blocks `connect.facebook.net` and `www.googletagmanager.com`. The Lighthouse gate
-  measures the site's own code: Meta's script adds main-thread work that only Meta can change.
+- Checks never reach Meta, TikTok or Google: Playwright serves stand-ins from `e2e/openSite.ts`
+  and Lighthouse blocks `connect.facebook.net`, `analytics.tiktok.com` and
+  `www.googletagmanager.com`. The Lighthouse gate measures the site's own code: Meta's script
+  adds main-thread work that only Meta can change.
 - An outside host works only after it is added to the CSP in `worker/securityHeaders.ts`.
   A tag added in the container needs its hosts there first.
 

@@ -4,14 +4,22 @@ import { waitForAppStart } from './letAppStart';
 
 export const languages: Language[] = ['en', 'he'];
 
-export const pixelCallLogPrefix = 'meta-pixel ';
+export const metaPixelLogPrefix = 'meta-pixel ';
+export const tikTokPixelLogPrefix = 'tiktok-pixel ';
 
 const metaPixelStandIn = `
   const pixel = window.fbq;
   pixel.callMethod = (...pixelArguments) =>
-    console.debug('${pixelCallLogPrefix}' + JSON.stringify(pixelArguments));
+    console.debug('${metaPixelLogPrefix}' + JSON.stringify(pixelArguments));
   for (const queuedCall of pixel.queue) pixel.callMethod(...queuedCall);
   pixel.queue = [];
+`;
+
+const tikTokPixelStandIn = `
+  const logCall = (...pixelArguments) =>
+    console.debug('${tikTokPixelLogPrefix}' + JSON.stringify(pixelArguments));
+  for (const queuedCall of window.ttq) logCall(...queuedCall);
+  window.ttq = { track: (...pixelArguments) => logCall('track', ...pixelArguments) };
 `;
 
 export const standInForOutsideScripts = async (page: Page) => {
@@ -23,6 +31,9 @@ export const standInForOutsideScripts = async (page: Page) => {
   );
   await page.route('https://connect.facebook.net/**', (route) =>
     route.fulfill({ contentType: 'application/javascript', body: metaPixelStandIn }),
+  );
+  await page.route('https://analytics.tiktok.com/**', (route) =>
+    route.fulfill({ contentType: 'application/javascript', body: tikTokPixelStandIn }),
   );
 };
 

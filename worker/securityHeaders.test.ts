@@ -8,6 +8,8 @@ const googleSignals = 'https://*.google.com';
 const metaEvents = 'https://www.facebook.com';
 const pixelGateway = 'https://mpc2-prod-29-is5qnl632q-uc.a.run.app';
 const pixelGatewayFallback = 'https://5z-2b6b7616f94640c2840d1841e1ac24c3.ecs.us-east-1.on.aws';
+const tikTokEvents = 'https://analytics.tiktok.com';
+const tikTokAddressCheck = 'https://analytics-ipv6.tiktokw.us';
 
 const policySources = (directiveName: string) => {
   const headers = new Headers();
@@ -69,6 +71,14 @@ describe('security headers', () => {
     expect(connectSources).toContain(pixelGatewayFallback);
   });
 
+  it('lets the TikTok Pixel load its script and report events', () => {
+    const scriptSources = policySources('script-src');
+    const connectSources = policySources('connect-src');
+    expect(scriptSources).toContain(tikTokEvents);
+    expect(connectSources).toContain(tikTokEvents);
+    expect(connectSources).toContain(tikTokAddressCheck);
+  });
+
   it('lets the page connect to no other host', () => {
     const connectSources = policySources('connect-src');
     expect(connectSources).toEqual([
@@ -80,6 +90,8 @@ describe('security headers', () => {
       tagManager,
       analytics,
       googleSignals,
+      tikTokEvents,
+      tikTokAddressCheck,
     ]);
   });
 });
