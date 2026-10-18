@@ -43,15 +43,17 @@ export const IntroSection = ({ language, prefersReducedMotion, isCovered }: Intr
       />
       <div className="section-content">
         <h1 className="display-heading intro-headline enter-on-load">
-          {text.greeting}{' '}
-          <span className="headline-photo">
-            <img
-              className="headline-photo-image"
-              src={profilePhoto}
-              alt={text.photoAlt}
-              width="320"
-              height="320"
-            />
+          <span className="headline-greeting">
+            <span className="headline-photo">
+              <img
+                className="headline-photo-image"
+                src={profilePhoto}
+                alt={text.photoAlt}
+                width="320"
+                height="320"
+              />
+            </span>
+            {text.greeting}
           </span>
           <span className="headline-line">{text.headline}</span>
           <span className="headline-line muted-line">{text.mutedLine}</span>

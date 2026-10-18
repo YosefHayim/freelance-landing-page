@@ -22,23 +22,33 @@ type IntroText = {
 export const introText: Record<Language, IntroText> = {
   en: {
     sectionLabel: 'Intro',
-    greeting: "Hi, I'm Joseph",
+    greeting: "Hi, I'm Joseph. A software engineer, and a founder at heart.",
     photoAlt: 'Joseph Sabag',
-    headline: 'The worst is seeing your idea in the app store',
-    mutedLine: "With someone else's name on it",
+    headline: 'With AI, building is easy',
+    mutedLine: 'Trusting what you built, less so',
     summary:
-      "And it happens. Not because they're smarter. They just started. What stops most founders isn't the idea. It's the tech side.",
-    callLabel: 'Message on WhatsApp',
-    callHoverLabel: 'Tell me your idea',
+      "Is it secure? Did it pass tests? Will it hold up when users arrive? For over two years I've been building apps, websites and AI systems. Let's start with an intro call: we'll work out together exactly what you need, and you'll get real help. Even if all you have is an idea.",
+    callLabel: 'Book a free call',
+    callHoverLabel: '10 minutes by phone',
     showcaseLabel: 'What I build',
     workTypes: {
       website: {
         label: 'Websites',
-        caption: "A nonprofit's system for donors, donations and reports",
+        caption:
+          "Landing pages, and an internal system that runs a nonprofit's income and expenses",
       },
-      app: { label: 'Apps', caption: 'Apps with AI that runs right on the phone' },
-      automation: { label: 'Automations', caption: 'Automations that end hours of copy-paste' },
-      aiTool: { label: 'AI tools', caption: 'Open-source AI tools, like AI that talks to eBay' },
+      app: {
+        label: 'Apps',
+        caption: 'A yoga app that watches your pose and corrects it in real time',
+      },
+      automation: {
+        label: 'Bots and automations',
+        caption: 'Telegram bots, and bots that scan websites and collect information',
+      },
+      aiTool: {
+        label: 'AI tools',
+        caption: 'A site and an app with AI that connect unpublished stories with journalists',
+      },
       extension: {
         label: 'Extensions',
         caption: 'Chrome extensions that do the work on their own',
@@ -47,20 +57,32 @@ export const introText: Record<Language, IntroText> = {
   },
   he: {
     sectionLabel: 'פתיחה',
-    greeting: 'היי, אני יוסף',
+    greeting: 'היי, אני יוסף. מהנדס תוכנה, ויזם בנשמה.',
     photoAlt: 'יוסף סבג',
-    headline: 'הכי מבאס זה לראות את הרעיון שלכם בחנות',
-    mutedLine: 'עם השם של מישהו אחר',
+    headline: 'עם AI, לבנות זה קל',
+    mutedLine: 'לסמוך על מה שבניתם, פחות',
     summary:
-      'וזה קורה. לא כי הם חכמים יותר. הם פשוט התחילו. מה שעוצר את רוב היזמים זה לא הרעיון. זה הצד הטכני.',
-    callLabel: 'שלחו הודעה בוואטסאפ',
-    callHoverLabel: 'ספרו לי על הרעיון',
+      'מאובטח? עבר בדיקות? יחזיק כשיגיעו משתמשים? כבר יותר משנתיים אני בונה אפליקציות, אתרים ומערכות AI. אני מזמין אתכם לשיחת היכרות: נבין ביחד מה בדיוק אתם צריכים, ותקבלו עזרה אמיתית. גם אם יש לכם רק רעיון.',
+    callLabel: 'לקביעת שיחה בחינם',
+    callHoverLabel: '10 דקות בטלפון',
     showcaseLabel: 'מה אני בונה',
     workTypes: {
-      website: { label: 'אתרים ומערכות', caption: 'מערכת ניהול לעמותה: תורמים, תרומות ודוחות' },
-      app: { label: 'אפליקציות', caption: 'אפליקציות עם AI שרץ ישר על הטלפון' },
-      automation: { label: 'אוטומציות', caption: 'אוטומציות שחוסכות שעות של העתק-הדבק' },
-      aiTool: { label: 'כלי AI', caption: 'כלי AI בקוד פתוח, למשל AI שמדבר עם eBay' },
+      website: {
+        label: 'אתרים ומערכות',
+        caption: 'דפי נחיתה, ומערכת פנימית שמנהלת לעמותה את כל ההכנסות וההוצאות',
+      },
+      app: {
+        label: 'אפליקציות',
+        caption: 'אפליקציית יוגה שעוקבת אחרי התנוחה שלכם, ומתקנת אותה בזמן אמת',
+      },
+      automation: {
+        label: 'בוטים ואוטומציות',
+        caption: 'בוטים לטלגרם, ובוטים שסורקים אתרים ואוספים מהם מידע',
+      },
+      aiTool: {
+        label: 'כלי AI',
+        caption: 'אתר ואפליקציה עם AI, שמחברים סיפורים שעוד לא פורסמו לעיתונאים',
+      },
       extension: { label: 'תוספים לכרום', caption: 'תוספים לכרום שעושים את העבודה לבד' },
     },
   },

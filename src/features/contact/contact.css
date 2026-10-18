@@ -92,6 +92,14 @@
   max-width: 14em;
 }
 
+.contact-lead {
+  max-width: 30em;
+  margin-top: -16px;
+  color: #ffe1c7;
+  font-size: clamp(17px, 1.4vw, 20px);
+  text-wrap: pretty;
+}
+
 .contact-other-ways {
   display: flex;
   flex-direction: column;

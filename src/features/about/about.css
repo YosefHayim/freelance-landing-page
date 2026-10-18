@@ -17,3 +17,41 @@
   margin-bottom: 16px;
   font-size: 17px;
 }
+
+.about-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+  list-style: none;
+  counter-reset: about-step;
+}
+
+.about-step {
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+  counter-increment: about-step;
+}
+
+.about-step-title {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.about-step-title::before {
+  content: counter(about-step) ". ";
+  color: var(--muted);
+}
+
+.about-step-detail {
+  color: var(--charcoal);
+  font-size: 16px;
+}
+
+@media (max-width: 760px) {
+  .about-steps {
+    grid-template-columns: 1fr;
+  }
+}

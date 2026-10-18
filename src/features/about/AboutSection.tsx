@@ -1,6 +1,6 @@
 import './about.css';
 import type { Language } from '../language/language';
-import { aboutParagraphNames, aboutText } from './about.text';
+import { aboutParagraphNames, aboutStepNames, aboutText } from './about.text';
 
 interface AboutSectionProps {
   language: Language;
@@ -21,6 +21,14 @@ export const AboutSection = ({ language }: AboutSectionProps) => {
             {text.paragraphs[paragraphName]}
           </p>
         ))}
+        <ol className="about-steps" aria-label={text.stepsLabel}>
+          {aboutStepNames.map((stepName) => (
+            <li key={stepName} className="about-step reveal-on-scroll">
+              <p className="about-step-title">{text.steps[stepName].title}</p>
+              <p className="about-step-detail">{text.steps[stepName].detail}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

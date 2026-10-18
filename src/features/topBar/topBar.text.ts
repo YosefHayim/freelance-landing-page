@@ -7,6 +7,10 @@ type TopBarText = {
 };
 
 export const topBarText: Record<Language, TopBarText> = {
-  en: { navigationLabel: 'Primary', callLabel: 'Send a message', callHoverLabel: 'On WhatsApp' },
-  he: { navigationLabel: 'ראשי', callLabel: 'שלחו הודעה', callHoverLabel: 'בוואטסאפ' },
+  en: {
+    navigationLabel: 'Primary',
+    callLabel: 'Book a free call',
+    callHoverLabel: '10 minutes by phone',
+  },
+  he: { navigationLabel: 'ראשי', callLabel: 'לקביעת שיחה בחינם', callHoverLabel: '10 דקות בטלפון' },
 };
