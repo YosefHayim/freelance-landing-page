@@ -12,25 +12,59 @@
 }
 
 .about-paragraph {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
   color: var(--charcoal);
-  max-width: 34em;
-  margin-bottom: 16px;
+  max-width: 36em;
+  margin-bottom: 20px;
   font-size: 17px;
+}
+
+.about-paragraph-icon {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  padding: 9px;
+  border-radius: 12px;
+  background: var(--blue-wash);
+  color: var(--blue-dark);
 }
 
 .about-steps {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  margin-top: 24px;
+  gap: 24px 0;
+  margin-top: 48px;
   list-style: none;
   counter-reset: about-step;
 }
 
 .about-step {
-  padding-top: 16px;
-  border-top: 1px solid var(--hairline);
+  position: relative;
+  padding-inline-end: 24px;
   counter-increment: about-step;
+}
+
+.about-step::before {
+  content: counter(about-step);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.about-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  inset-inline: 48px 8px;
+  border-top: 1px solid var(--gray-border);
 }
 
 .about-step-title {
@@ -38,11 +72,6 @@
   font-size: 18px;
   color: var(--text);
   margin-bottom: 6px;
-}
-
-.about-step-title::before {
-  content: counter(about-step) ". ";
-  color: var(--muted);
 }
 
 .about-step-detail {
@@ -53,5 +82,27 @@
 @media (max-width: 760px) {
   .about-steps {
     grid-template-columns: 1fr;
+  }
+
+  .about-step {
+    padding-inline: 56px 0;
+  }
+
+  .about-step::before {
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+  }
+
+  .about-step-title {
+    padding-top: 8px;
+  }
+
+  .about-step:not(:last-child)::after {
+    top: 48px;
+    bottom: -16px;
+    inset-inline: 20px auto;
+    border-top: 0;
+    border-inline-start: 1px solid var(--gray-border);
   }
 }

@@ -43,7 +43,7 @@ test('profile links point to LinkedIn and GitHub', async ({ page }) => {
     'href',
     'https://www.linkedin.com/in/yosef-hayim-sabag/',
   );
-  await expect(page.getByRole('link', { name: 'GitHub' })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'GitHub', exact: true })).toHaveAttribute(
     'href',
     /^https:\/\/github\.com\//,
   );
