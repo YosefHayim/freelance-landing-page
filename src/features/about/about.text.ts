@@ -10,7 +10,7 @@ export const aboutParagraphNames = [
 
 export const aboutStepNames = ['call', 'questionnaire', 'spec'] as const;
 
-type AboutParagraphName = (typeof aboutParagraphNames)[number];
+export type AboutParagraphName = (typeof aboutParagraphNames)[number];
 
 type AboutStepName = (typeof aboutStepNames)[number];
 

@@ -55,7 +55,7 @@ export const questionsText: Record<Language, QuestionsText> = {
       },
       privacy: {
         question: 'Will my idea stay between us?',
-        answer: "Yes. What you tell me stays between us, and so do other clients' projects.",
+        answer: 'Yes. What you tell me stays between us, and nothing goes out without your OK.',
       },
       equity: {
         question: 'Do you take equity?',
@@ -99,7 +99,7 @@ export const questionsText: Record<Language, QuestionsText> = {
       },
       privacy: {
         question: 'הרעיון שלי יישאר ביננו?',
-        answer: 'כן. מה שאתם מספרים לי נשאר ביני לביניכם, וכך גם הפרויקטים של לקוחות אחרים.',
+        answer: 'כן. מה שאתם מספרים לי נשאר ביני לביניכם, ושום דבר לא יוצא החוצה בלי אישור שלכם.',
       },
       equity: {
         question: 'אתה לוקח אחוזים?',

@@ -149,6 +149,26 @@ test('the phone and price form links report as clicks under their own names', as
   expect(callsNamed(pixelCalls, 'Contact')).toHaveLength(0);
 });
 
+test('the project and GitHub links report as clicks under their own names', async ({ page }) => {
+  const pixelCalls = await openSiteWithPixel(page, 'en');
+  await keepClicksOnPage(page);
+  for (const link of await page.locator('#experience a, #projects a').all()) {
+    await link.dispatchEvent('click');
+  }
+  await expect
+    .poll(() => detailsNamed(pixelCalls, 'Click'))
+    .toEqual([
+      { target: 'experience_ebay_mcp', section: 'experience', language: 'en' },
+      { target: 'project_oly', section: 'projects', language: 'en' },
+      { target: 'project_mypr', section: 'projects', language: 'en' },
+      { target: 'project_omri_association', section: 'projects', language: 'en' },
+      { target: 'project_cal_friend', section: 'projects', language: 'en' },
+      { target: 'project_small_bites', section: 'projects', language: 'en' },
+      { target: 'project_wise_note_taker', section: 'projects', language: 'en' },
+    ]);
+  expect(callsNamed(pixelCalls, 'Contact')).toHaveLength(0);
+});
+
 test('a middle click counts as a click and a right click does not', async ({ page }) => {
   const pixelCalls = await openSiteWithPixel(page, 'en');
   await keepClicksOnPage(page);

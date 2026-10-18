@@ -1,6 +1,7 @@
 import './about.css';
 import type { Language } from '../language/language';
 import { aboutParagraphNames, aboutStepNames, aboutText } from './about.text';
+import { aboutParagraphIcons } from './aboutParagraphIcons';
 
 interface AboutSectionProps {
   language: Language;
@@ -18,7 +19,19 @@ export const AboutSection = ({ language }: AboutSectionProps) => {
         </h2>
         {aboutParagraphNames.map((paragraphName) => (
           <p key={paragraphName} className="about-paragraph reveal-on-scroll">
-            {text.paragraphs[paragraphName]}
+            <svg
+              className="about-paragraph-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              {aboutParagraphIcons[paragraphName]}
+            </svg>
+            <span>{text.paragraphs[paragraphName]}</span>
           </p>
         ))}
         <ol className="about-steps" aria-label={text.stepsLabel}>

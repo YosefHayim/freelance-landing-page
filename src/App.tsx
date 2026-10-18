@@ -2,10 +2,12 @@ import './features/scrollEffects/scrollEffects.css';
 import { useRef } from 'react';
 import { AboutSection } from './features/about/AboutSection';
 import { ContactSection } from './features/contact/ContactSection';
+import { ExperienceSection } from './features/experience/ExperienceSection';
 import { IntroSection } from './features/intro/IntroSection';
 import type { Language } from './features/language/language';
 import { pageHeadText } from './features/language/pageHead.text';
 import { useLanguage } from './features/language/useLanguage';
+import { ProjectsSection } from './features/projects/ProjectsSection';
 import { QuestionsSection } from './features/questions/QuestionsSection';
 import { useRevealOnScroll } from './features/scrollEffects/useRevealOnScroll';
 import { useStackOnScroll } from './features/scrollEffects/useStackOnScroll';
@@ -34,6 +36,8 @@ export const App = ({ initialLanguage }: AppProps) => {
           prefersReducedMotion={prefersReducedMotion}
           isCovered={coveredSectionCount >= 1}
         />
+        <ExperienceSection language={language} />
+        <ProjectsSection language={language} />
         <AboutSection language={language} />
         <QuestionsSection language={language} />
         <ContactSection language={language} prefersReducedMotion={prefersReducedMotion} />
