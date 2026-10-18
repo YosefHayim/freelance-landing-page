@@ -1,6 +1,7 @@
 import { chatWidgetTag } from '../chat/loadChatWidget';
 import { whatsappLinkSelector } from '../whatsapp/whatsappLink';
 import { sendCustomEvent, sendStandardEvent } from './metaPixel';
+import { sendTikTokEvent } from './tikTokPixel';
 import { trackedPlace } from './trackedPlace';
 
 const middleButton = 1;
@@ -25,6 +26,7 @@ export const trackClicks = () => {
     if (clicked.closest(whatsappLinkSelector)) {
       sendStandardEvent('Contact', place);
       sendCustomEvent('WhatsAppClick', place);
+      sendTikTokEvent('Contact', place);
       return;
     }
     sendCustomEvent('Click', place);

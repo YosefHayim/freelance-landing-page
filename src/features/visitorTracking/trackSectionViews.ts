@@ -1,4 +1,5 @@
 import { sendCustomEvent } from './metaPixel';
+import { sendTikTokEvent } from './tikTokPixel';
 
 const viewDuration = 1000;
 const middleOfScreen = '-50% 0px -50% 0px';
@@ -22,6 +23,7 @@ export const trackSectionViews = (sections: HTMLElement[]) => {
     view.timer = window.setTimeout(() => {
       reportedSections.add(section);
       sendCustomEvent('SectionView', { section });
+      sendTikTokEvent('ViewContent', { section });
     }, viewDuration);
   };
 

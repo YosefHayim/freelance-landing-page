@@ -38,7 +38,7 @@ pnpm check
 This runs Biome, TypeScript, Vitest, the production build, Playwright in Chromium and WebKit,
 and a mobile Lighthouse gate. The browser tests cover both languages at 320 to 1440px,
 overflow and clipped text, accessibility, keyboard use, reduced motion, the work showcase,
-WhatsApp, phone and price form links, the Meta Pixel events, the legal pages, cache headers and
+WhatsApp, phone and price form links, the Meta and TikTok Pixel events, the legal pages, cache headers and
 404s.
 
 On macOS, WebKit moves focus with Option+Tab when full keyboard access is off, so the suite

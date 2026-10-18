@@ -4,17 +4,17 @@ import type { Language } from '../src/features/language/language';
 import { languageText } from '../src/features/language/language.text';
 import { letAppStart } from './letAppStart';
 import { letPageSettle } from './letPageSettle';
-import { pixelCallLogPrefix, visitSite } from './openSite';
+import { metaPixelLogPrefix, tikTokPixelLogPrefix, visitSite } from './openSite';
 
 const clockStart = new Date('2026-01-01T09:00:00');
 const visitStart = new Date('2026-01-01T10:00:00');
 
-const collectPixelCalls = (page: Page) => {
+const collectPixelCalls = (page: Page, logPrefix: string) => {
   const pixelCalls: unknown[][] = [];
   page.on('console', (message) => {
     const text = message.text();
-    if (!text.startsWith(pixelCallLogPrefix)) return;
-    const pixelCall = text.slice(pixelCallLogPrefix.length);
+    if (!text.startsWith(logPrefix)) return;
+    const pixelCall = text.slice(logPrefix.length);
     pixelCalls.push(JSON.parse(pixelCall));
   });
   return pixelCalls;
@@ -29,7 +29,7 @@ const detailsNamed = (pixelCalls: unknown[][], eventName: string) => {
 };
 
 const openSiteWithPixel = async (page: Page, language: Language) => {
-  const pixelCalls = collectPixelCalls(page);
+  const pixelCalls = collectPixelCalls(page, metaPixelLogPrefix);
   await visitSite(page, language);
   await letAppStart(page);
   await letPageSettle(page);
@@ -79,6 +79,12 @@ test('the pixel starts with the page view', async ({ page }) => {
   ]);
 });
 
+test('the TikTok pixel starts with the page view', async ({ page }) => {
+  const tikTokCalls = collectPixelCalls(page, tikTokPixelLogPrefix);
+  await openSiteWithPixel(page, 'en');
+  await expect.poll(() => tikTokCalls.slice(0, 1)).toEqual([['page']]);
+});
+
 test('a WhatsApp click is a contact and other clicks name their button', async ({ page }) => {
   const pixelCalls = await openSiteWithPixel(page, 'he');
   await keepClicksOnPage(page);
@@ -113,6 +119,7 @@ test('a WhatsApp click is a contact and other clicks name their button', async (
 });
 
 test('every WhatsApp button and the top bar report under their own names', async ({ page }) => {
+  const tikTokCalls = collectPixelCalls(page, tikTokPixelLogPrefix);
   const pixelCalls = await openSiteWithPixel(page, 'en');
   await keepClicksOnPage(page);
   for (const link of await page.locator('a[href^="https://wa.me/"]').all()) {
@@ -128,6 +135,7 @@ test('every WhatsApp button and the top bar report under their own names', async
   ];
   expect(detailsNamed(pixelCalls, 'Contact')).toEqual(whatsappButtons);
   expect(detailsNamed(pixelCalls, 'WhatsAppClick')).toEqual(whatsappButtons);
+  await expect.poll(() => detailsNamed(tikTokCalls, 'Contact')).toEqual(whatsappButtons);
   expect(pixelCalls).toContainEqual([
     'trackCustom',
     'Click',
@@ -136,6 +144,7 @@ test('every WhatsApp button and the top bar report under their own names', async
 });
 
 test('the phone and price form links report as clicks under their own names', async ({ page }) => {
+  const tikTokCalls = collectPixelCalls(page, tikTokPixelLogPrefix);
   const pixelCalls = await openSiteWithPixel(page, 'en');
   await keepClicksOnPage(page);
   await page.locator('[data-track="contact_phone"]').dispatchEvent('click');
@@ -147,6 +156,7 @@ test('the phone and price form links report as clicks under their own names', as
       { target: 'contact_start_form', section: 'contact', language: 'en' },
     ]);
   expect(callsNamed(pixelCalls, 'Contact')).toHaveLength(0);
+  expect(callsNamed(tikTokCalls, 'Contact')).toHaveLength(0);
 });
 
 test('the project and GitHub links report as clicks under their own names', async ({ page }) => {
@@ -226,6 +236,7 @@ test('pressing and holding reports one hold, a quick click reports none', async 
 test('scrolling reports each depth once and the sections the visitor stops on', async ({
   page,
 }) => {
+  const tikTokCalls = collectPixelCalls(page, tikTokPixelLogPrefix);
   const pixelCalls = await openSiteWithPixel(page, 'en');
   await page.clock.runFor(1100);
   await expect
@@ -248,6 +259,12 @@ test('scrolling reports each depth once and the sections the visitor stops on', 
     ]);
   await expect
     .poll(() => callsNamed(pixelCalls, 'SectionView').map((pixelCall) => pixelCall[2]))
+    .toEqual([
+      { section: 'intro', language: 'en' },
+      { section: 'contact', language: 'en' },
+    ]);
+  await expect
+    .poll(() => detailsNamed(tikTokCalls, 'ViewContent'))
     .toEqual([
       { section: 'intro', language: 'en' },
       { section: 'contact', language: 'en' },
