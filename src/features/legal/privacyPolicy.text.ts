@@ -37,11 +37,11 @@ export const privacyPolicyText: Record<Language, LegalDocumentText> = {
         content: [
           {
             paragraph:
-              'Both sites use the Meta Pixel and Google Tag Manager with Google Analytics. They record page views, clicks, hovers and time on the page. On this site they also record how far you scroll, the sections you view, and when you select or copy text, but not the text itself. A tap on a WhatsApp button counts as a Contact. On the project form they also record when you start, the options you pick (not the text you type), when you leave, and a Lead when you send, with the type of product and a price estimate.',
+              'Both sites use the Meta Pixel and Google Tag Manager with Google Analytics, and this site also uses the TikTok Pixel. They record page views, clicks, hovers and time on the page. On this site they also record how far you scroll, the sections you view, and when you select or copy text, but not the text itself. A tap on a WhatsApp button counts as a Contact. On the project form they also record when you start, the options you pick (not the text you type), when you leave, and a Lead when you send, with the type of product and a price estimate.',
           },
           {
             paragraph:
-              'These events never include your email or phone. Meta and Google do get your IP address and browser details, and may set cookies such as _fbp and _ga. Some events also reach Meta through its Conversions API Gateway, a server that passes them on. Meta and Google may link this to your accounts with them and use it under their own policies.',
+              'These events never include your email or phone. Meta, Google and TikTok do get your IP address and browser details, and may set cookies such as _fbp, _ga and _ttp. Some events also reach Meta through its Conversions API Gateway, a server that passes them on. Meta, Google and TikTok may link this to your accounts with them and use it under their own policies.',
           },
           {
             paragraph:
@@ -56,7 +56,7 @@ export const privacyPolicyText: Record<Language, LegalDocumentText> = {
             points: [
               'jts-language remembers your language for one year.',
               'The project form keeps your unsent answers and a visit id in your browser storage, so a reload loses nothing. Both are removed after you send.',
-              'Meta and Google cookies, as described above.',
+              'Meta, Google and TikTok cookies, as described above.',
             ],
           },
           {
@@ -91,6 +91,7 @@ export const privacyPolicyText: Record<Language, LegalDocumentText> = {
               'Cloudflare hosts both sites, stores the form answers, sends our emails, and checks the form for bots with Turnstile, which sees your IP address.',
               'Google: our inbox is Gmail, so emails with your answers and messages arrive there. Google also runs Google Tag Manager and Google Analytics.',
               'Meta runs the Meta Pixel and WhatsApp.',
+              'TikTok runs the TikTok Pixel on this site.',
               'Replybase runs the chat window on this site. It keeps the chat and uses OpenAI to write the answers, so what you type in the chat reaches OpenAI too.',
               'Voice input on the form uses the speech service built into your browser. The company behind your browser, such as Google or Apple, may process the audio. We get only the text.',
             ],
@@ -115,7 +116,7 @@ export const privacyPolicyText: Record<Language, LegalDocumentText> = {
         content: [
           {
             paragraph:
-              'You can ask to see the information we hold about you, and to correct or delete it. Write to us using the details below. You can also block cookies in your browser and change your ad settings in your Meta and Google accounts.',
+              'You can ask to see the information we hold about you, and to correct or delete it. Write to us using the details below. You can also block cookies in your browser and change your ad settings in your Meta, Google and TikTok accounts.',
           },
           {
             paragraph:
@@ -168,11 +169,11 @@ export const privacyPolicyText: Record<Language, LegalDocumentText> = {
         content: [
           {
             paragraph:
-              'בשני האתרים פועלים Meta Pixel ו-Google Tag Manager עם Google Analytics. הם רושמים צפיות בעמוד, לחיצות, מעבר עם העכבר וכמה זמן הייתם בעמוד. באתר הזה הם רושמים גם עד כמה גללתם, אילו חלקים ראיתם, ומתי סימנתם או העתקתם טקסט, אבל לא את הטקסט עצמו. לחיצה על כפתור וואטסאפ נספרת כפנייה (Contact). בטופס הפרויקט הם רושמים גם מתי התחלתם, אילו אפשרויות בחרתם (בלי הטקסט שכתבתם), מתי יצאתם, ופנייה (Lead) כשאתם שולחים, עם סוג המוצר והערכת מחיר.',
+              'בשני האתרים פועלים Meta Pixel ו-Google Tag Manager עם Google Analytics, ובאתר הזה פועל גם TikTok Pixel. הם רושמים צפיות בעמוד, לחיצות, מעבר עם העכבר וכמה זמן הייתם בעמוד. באתר הזה הם רושמים גם עד כמה גללתם, אילו חלקים ראיתם, ומתי סימנתם או העתקתם טקסט, אבל לא את הטקסט עצמו. לחיצה על כפתור וואטסאפ נספרת כפנייה (Contact). בטופס הפרויקט הם רושמים גם מתי התחלתם, אילו אפשרויות בחרתם (בלי הטקסט שכתבתם), מתי יצאתם, ופנייה (Lead) כשאתם שולחים, עם סוג המוצר והערכת מחיר.',
           },
           {
             paragraph:
-              'האירועים האלה אף פעם לא כוללים את האימייל או הטלפון שלכם. Meta ו-Google כן מקבלות את כתובת ה-IP ופרטי הדפדפן, ויכולות לשמור עוגיות כמו _fbp ו-_ga. חלק מהאירועים מגיעים ל-Meta גם דרך Conversions API Gateway, שרת שמעביר אותם הלאה. Meta ו-Google יכולות לקשר את המידע לחשבונות שלכם אצלן ולהשתמש בו לפי המדיניות שלהן.',
+              'האירועים האלה אף פעם לא כוללים את האימייל או הטלפון שלכם. Meta, Google ו-TikTok כן מקבלות את כתובת ה-IP ופרטי הדפדפן, ויכולות לשמור עוגיות כמו _fbp, _ga ו-_ttp. חלק מהאירועים מגיעים ל-Meta גם דרך Conversions API Gateway, שרת שמעביר אותם הלאה. Meta, Google ו-TikTok יכולות לקשר את המידע לחשבונות שלכם אצלן ולהשתמש בו לפי המדיניות שלהן.',
           },
           {
             paragraph:
@@ -187,7 +188,7 @@ export const privacyPolicyText: Record<Language, LegalDocumentText> = {
             points: [
               'jts-language זוכרת את השפה שבחרתם, למשך שנה.',
               'טופס הפרויקט שומר בדפדפן את התשובות שעוד לא שלחתם ומזהה ביקור, כדי שרענון לא ימחק כלום. שניהם נמחקים אחרי השליחה.',
-              'העוגיות של Meta ו-Google, כמו שהסברנו למעלה.',
+              'העוגיות של Meta, Google ו-TikTok, כמו שהסברנו למעלה.',
             ],
           },
           {
@@ -221,6 +222,7 @@ export const privacyPolicyText: Record<Language, LegalDocumentText> = {
               'Cloudflare מארחת את שני האתרים, שומרת את התשובות מהטופס, שולחת את המיילים שלנו ובודקת עם Turnstile שהטופס לא נשלח מבוט. Turnstile רואה את כתובת ה-IP שלכם.',
               'Google: תיבת המייל שלנו נמצאת ב-Gmail, אז מיילים עם התשובות וההודעות שלכם מגיעים לשם. Google מפעילה גם את Google Tag Manager ואת Google Analytics.',
               'Meta מפעילה את Meta Pixel ואת וואטסאפ.',
+              'TikTok מפעילה את TikTok Pixel באתר הזה.',
               'Replybase מפעילה את הצ׳אט באתר הזה. היא שומרת את השיחה ומשתמשת ב-OpenAI כדי לכתוב את התשובות, אז מה שאתם כותבים בצ׳אט מגיע גם ל-OpenAI.',
               'הקלטה קולית בטופס עובדת דרך שירות הדיבור של הדפדפן. החברה שמאחורי הדפדפן, למשל Google או Apple, יכולה לעבד את ההקלטה. אנחנו מקבלים רק את הטקסט.',
             ],
@@ -244,7 +246,7 @@ export const privacyPolicyText: Record<Language, LegalDocumentText> = {
         content: [
           {
             paragraph:
-              'אתם יכולים לבקש לראות את המידע שיש לנו עליכם, לתקן אותו או למחוק אותו. פנו אלינו בפרטים שלמטה. אפשר גם לחסום עוגיות בדפדפן ולשנות את הגדרות הפרסום בחשבונות Meta ו-Google שלכם.',
+              'אתם יכולים לבקש לראות את המידע שיש לנו עליכם, לתקן אותו או למחוק אותו. פנו אלינו בפרטים שלמטה. אפשר גם לחסום עוגיות בדפדפן ולשנות את הגדרות הפרסום בחשבונות Meta, Google ו-TikTok שלכם.',
           },
           {
             paragraph:

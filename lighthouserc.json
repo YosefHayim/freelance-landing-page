@@ -6,7 +6,11 @@
       "url": ["http://127.0.0.1:4173/"],
       "numberOfRuns": 3,
       "settings": {
-        "blockedUrlPatterns": ["*://connect.facebook.net/*", "*://www.googletagmanager.com/*"]
+        "blockedUrlPatterns": [
+          "*://connect.facebook.net/*",
+          "*://www.googletagmanager.com/*",
+          "*://analytics.tiktok.com/*"
+        ]
       }
     },
     "assert": {
