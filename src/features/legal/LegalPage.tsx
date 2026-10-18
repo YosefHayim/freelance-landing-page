@@ -1,5 +1,6 @@
 import './legal.css';
 import { useRef } from 'react';
+import { startFormAddress } from '../contact/startFormLink';
 import type { Language } from '../language/language';
 import { useLanguage } from '../language/useLanguage';
 import { TopBar } from '../topBar/TopBar';
@@ -11,7 +12,6 @@ import { legalText } from './legal.text';
 import { type LegalPageName, legalDocuments } from './legalPages';
 
 const siteAddress = 'joseph-tech-solutions.dev';
-const formAddress = 'start.joseph-tech-solutions.dev';
 
 interface LegalPageProps {
   initialLanguage: Language;
@@ -41,7 +41,7 @@ export const LegalPage = ({ initialLanguage, legalPageName }: LegalPageProps) =>
             </h1>
             <p className="legal-details">{text.updated}</p>
             <p className="legal-details">
-              {text.sitesLabel}: <bdi>{siteAddress}</bdi>, <bdi>{formAddress}</bdi>
+              {text.sitesLabel}: <bdi>{siteAddress}</bdi>, <bdi>{startFormAddress}</bdi>
             </p>
             <p className="legal-intro">{legalDocument.intro}</p>
             {legalDocument.topics.map((topic) => (

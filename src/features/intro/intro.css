@@ -23,6 +23,11 @@
   text-wrap: balance;
 }
 
+.headline-line {
+  display: block;
+  text-wrap: balance;
+}
+
 .headline-photo {
   position: relative;
   z-index: 1;

@@ -1,8 +1,8 @@
 import './workShowcase.css';
 import { useRef } from 'react';
-import { useIsOnScreen } from '../../hooks/useIsOnScreen';
 import type { Language } from '../language/language';
 import { introText } from './intro.text';
+import { useIsOnScreen } from './useIsOnScreen';
 import { useWorkTypeRotation } from './useWorkTypeRotation';
 import { workTypeNames } from './workTypes';
 import { workTypeVisuals } from './workTypeVisuals';

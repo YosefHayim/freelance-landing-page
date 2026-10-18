@@ -19,6 +19,24 @@ for (const language of languages) {
   });
 }
 
+for (const language of languages) {
+  test(`${language} closing offers a phone call and the price form in the page language`, async ({
+    page,
+  }) => {
+    await openSite(page, language);
+    const contact = page.locator('#contact');
+    const text = contactText[language];
+    await expect(contact.getByRole('link', { name: text.phoneLabel })).toHaveAttribute(
+      'href',
+      'tel:+972546187549',
+    );
+    await expect(contact.getByRole('link', { name: text.startFormLabel })).toHaveAttribute(
+      'href',
+      `https://start.joseph-tech-solutions.dev/${language}`,
+    );
+  });
+}
+
 test('profile links point to LinkedIn and GitHub', async ({ page }) => {
   await openSite(page, 'en');
   await expect(page.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(

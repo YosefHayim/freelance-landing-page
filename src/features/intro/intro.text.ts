@@ -24,12 +24,12 @@ export const introText: Record<Language, IntroText> = {
     sectionLabel: 'Intro',
     greeting: "Hi, I'm Joseph",
     photoAlt: 'Joseph Sabag',
-    headline: 'Software should work for you',
-    mutedLine: 'Take back the reins',
+    headline: 'The worst is seeing your idea in the app store',
+    mutedLine: "With someone else's name on it",
     summary:
-      "Right now it's the other way round: the product has been \"almost ready\" for months, the team types what a script does in a second, and the AI shines in the demo and falls over at 3am. What's stuck gets finished, what's manual gets automated, and what breaks gets rebuilt to hold.",
-    callLabel: "Let's talk",
-    callHoverLabel: '15 minutes, no sales pitch',
+      "And it happens. Not because they're smarter. They just started. What stops most founders isn't the idea. It's the tech side.",
+    callLabel: 'Message on WhatsApp',
+    callHoverLabel: 'Tell me your idea',
     showcaseLabel: 'What I build',
     workTypes: {
       website: {
@@ -49,12 +49,12 @@ export const introText: Record<Language, IntroText> = {
     sectionLabel: 'פתיחה',
     greeting: 'היי, אני יוסף',
     photoAlt: 'יוסף סבג',
-    headline: 'התוכנה אמורה לעבוד בשבילכם',
-    mutedLine: 'הגיע הזמן לקחת את המושכות לידיים',
+    headline: 'הכי מבאס זה לראות את הרעיון שלכם בחנות',
+    mutedLine: 'עם השם של מישהו אחר',
     summary:
-      'בינתיים זה הפוך: המוצר "כמעט מוכן" כבר חודשים, הצוות מקליד ביד מה שסקריפט גומר בשנייה, וה-AI מבריק בדמו ונופל בשלוש בלילה. מה שתקוע נסגר, מה שידני עובר לאוטומציה, ומה שנשבר נבנה כך שיחזיק.',
-    callLabel: 'בואו נדבר',
-    callHoverLabel: 'רבע שעה, בלי חפירות',
+      'וזה קורה. לא כי הם חכמים יותר. הם פשוט התחילו. מה שעוצר את רוב היזמים זה לא הרעיון. זה הצד הטכני.',
+    callLabel: 'שלחו הודעה בוואטסאפ',
+    callHoverLabel: 'ספרו לי על הרעיון',
     showcaseLabel: 'מה אני בונה',
     workTypes: {
       website: { label: 'אתרים ומערכות', caption: 'מערכת ניהול לעמותה: תורמים, תרומות ודוחות' },

@@ -4,7 +4,8 @@ A one-page bilingual (English and Hebrew) business site for Joseph Sabag, served
 https://joseph-tech-solutions.dev/ by one Cloudflare Worker named `freelance-landing-page`, plus
 a privacy policy at `/privacy` and terms of use at `/terms`. The look and motion are final;
 change them only when asked. Every call button opens WhatsApp at
-+972546187549 with a localized draft message. There are no forms, accounts, business API,
++972546187549 with a localized draft message, and the closing also offers a phone call and the
+project form at start.joseph-tech-solutions.dev. This site has no forms, accounts, business API,
 database or secrets.
 
 ## Structure
@@ -38,7 +39,7 @@ Where a new file goes:
 4. Unsure? The feature folder.
 
 Name patterns: `<Name>Section.tsx` (a full-screen section), `<Name>Canvas.tsx` (a canvas
-animation), `<Problem>Animation.tsx`, `<Name>.tsx` (other components), `use<Name>.ts`,
+animation), `<Name>.tsx` (other components), `use<Name>.ts`,
 `<name>.ts` (no React), `<feature>.text.ts` (English and Hebrew words), `<feature>.css`,
 `<file>.test.ts` (colocated Vitest), `e2e/<topic>.spec.ts`. A name says what the thing is.
 No design-file jargon such as sheet, hero, pains, scene, stage, band, toast or copy, in file
@@ -74,6 +75,7 @@ names or CSS classes.
   `jts-language` cookie (a manual choice) wins, else the link's `?lang=he` or `?lang=en` (ad
   links set it to match the ad), else the browser's first `Accept-Language`.
 - Every visible word and accessible label lives in a `<feature>.text.ts` in both languages.
+- The page speaks to one visitor: a founder with an app idea and no tech side.
 - Voice: spoken and specific. Open on the visitor's problem in their own words, then give the
   fix. The visitor is the one acting, so keep "I" rare. Hebrew talks to the visitor in plural
   and sounds spoken, not written. No em dashes, no revenue promises, no claims beyond the

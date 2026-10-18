@@ -53,10 +53,8 @@ export const IntroSection = ({ language, prefersReducedMotion, isCovered }: Intr
               height="320"
             />
           </span>
-          <br />
-          {text.headline}
-          <br />
-          <span className="muted-line">{text.mutedLine}</span>
+          <span className="headline-line">{text.headline}</span>
+          <span className="headline-line muted-line">{text.mutedLine}</span>
         </h1>
         <p className="intro-summary enter-on-load">{text.summary}</p>
         <div className="enter-on-load" style={{ animationDelay: '.15s' }}>
