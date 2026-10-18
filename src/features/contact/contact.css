@@ -92,12 +92,25 @@
   max-width: 14em;
 }
 
-.contact-muted-line {
-  display: block;
+.contact-other-ways {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   color: #ffe1c7;
-  font-size: 0.62em;
-  margin-top: 0.4em;
-  letter-spacing: -0.02em;
+  font-size: 16px;
+}
+
+.contact-other-ways a {
+  display: inline-block;
+  padding-block: 4px;
+  color: var(--white);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-other-ways a:focus-visible {
+  outline-color: var(--white);
 }
 
 .contact-actions {

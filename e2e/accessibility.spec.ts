@@ -1,7 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { languageText } from '../src/features/language/language.text';
-import { problemsText } from '../src/features/problems/problems.text';
 import { topBarText } from '../src/features/topBar/topBar.text';
 import { languages, openSite, revealEverySection } from './openSite';
 
@@ -16,17 +15,12 @@ for (const language of languages) {
   });
 }
 
-test('keyboard reaches the top bar and arrow keys move through the problems', async ({
+test('keyboard reaches the language switch and the top bar call link', async ({
   page,
 }, testInfo) => {
   const tabKey =
     testInfo.project.name === 'webkit' && process.platform === 'darwin' ? 'Alt+Tab' : 'Tab';
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  const clockStart = new Date('2026-01-01T00:00:00Z');
-  const keyboardTime = new Date('2026-01-01T00:01:00Z');
-  await page.clock.install({ time: clockStart });
   await openSite(page, 'en');
-  await page.clock.pauseAt(keyboardTime);
 
   await page.keyboard.press(tabKey);
   await expect(page.getByRole('button', { name: languageText.en.switchLabel })).toBeFocused();
@@ -35,20 +29,4 @@ test('keyboard reaches the top bar and arrow keys move through the problems', as
     .getByRole('navigation')
     .getByRole('link', { name: topBarText.en.callLabel });
   await expect(callLink).toBeFocused();
-
-  const activeTab = page.getByRole('tab', { selected: true });
-  await page.locator('#problem-animation-panel').scrollIntoViewIfNeeded();
-  await expect(page.locator('.problem-progress-bar.is-running')).toHaveCount(1);
-  await activeTab.focus();
-  await page.keyboard.press('ArrowDown');
-  await expect(activeTab.locator('.problem-tab-title')).toHaveText(
-    problemsText.en.problems[1].title,
-  );
-  await expect(activeTab).toBeFocused();
-  await page.keyboard.press('ArrowUp');
-  await page.keyboard.press('ArrowUp');
-  await expect(activeTab.locator('.problem-tab-title')).toHaveText(
-    problemsText.en.problems[7].title,
-  );
-  await expect(activeTab).toBeFocused();
 });

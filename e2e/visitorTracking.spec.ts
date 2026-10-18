@@ -54,7 +54,7 @@ const scrollToEdge = (page: Page, edge: 'top' | 'bottom') =>
   );
 
 const introCallLink = (page: Page, language: Language) =>
-  page.getByRole('main').getByRole('link', { name: introText[language].callLabel });
+  page.locator('#intro').getByRole('link', { name: introText[language].callLabel });
 
 const keepClicksOnPage = (page: Page) =>
   page.evaluate(() => {
@@ -133,6 +133,20 @@ test('every WhatsApp button and the top bar report under their own names', async
     'Click',
     { target: 'language_switch', section: 'page', language: 'he' },
   ]);
+});
+
+test('the phone and price form links report as clicks under their own names', async ({ page }) => {
+  const pixelCalls = await openSiteWithPixel(page, 'en');
+  await keepClicksOnPage(page);
+  await page.locator('[data-track="contact_phone"]').dispatchEvent('click');
+  await page.locator('[data-track="contact_start_form"]').dispatchEvent('click');
+  await expect
+    .poll(() => detailsNamed(pixelCalls, 'Click'))
+    .toEqual([
+      { target: 'contact_phone', section: 'contact', language: 'en' },
+      { target: 'contact_start_form', section: 'contact', language: 'en' },
+    ]);
+  expect(callsNamed(pixelCalls, 'Contact')).toHaveLength(0);
 });
 
 test('a middle click counts as a click and a right click does not', async ({ page }) => {

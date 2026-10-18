@@ -6,7 +6,7 @@ import { IntroSection } from './features/intro/IntroSection';
 import type { Language } from './features/language/language';
 import { pageHeadText } from './features/language/pageHead.text';
 import { useLanguage } from './features/language/useLanguage';
-import { ProblemsSection } from './features/problems/ProblemsSection';
+import { QuestionsSection } from './features/questions/QuestionsSection';
 import { useRevealOnScroll } from './features/scrollEffects/useRevealOnScroll';
 import { useStackOnScroll } from './features/scrollEffects/useStackOnScroll';
 import { TopBar } from './features/topBar/TopBar';
@@ -34,16 +34,8 @@ export const App = ({ initialLanguage }: AppProps) => {
           prefersReducedMotion={prefersReducedMotion}
           isCovered={coveredSectionCount >= 1}
         />
-        <ProblemsSection
-          language={language}
-          prefersReducedMotion={prefersReducedMotion}
-          isCovered={coveredSectionCount >= 2}
-        />
-        <AboutSection
-          language={language}
-          prefersReducedMotion={prefersReducedMotion}
-          isCovered={coveredSectionCount >= 3}
-        />
+        <AboutSection language={language} />
+        <QuestionsSection language={language} />
         <ContactSection language={language} prefersReducedMotion={prefersReducedMotion} />
       </main>
     </>

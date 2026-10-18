@@ -38,7 +38,7 @@ for (const language of languages) {
       for (const section of await page.locator('main > section').all()) {
         const clippedText = await section.evaluate((sectionElement) => {
           const bounds = sectionElement.getBoundingClientRect();
-          const textElements = sectionElement.querySelectorAll('h1, h2, p, a, button, li');
+          const textElements = sectionElement.querySelectorAll('h1, h2, p, a, button, li, dt, dd');
           return Array.from(textElements)
             .filter((element) => {
               const box = element.getBoundingClientRect();

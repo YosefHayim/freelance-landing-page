@@ -1,11 +1,12 @@
 import './contact.css';
 import type { Language } from '../language/language';
 import { LegalLinks } from '../legal/LegalLinks';
-import { whatsappLink } from '../whatsapp/whatsappLink';
+import { whatsappLink, whatsappNumber } from '../whatsapp/whatsappLink';
 import { CopiedNotice } from './CopiedNotice';
 import { contactText } from './contact.text';
 import { SocialLinks } from './SocialLinks';
 import { StarrySkyCanvas } from './StarrySkyCanvas';
+import { startFormLink } from './startFormLink';
 import { useCopiedNotice } from './useCopiedNotice';
 
 const sunsetClouds = [
@@ -47,7 +48,6 @@ interface ContactSectionProps {
 export const ContactSection = ({ language, prefersReducedMotion }: ContactSectionProps) => {
   const text = contactText[language];
   const { copiedCount, isNoticeVisible, showNotice } = useCopiedNotice();
-  const [firstHeadingLine, secondHeadingLine] = text.headingLines;
 
   return (
     <section className="contact-section" id="contact" aria-labelledby="contact-heading">
@@ -58,11 +58,7 @@ export const ContactSection = ({ language, prefersReducedMotion }: ContactSectio
       <StarrySkyCanvas prefersReducedMotion={prefersReducedMotion} />
       <div className="contact-content">
         <h2 id="contact-heading" className="display-heading contact-heading reveal-on-scroll">
-          {firstHeadingLine}
-          <br />
-          {secondHeadingLine}
-          <br />
-          <span className="contact-muted-line">{text.mutedLine}</span>
+          {text.heading}
         </h2>
         <div className="contact-actions reveal-on-scroll" style={{ transitionDelay: '.1s' }}>
           <a
@@ -74,6 +70,20 @@ export const ContactSection = ({ language, prefersReducedMotion }: ContactSectio
           >
             {text.callLabel}
           </a>
+        </div>
+        <div className="contact-other-ways reveal-on-scroll" style={{ transitionDelay: '.2s' }}>
+          <p>
+            {text.phoneLead}{' '}
+            <a data-track="contact_phone" href={`tel:+${whatsappNumber}`} dir="ltr">
+              {text.phoneLabel}
+            </a>
+          </p>
+          <p>
+            {text.startFormLead}{' '}
+            <a data-track="contact_start_form" href={startFormLink(language)}>
+              {text.startFormLabel}
+            </a>
+          </p>
         </div>
       </div>
       <footer className="site-footer">

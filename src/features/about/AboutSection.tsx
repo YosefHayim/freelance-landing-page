@@ -1,48 +1,26 @@
 import './about.css';
-import { useRef } from 'react';
 import type { Language } from '../language/language';
 import { aboutParagraphNames, aboutText } from './about.text';
-import { Iceberg } from './Iceberg';
 
 interface AboutSectionProps {
   language: Language;
-  prefersReducedMotion: boolean;
-  isCovered: boolean;
 }
 
-export const AboutSection = ({ language, prefersReducedMotion, isCovered }: AboutSectionProps) => {
-  const sectionRef = useRef<HTMLElement>(null);
+export const AboutSection = ({ language }: AboutSectionProps) => {
   const text = aboutText[language];
 
   return (
-    <section
-      ref={sectionRef}
-      className="stacking-section"
-      id="about"
-      aria-labelledby="about-heading"
-    >
+    <section className="stacking-section" id="about" aria-labelledby="about-heading">
       <div className="section-content about-layout">
-        <div>
-          <h2 id="about-heading" className="display-heading about-heading reveal-on-scroll">
-            <span>{text.heading}</span>
-            {text.mutedHeadingLines.map((line) => (
-              <span key={line} className="muted-line">
-                {line}
-              </span>
-            ))}
-          </h2>
-          {aboutParagraphNames.map((paragraphName) => (
-            <p key={paragraphName} className="about-paragraph reveal-on-scroll">
-              {text.paragraphs[paragraphName]}
-            </p>
-          ))}
-        </div>
-        <Iceberg
-          language={language}
-          prefersReducedMotion={prefersReducedMotion}
-          isCovered={isCovered}
-          tiltAreaRef={sectionRef}
-        />
+        <h2 id="about-heading" className="display-heading about-heading reveal-on-scroll">
+          <span>{text.heading}</span>
+          <span className="muted-line">{text.mutedHeading}</span>
+        </h2>
+        {aboutParagraphNames.map((paragraphName) => (
+          <p key={paragraphName} className="about-paragraph reveal-on-scroll">
+            {text.paragraphs[paragraphName]}
+          </p>
+        ))}
       </div>
     </section>
   );
