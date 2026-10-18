@@ -34,6 +34,23 @@ for (const language of languages) {
   });
 }
 
+test('project pictures are WebP files cached for a year', async ({ page, request }) => {
+  await openSite(page, 'en');
+  const imageAddresses = await page
+    .locator('#projects .project-image')
+    .evaluateAll((images: HTMLImageElement[]) => images.map((image) => image.src));
+  expect(imageAddresses).toHaveLength(liveProjects.length);
+  for (const imageAddress of imageAddresses) {
+    expect(new URL(imageAddress).pathname, imageAddress).toMatch(/^\/assets\/.+\.webp$/);
+    const imageResponse = await request.get(imageAddress);
+    expect(imageResponse.status(), imageAddress).toBe(200);
+    expect(imageResponse.headers()['content-type'], imageAddress).toBe('image/webp');
+    expect(imageResponse.headers()['cache-control'], imageAddress).toBe(
+      'public, max-age=31536000, immutable',
+    );
+  }
+});
+
 for (const language of languages) {
   test(`${language} the GitHub stars proof opens the eBay tool on GitHub`, async ({ page }) => {
     await openSite(page, language);

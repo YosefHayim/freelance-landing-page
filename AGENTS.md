@@ -84,6 +84,8 @@ names or CSS classes.
   line in `experience.text.ts`.
 - Project cards link to live work the owner approved. Their pictures are 600x450 WebP files in
   `assets/projects/`, lazy loaded, since the content policy allows only images from this site.
+  Encode them with `cwebp -q 60 -m 6 -af -pass 10` and keep each above 4 KB, or Vite inlines it
+  as a `data:` URL the content policy blocks.
 - Use CSS logical properties. Mirror directional animations under `html[dir="rtl"]`.
 - The privacy policy and terms (`features/legal/`) cover this site and the project form at
   start.joseph-tech-solutions.dev (the `project-brief` repo). When tracking, a stored field or an
