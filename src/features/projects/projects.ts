@@ -7,6 +7,7 @@ export type ProjectName =
   | 'myPr'
   | 'omriAssociation'
   | 'calFriend'
+  | 'replybase'
   | 'smallBites'
   | 'wiseNoteTaker';
 
@@ -20,7 +21,7 @@ type Project = {
 
 export const projectGroups: Record<ProjectGroupName, ProjectName[]> = {
   client: ['oly', 'myPr', 'omriAssociation'],
-  own: ['calFriend', 'smallBites', 'wiseNoteTaker'],
+  own: ['calFriend', 'replybase', 'smallBites', 'wiseNoteTaker'],
 };
 
 export const projects: Record<ProjectName, Project> = {
@@ -43,6 +44,11 @@ export const projects: Record<ProjectName, Project> = {
     href: 'https://calfriend.ai/',
     linkKind: 'site',
     trackedName: 'project_cal_friend',
+  },
+  replybase: {
+    href: 'https://replybase.dev/',
+    linkKind: 'site',
+    trackedName: 'project_replybase',
   },
   smallBites: {
     href: 'https://apps.apple.com/app/id6759283694',
