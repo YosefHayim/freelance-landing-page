@@ -30,7 +30,7 @@ for (const language of languages) {
       await projectImage.scrollIntoViewIfNeeded();
       await expect
         .poll(() => projectImage.evaluate((image: HTMLImageElement) => image.naturalWidth))
-        .toBe(600);
+        .toBe(1200);
     }
   });
 }
