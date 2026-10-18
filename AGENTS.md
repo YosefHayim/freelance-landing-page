@@ -75,7 +75,8 @@ names or CSS classes.
   `jts-language` cookie (a manual choice) wins, else the link's `?lang=he` or `?lang=en` (ad
   links set it to match the ad), else the browser's first `Accept-Language`.
 - Every visible word and accessible label lives in a `<feature>.text.ts` in both languages.
-- The page speaks to one visitor: a founder with an app idea and no tech side.
+- The page speaks to one visitor: a founder with an app idea, or one who built a product with AI
+  and is not sure it is secure, tested and ready for the next version.
 - Voice: spoken and specific. Open on the visitor's problem in their own words, then give the
   fix. The visitor is the one acting, so keep "I" rare. Hebrew talks to the visitor in plural
   and sounds spoken, not written. No em dashes, no revenue promises, no claims beyond the

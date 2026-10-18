@@ -60,6 +60,9 @@ export const ContactSection = ({ language, prefersReducedMotion }: ContactSectio
         <h2 id="contact-heading" className="display-heading contact-heading reveal-on-scroll">
           {text.heading}
         </h2>
+        <p className="contact-lead reveal-on-scroll" style={{ transitionDelay: '.05s' }}>
+          {text.lead}
+        </p>
         <div className="contact-actions reveal-on-scroll" style={{ transitionDelay: '.1s' }}>
           <a
             className="contact-call-button"

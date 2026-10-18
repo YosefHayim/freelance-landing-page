@@ -10,8 +10,8 @@ type WorkExamplesText = {
     onDeviceAi: string;
   };
   automation: {
-    spreadsheet: string;
-    invoice: string;
+    website: string;
+    telegram: string;
     sent: string;
   };
   aiTool: {
@@ -33,10 +33,10 @@ export const workExamplesText: Record<Language, WorkExamplesText> = {
       monthlyReport: 'Monthly report',
     },
     app: { onDeviceAi: 'On-device AI' },
-    automation: { spreadsheet: 'Sheet', invoice: 'Invoice', sent: 'Sent' },
+    automation: { website: 'Website', telegram: 'Telegram', sent: 'Sent' },
     aiTool: {
-      question: 'How many eBay orders came in today?',
-      answer: 'Three. Two shipped, one is waiting for a label.',
+      question: 'I have a story nobody has published yet. Who should hear it?',
+      answer: 'I found three journalists who cover this topic.',
     },
     extension: {
       address: 'chatgpt.com',
@@ -51,10 +51,10 @@ export const workExamplesText: Record<Language, WorkExamplesText> = {
       monthlyReport: 'דוח חודשי',
     },
     app: { onDeviceAi: 'AI על המכשיר' },
-    automation: { spreadsheet: 'אקסל', invoice: 'חשבונית', sent: 'נשלחה' },
+    automation: { website: 'אתר', telegram: 'טלגרם', sent: 'נשלח' },
     aiTool: {
-      question: 'כמה הזמנות נכנסו היום ב-eBay?',
-      answer: 'שלוש. שתיים כבר נשלחו, אחת מחכה לתווית.',
+      question: 'יש לי סיפור שעוד לא פורסם. למי כדאי לספר?',
+      answer: 'מצאתי שלושה עיתונאים שכותבים על הנושא.',
     },
     extension: {
       address: 'chatgpt.com',

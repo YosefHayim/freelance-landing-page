@@ -5,9 +5,6 @@ type WhatsappText = {
 };
 
 export const whatsappText: Record<Language, WhatsappText> = {
-  en: {
-    message:
-      'Hi Joseph, I found you through your site. I have an idea and would love to tell you about it.',
-  },
-  he: { message: 'היי יוסף, הגעתי דרך האתר. יש לי רעיון ואשמח לספר לך עליו.' },
+  en: { message: 'Hi Joseph, I have an idea I want to build. When can we set up a call?' },
+  he: { message: 'היי יוסף, יש לי רעיון שאני רוצה לפתח. מתי אפשר לקבוע שיחה?' },
 };

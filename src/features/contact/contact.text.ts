@@ -2,6 +2,7 @@ import type { Language } from '../language/language';
 
 type ContactText = {
   heading: string;
+  lead: string;
   callLabel: string;
   phoneLead: string;
   phoneLabel: string;
@@ -14,23 +15,25 @@ type ContactText = {
 
 export const contactText: Record<Language, ContactText> = {
   en: {
-    heading: 'Start before someone else does',
-    callLabel: 'Message on WhatsApp',
+    heading: "Tell me about your idea, or what you've already built",
+    lead: "In 10 minutes we'll work out together the right way forward, professionally. Free.",
+    callLabel: 'Book a call on WhatsApp →',
     phoneLead: 'Or call:',
     phoneLabel: '+972 54-618-7549',
-    startFormLead: 'Want a price estimate before we talk?',
-    startFormLabel: 'Tell me about the idea here →',
+    startFormLead: 'Rather write?',
+    startFormLabel: 'To the short questionnaire →',
     copyHandleLabel: 'Copy X handle @yosefhayim',
     copyHandleTooltip: 'Copy @yosefhayim',
     copiedNotice: 'Copied @yosefhayim',
   },
   he: {
-    heading: 'תתחילו לפני מישהו אחר',
-    callLabel: 'שלחו הודעה בוואטסאפ',
+    heading: 'ספרו לי על הרעיון, או על מה שכבר בניתם',
+    lead: 'ב-10 דקות נבין ביחד איך נכון להמשיך, בצורה מקצועית. בחינם.',
+    callLabel: 'לקביעת שיחה בוואטסאפ ←',
     phoneLead: 'או תתקשרו:',
     phoneLabel: '054-618-7549',
-    startFormLead: 'רוצים הערכת מחיר עוד לפני שמדברים?',
-    startFormLabel: 'ספרו לי על הרעיון כאן ←',
+    startFormLead: 'מעדיפים לכתוב?',
+    startFormLabel: 'לשאלון הקצר ←',
     copyHandleLabel: 'העתקת שם המשתמש ב-X: @yosefhayim',
     copyHandleTooltip: 'העתקת @yosefhayim',
     copiedNotice: 'הועתק: @yosefhayim',

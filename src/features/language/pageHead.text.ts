@@ -7,13 +7,13 @@ export type PageHeadText = {
 
 export const pageHeadText: Record<Language, PageHeadText> = {
   en: {
-    title: 'Joseph Sabag | Apps and systems for founders with no tech side',
+    title: 'Joseph Sabag | Software engineer',
     description:
-      'Got a good idea and no tech side? Joseph Sabag builds apps and systems with you, from day one until the product is live. A written offer, and the code is yours.',
+      "Built with AI, or have only an idea? In a free 10-minute call, we'll work out together how to build a product you can trust.",
   },
   he: {
-    title: 'יוסף סבג | אפליקציות ומערכות ליזמים בלי צד טכני',
+    title: 'יוסף סבג | מהנדס תוכנה',
     description:
-      'יש לכם רעיון טוב ואין לכם צד טכני? יוסף סבג בונה איתכם אפליקציות ומערכות, מהיום הראשון ועד שהמוצר באוויר. הצעה בכתב, והקוד שלכם.',
+      'בניתם עם AI, או שיש לכם רק רעיון? ב-10 דקות של שיחה, בחינם, נבין ביחד איך לבנות מוצר שאפשר לסמוך עליו.',
   },
 };
