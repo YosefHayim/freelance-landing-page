@@ -99,6 +99,7 @@ h2 {
   font-weight: 600;
   letter-spacing: -0.035em;
   line-height: 1.08;
+  text-wrap: balance;
 }
 
 .muted-line {
