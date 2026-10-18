@@ -37,8 +37,8 @@ export const ProjectsSection = ({ language }: ProjectsSectionProps) => {
                         className="project-image"
                         src={projectImages[projectName]}
                         alt=""
-                        width="600"
-                        height="450"
+                        width="1200"
+                        height="900"
                         loading="lazy"
                         decoding="async"
                       />

@@ -82,9 +82,10 @@ names or CSS classes.
   and sounds spoken, not written. No em dashes, no revenue promises, no claims beyond the
   facts already in the text. Military service appears only as the approved commanders course
   line in `experience.text.ts`.
-- Project cards link to live work the owner approved. Their pictures are 600x450 WebP files in
+- Project cards link to live work the owner approved. Each picture is the project's official logo,
+  not a screenshot, centered on a soft tile in its brand color: a 1200x900 WebP in
   `assets/projects/`, lazy loaded, since the content policy allows only images from this site.
-  Encode them with `cwebp -q 60 -m 6 -af -pass 10` and keep each above 4 KB, or Vite inlines it
+  Encode them with `cwebp -q 80 -m 6 -af -pass 10` and keep each above 4 KB, or Vite inlines it
   as a `data:` URL the content policy blocks.
 - Use CSS logical properties. Mirror directional animations under `html[dir="rtl"]`.
 - The privacy policy and terms (`features/legal/`) cover this site and the project form at
