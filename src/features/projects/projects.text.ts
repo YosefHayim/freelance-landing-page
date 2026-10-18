@@ -45,6 +45,11 @@ export const projectsText: Record<Language, ProjectsText> = {
         name: 'Cal Friend',
         detail: 'Snap your meal and get calories, protein and progress tracking.',
       },
+      replybase: {
+        name: 'Replybase',
+        detail:
+          'An AI chat for your site that answers customers only from content you approved, and sends you the leads.',
+      },
       smallBites: {
         name: 'Small Bites',
         detail: 'An app for parents starting solids, with 400+ first foods and 300+ recipes.',
@@ -82,6 +87,10 @@ export const projectsText: Record<Language, ProjectsText> = {
       calFriend: {
         name: 'Cal Friend',
         detail: 'מצלמים את הארוחה, ומקבלים קלוריות, חלבון ומעקב התקדמות.',
+      },
+      replybase: {
+        name: 'Replybase',
+        detail: "צ'אט AI לאתר שעונה ללקוחות רק מהתוכן שאישרתם, ומעביר לכם את הלידים.",
       },
       smallBites: {
         name: 'Small Bites',
