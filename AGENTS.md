@@ -4,7 +4,7 @@ A one-page bilingual (English and Hebrew) business site for Joseph Sabag, served
 https://joseph-tech-solutions.dev/ by one Cloudflare Worker named `freelance-landing-page`, plus
 a privacy policy at `/privacy` and terms of use at `/terms`. The look and motion are final;
 change them only when asked. Every call button opens WhatsApp at
-+972546187549 with a localized draft message, and the closing also offers a phone call and the
++972525842972 with a localized draft message, and the closing also offers a phone call and the
 project form at start.joseph-tech-solutions.dev. This site has no forms, accounts, business API,
 database or secrets.
 
