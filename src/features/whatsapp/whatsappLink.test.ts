@@ -8,7 +8,7 @@ describe('WhatsApp link', () => {
       const link = whatsappLink(language);
       const url = new URL(link);
       expect(url.origin).toBe('https://wa.me');
-      expect(url.pathname).toBe('/972546187549');
+      expect(url.pathname).toBe('/972525842972');
       const message = url.searchParams.get('text');
       expect(message).toContain(language === 'he' ? 'היי יוסף' : 'Hi Joseph');
     },

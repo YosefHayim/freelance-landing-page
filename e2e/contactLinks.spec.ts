@@ -11,7 +11,7 @@ for (const language of languages) {
     for (const link of await whatsappLinks.all()) {
       const href = await link.evaluate((anchor: HTMLAnchorElement) => anchor.href);
       const address = new URL(href);
-      expect(address.pathname).toBe('/972546187549');
+      expect(address.pathname).toBe('/972525842972');
       expect(address.searchParams.get('text')).toBe(whatsappText[language].message);
       await expect(link).toHaveAttribute('target', '_blank');
       await expect(link).toHaveAttribute('rel', 'noopener');
@@ -28,7 +28,7 @@ for (const language of languages) {
     const text = contactText[language];
     await expect(contact.getByRole('link', { name: text.phoneLabel })).toHaveAttribute(
       'href',
-      'tel:+972546187549',
+      'tel:+972525842972',
     );
     await expect(contact.getByRole('link', { name: text.startFormLabel })).toHaveAttribute(
       'href',
