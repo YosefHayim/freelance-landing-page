@@ -79,6 +79,14 @@ test('the pixel starts with the page view', async ({ page }) => {
   ]);
 });
 
+test('the pixel loads once the page settles, before any interaction', async ({ page }) => {
+  const pixelCalls = collectPixelCalls(page, metaPixelLogPrefix);
+  await visitSite(page, 'en');
+  await letAppStart(page);
+  await letPageSettle(page);
+  await expect.poll(() => pixelCalls).toContainEqual(['track', 'PageView']);
+});
+
 test('the TikTok pixel starts with the page view', async ({ page }) => {
   const tikTokCalls = collectPixelCalls(page, tikTokPixelLogPrefix);
   await openSiteWithPixel(page, 'en');
