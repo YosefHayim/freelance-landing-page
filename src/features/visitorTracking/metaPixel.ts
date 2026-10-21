@@ -1,4 +1,4 @@
-import { runAfterFirstInteraction } from '../pageLoad/runAfterFirstInteraction';
+import { runAfterPageSettles } from '../pageLoad/runAfterPageSettles';
 import { addScript } from './addScript';
 
 const pixelId = '4662982497316102';
@@ -45,7 +45,7 @@ export const loadMetaPixel = () => {
   window._fbq = pixel;
   pixel('init', pixelId);
   pixel('track', 'PageView');
-  runAfterFirstInteraction(() => addScript(pixelScriptAddress));
+  runAfterPageSettles(() => addScript(pixelScriptAddress));
 };
 
 const sendEvent = (method: 'track' | 'trackCustom', eventName: string, details: EventDetails) => {

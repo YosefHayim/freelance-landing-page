@@ -2,23 +2,13 @@ import { expect, type Page, test } from '@playwright/test';
 import { introText } from '../src/features/intro/intro.text';
 import type { Language } from '../src/features/language/language';
 import { languageText } from '../src/features/language/language.text';
+import { collectPixelCalls } from './collectPixelCalls';
 import { letAppStart } from './letAppStart';
 import { letPageSettle } from './letPageSettle';
 import { metaPixelLogPrefix, tikTokPixelLogPrefix, visitSite } from './openSite';
 
 const clockStart = new Date('2026-01-01T09:00:00');
 const visitStart = new Date('2026-01-01T10:00:00');
-
-const collectPixelCalls = (page: Page, logPrefix: string) => {
-  const pixelCalls: unknown[][] = [];
-  page.on('console', (message) => {
-    const text = message.text();
-    if (!text.startsWith(logPrefix)) return;
-    const pixelCall = text.slice(logPrefix.length);
-    pixelCalls.push(JSON.parse(pixelCall));
-  });
-  return pixelCalls;
-};
 
 const callsNamed = (pixelCalls: unknown[][], eventName: string) =>
   pixelCalls.filter((pixelCall) => pixelCall[1] === eventName);
