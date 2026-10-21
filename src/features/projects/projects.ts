@@ -1,7 +1,3 @@
-export const projectGroupNames = ['client', 'own'] as const;
-
-export type ProjectGroupName = (typeof projectGroupNames)[number];
-
 export type ProjectName =
   | 'oly'
   | 'myPr'
@@ -20,10 +16,16 @@ type Project = {
   trackedName: string;
 };
 
-export const projectGroups: Record<ProjectGroupName, ProjectName[]> = {
-  client: ['oly', 'myPr', 'omriAssociation', 'vybeKiit'],
-  own: ['calFriend', 'replybase', 'smallBites', 'wiseNoteTaker'],
-};
+export const projectNames: ProjectName[] = [
+  'oly',
+  'myPr',
+  'omriAssociation',
+  'vybeKiit',
+  'calFriend',
+  'replybase',
+  'smallBites',
+  'wiseNoteTaker',
+];
 
 export const projects: Record<ProjectName, Project> = {
   oly: {

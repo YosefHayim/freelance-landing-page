@@ -7,11 +7,7 @@
   display: block;
 }
 
-.project-group + .project-group {
-  margin-top: 56px;
-}
-
-.project-group-title {
+.project-list-title {
   color: var(--muted-dark);
   font-size: 15px;
   font-weight: 600;
