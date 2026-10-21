@@ -1,5 +1,5 @@
 import type { Language } from '../language/language';
-import type { ProjectGroupName, ProjectLinkKind, ProjectName } from './projects';
+import type { ProjectLinkKind, ProjectName } from './projects';
 
 type ProjectText = {
   name: string;
@@ -9,7 +9,7 @@ type ProjectText = {
 type ProjectsText = {
   heading: string;
   mutedHeading: string;
-  groupTitles: Record<ProjectGroupName, string>;
+  listTitle: string;
   linkLabels: Record<ProjectLinkKind, string>;
   projects: Record<ProjectName, ProjectText>;
 };
@@ -18,10 +18,7 @@ export const projectsText: Record<Language, ProjectsText> = {
   en: {
     heading: 'Already live',
     mutedHeading: 'Tap and see for yourself',
-    groupTitles: {
-      client: "Some of the projects I've built, and more to come",
-      own: 'My own products',
-    },
+    listTitle: "Some of the projects I've built, and more to come",
     linkLabels: {
       site: 'Visit the site →',
       appStore: 'On the App Store →',
@@ -68,10 +65,7 @@ export const projectsText: Record<Language, ProjectsText> = {
   he: {
     heading: 'כבר באוויר',
     mutedHeading: 'לחצו ותראו בעצמכם',
-    groupTitles: {
-      client: 'חלק מהפרויקטים שבניתי, ועוד בדרך',
-      own: 'המוצרים שלי',
-    },
+    listTitle: 'חלק מהפרויקטים שבניתי, ועוד בדרך',
     linkLabels: {
       site: 'לאתר ←',
       appStore: 'ב-App Store ←',
