@@ -172,6 +172,7 @@ test('the project and GitHub links report as clicks under their own names', asyn
       { target: 'project_oly', section: 'projects', language: 'en' },
       { target: 'project_mypr', section: 'projects', language: 'en' },
       { target: 'project_omri_association', section: 'projects', language: 'en' },
+      { target: 'project_vybekiit', section: 'projects', language: 'en' },
       { target: 'project_cal_friend', section: 'projects', language: 'en' },
       { target: 'project_replybase', section: 'projects', language: 'en' },
       { target: 'project_small_bites', section: 'projects', language: 'en' },

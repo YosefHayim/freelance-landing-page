@@ -19,7 +19,7 @@ export const projectsText: Record<Language, ProjectsText> = {
     heading: 'Already live',
     mutedHeading: 'Tap and see for yourself',
     groupTitles: {
-      client: 'For clients',
+      client: "Some of the projects I've built, and more to come",
       own: 'My own products',
     },
     linkLabels: {
@@ -50,6 +50,11 @@ export const projectsText: Record<Language, ProjectsText> = {
         detail:
           'An AI chat for your site that answers customers only from content you approved, and sends you the leads.',
       },
+      vybeKiit: {
+        name: 'VybeKiit',
+        detail:
+          'A kit for vibe coders that gets Claude Code writing clean, efficient code, with sign-in, payments and a database ready out of the box.',
+      },
       smallBites: {
         name: 'Small Bites',
         detail: 'An app for parents starting solids, with 400+ first foods and 300+ recipes.',
@@ -64,7 +69,7 @@ export const projectsText: Record<Language, ProjectsText> = {
     heading: 'כבר באוויר',
     mutedHeading: 'לחצו ותראו בעצמכם',
     groupTitles: {
-      client: 'ללקוחות',
+      client: 'חלק מהפרויקטים שבניתי, ועוד בדרך',
       own: 'המוצרים שלי',
     },
     linkLabels: {
@@ -91,6 +96,11 @@ export const projectsText: Record<Language, ProjectsText> = {
       replybase: {
         name: 'Replybase',
         detail: "צ'אט AI לאתר שעונה ללקוחות רק מהתוכן שאישרתם, ומעביר לכם את הלידים.",
+      },
+      vybeKiit: {
+        name: 'VybeKiit',
+        detail:
+          'ערכה למי שבונה עם AI, שגורמת ל-Claude Code לכתוב קוד נקי ויעיל, עם התחברות, תשלומים ומסד נתונים מוכנים מהקופסה.',
       },
       smallBites: {
         name: 'Small Bites',

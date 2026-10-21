@@ -10,6 +10,7 @@ const liveProjects: { projectName: ProjectName; address: string }[] = [
   { projectName: 'omriAssociation', address: 'https://www.omri-association.com/' },
   { projectName: 'calFriend', address: 'https://calfriend.ai/' },
   { projectName: 'replybase', address: 'https://replybase.dev/' },
+  { projectName: 'vybeKiit', address: 'https://vybekiit.com/' },
   { projectName: 'smallBites', address: 'https://apps.apple.com/app/id6759283694' },
   { projectName: 'wiseNoteTaker', address: 'https://apps.apple.com/app/id6759506382' },
 ];
