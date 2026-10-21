@@ -2,23 +2,13 @@ import { expect, type Page, test } from '@playwright/test';
 import { introText } from '../src/features/intro/intro.text';
 import type { Language } from '../src/features/language/language';
 import { languageText } from '../src/features/language/language.text';
+import { collectPixelCalls } from './collectPixelCalls';
 import { letAppStart } from './letAppStart';
 import { letPageSettle } from './letPageSettle';
 import { metaPixelLogPrefix, tikTokPixelLogPrefix, visitSite } from './openSite';
 
 const clockStart = new Date('2026-01-01T09:00:00');
 const visitStart = new Date('2026-01-01T10:00:00');
-
-const collectPixelCalls = (page: Page, logPrefix: string) => {
-  const pixelCalls: unknown[][] = [];
-  page.on('console', (message) => {
-    const text = message.text();
-    if (!text.startsWith(logPrefix)) return;
-    const pixelCall = text.slice(logPrefix.length);
-    pixelCalls.push(JSON.parse(pixelCall));
-  });
-  return pixelCalls;
-};
 
 const callsNamed = (pixelCalls: unknown[][], eventName: string) =>
   pixelCalls.filter((pixelCall) => pixelCall[1] === eventName);
@@ -77,14 +67,6 @@ test('the pixel starts with the page view', async ({ page }) => {
     ['init', '4662982497316102'],
     ['track', 'PageView'],
   ]);
-});
-
-test('the pixel loads once the page settles, before any interaction', async ({ page }) => {
-  const pixelCalls = collectPixelCalls(page, metaPixelLogPrefix);
-  await visitSite(page, 'en');
-  await letAppStart(page);
-  await letPageSettle(page);
-  await expect.poll(() => pixelCalls).toContainEqual(['track', 'PageView']);
 });
 
 test('the TikTok pixel starts with the page view', async ({ page }) => {

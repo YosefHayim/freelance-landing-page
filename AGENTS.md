@@ -126,13 +126,15 @@ names or CSS classes.
 - The container loads from a module, not from Google's inline snippet, so the CSP keeps no
   `unsafe-inline` for scripts. Custom HTML tags and Custom JavaScript variables need
   `unsafe-inline` and `unsafe-eval`, so they do not run here: use the built-in tag templates.
-- Outside scripts (pixels, container, chat widget) start through `runAfterFirstInteraction`:
+- The TikTok Pixel, the container and the chat widget start through `runAfterFirstInteraction`:
   after the first pointer, key or scroll event (at once if the visitor scrolled or tapped before
   the code ran) and once the page settles (`runAfterPageSettles`:
-  the wait after `load`, no running CSS transition, a last frame to paint). The pixel queues and
-  `dataLayer` start at once, so no event is lost. Lighthouse counts an outside request that
-  starts before the largest paint, even a blocked one. A test calls `letPageSettle` from
-  `e2e/letPageSettle.ts`, then presses a key before it expects the scripts.
+  the wait after `load`, no running CSS transition, a last frame to paint). The Meta Pixel starts
+  through `runAfterPageSettles` alone, so a visitor who never interacts still counts as a landing
+  page view. The pixel queues and `dataLayer` start at once, so no event is lost. Lighthouse
+  counts an outside request that starts before the largest paint, even a blocked one. A test
+  calls `letPageSettle` from `e2e/letPageSettle.ts`, then presses a key before it expects the
+  scripts that wait for an interaction.
 - The work showcase also starts rotating on the first interaction (`listenForFirstInteraction`).
   Lighthouse never interacts, so its contrast check never lands on a button mid-fade.
   `navigator.userActivation` is read only where it exists: Safari before 16.4 lacks it, and a
