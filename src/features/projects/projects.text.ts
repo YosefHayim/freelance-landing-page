@@ -19,7 +19,7 @@ export const projectsText: Record<Language, ProjectsText> = {
     heading: 'Already live',
     mutedHeading: 'Tap and see for yourself',
     groupTitles: {
-      client: 'For clients',
+      client: "Some of the projects I've built, and more to come",
       own: 'My own products',
     },
     linkLabels: {
@@ -69,7 +69,7 @@ export const projectsText: Record<Language, ProjectsText> = {
     heading: 'כבר באוויר',
     mutedHeading: 'לחצו ותראו בעצמכם',
     groupTitles: {
-      client: 'ללקוחות',
+      client: 'חלק מהפרויקטים שבניתי, ועוד בדרך',
       own: 'המוצרים שלי',
     },
     linkLabels: {

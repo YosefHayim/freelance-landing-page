@@ -21,8 +21,8 @@ type Project = {
 };
 
 export const projectGroups: Record<ProjectGroupName, ProjectName[]> = {
-  client: ['oly', 'myPr', 'omriAssociation'],
-  own: ['calFriend', 'replybase', 'vybeKiit', 'smallBites', 'wiseNoteTaker'],
+  client: ['oly', 'myPr', 'omriAssociation', 'vybeKiit'],
+  own: ['calFriend', 'replybase', 'smallBites', 'wiseNoteTaker'],
 };
 
 export const projects: Record<ProjectName, Project> = {
