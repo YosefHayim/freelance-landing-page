@@ -47,7 +47,7 @@ export const aboutText: Record<Language, AboutText> = {
     steps: {
       call: {
         title: 'A 10-minute call',
-        detail: "Tell me about the idea, or what you've already built. Free.",
+        detail: "Tell me about the idea, or what you've already built.",
       },
       questionnaire: {
         title: 'A short questionnaire',
@@ -76,7 +76,7 @@ export const aboutText: Record<Language, AboutText> = {
     steps: {
       call: {
         title: 'שיחה של 10 דקות',
-        detail: 'מספרים לי על הרעיון, או על מה שכבר בניתם. בחינם.',
+        detail: 'מספרים לי על הרעיון, או על מה שכבר בניתם.',
       },
       questionnaire: { title: 'שאלון קצר', detail: 'כמה שאלות, כדי שאבין בדיוק מה אתם צריכים.' },
       spec: {

@@ -16,7 +16,7 @@ type ContactText = {
 export const contactText: Record<Language, ContactText> = {
   en: {
     heading: "Tell me about your idea, or what you've already built",
-    lead: "In 10 minutes we'll work out together the right way forward, professionally. Free.",
+    lead: "In 10 minutes we'll work out together the right way forward, professionally.",
     callLabel: 'Book a call on WhatsApp →',
     phoneLead: 'Or call:',
     phoneLabel: '+972 52-584-2972',
@@ -28,7 +28,7 @@ export const contactText: Record<Language, ContactText> = {
   },
   he: {
     heading: 'ספרו לי על הרעיון, או על מה שכבר בניתם',
-    lead: 'ב-10 דקות נבין ביחד איך נכון להמשיך, בצורה מקצועית. בחינם.',
+    lead: 'ב-10 דקות נבין ביחד איך נכון להמשיך, בצורה מקצועית.',
     callLabel: 'לקביעת שיחה בוואטסאפ ←',
     phoneLead: 'או תתקשרו:',
     phoneLabel: '052-584-2972',
