@@ -1,7 +1,7 @@
 import type { Language } from '../language/language';
 
 export const questionNames = [
-  'freeCall',
+  'commitment',
   'price',
   'timeline',
   'takeOver',
@@ -27,10 +27,10 @@ export const questionsText: Record<Language, QuestionsText> = {
   en: {
     heading: 'What people always ask me',
     questions: {
-      freeCall: {
-        question: "Is the call really free? What's the catch?",
+      commitment: {
+        question: 'Does the call commit me to anything?',
         answer:
-          "No catch. Ten minutes, no commitment. We work out together what you need, and you leave with a clear direction, even if we don't end up working together.",
+          "No. Ten minutes, no commitment. We work out together what you need, and you leave with a clear direction, even if we don't end up working together.",
       },
       price: {
         question: 'How much does it cost?',
@@ -73,10 +73,10 @@ export const questionsText: Record<Language, QuestionsText> = {
   he: {
     heading: 'מה שתמיד שואלים אותי',
     questions: {
-      freeCall: {
-        question: 'השיחה באמת בחינם? מה המלכוד?',
+      commitment: {
+        question: 'השיחה מחייבת אותי במשהו?',
         answer:
-          'אין מלכוד. עשר דקות, בלי התחייבות. נבין ביחד מה אתם צריכים, ותצאו עם כיוון ברור, גם אם בסוף לא נעבוד ביחד.',
+          'לא. עשר דקות, בלי התחייבות. נבין ביחד מה אתם צריכים, ותצאו עם כיוון ברור, גם אם בסוף לא נעבוד ביחד.',
       },
       price: {
         question: 'כמה זה עולה?',

@@ -28,7 +28,7 @@ export const introText: Record<Language, IntroText> = {
     mutedLine: 'Trusting what you built, less so',
     summary:
       "Is it secure? Did it pass tests? Will it hold up when users arrive? For over two years I've been building apps, websites and AI systems. Let's start with an intro call: we'll work out together exactly what you need, and you'll get real help. Even if all you have is an idea.",
-    callLabel: 'Book a free call',
+    callLabel: 'Book a call',
     callHoverLabel: '10 minutes by phone',
     showcaseLabel: 'What I build',
     workTypes: {
@@ -63,7 +63,7 @@ export const introText: Record<Language, IntroText> = {
     mutedLine: 'לסמוך על מה שבניתם, פחות',
     summary:
       'מאובטח? עבר בדיקות? יחזיק כשיגיעו משתמשים? כבר יותר משנתיים אני בונה אפליקציות, אתרים ומערכות AI. אני מזמין אתכם לשיחת היכרות: נבין ביחד מה בדיוק אתם צריכים, ותקבלו עזרה אמיתית. גם אם יש לכם רק רעיון.',
-    callLabel: 'לקביעת שיחה בחינם',
+    callLabel: 'לקביעת שיחה',
     callHoverLabel: '10 דקות בטלפון',
     showcaseLabel: 'מה אני בונה',
     workTypes: {
