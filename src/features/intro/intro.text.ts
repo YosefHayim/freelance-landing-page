@@ -22,7 +22,7 @@ type IntroText = {
 export const introText: Record<Language, IntroText> = {
   en: {
     sectionLabel: 'Intro',
-    greeting: "Hi, I'm Joseph. A software engineer, and a founder at heart.",
+    greeting: "Hi, I'm Joseph. An x10 AI Native Engineer, and a founder at heart.",
     photoAlt: 'Joseph Sabag',
     headline: 'With AI, building is easy',
     mutedLine: 'Trusting what you built, less so',
@@ -57,7 +57,7 @@ export const introText: Record<Language, IntroText> = {
   },
   he: {
     sectionLabel: 'פתיחה',
-    greeting: 'היי, אני יוסף. מהנדס תוכנה, ויזם בנשמה.',
+    greeting: 'היי, אני יוסף. x10 AI Native Engineer, ויזם בנשמה.',
     photoAlt: 'יוסף סבג',
     headline: 'עם AI, לבנות זה קל',
     mutedLine: 'לסמוך על מה שבניתם, פחות',
