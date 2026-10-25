@@ -198,11 +198,12 @@ where the page uses `backdrop-filter`, so the browser job times out
 release ships WebKit r2373 or newer.
 
 CI runs the same checks as parallel jobs behind one required `CI Gate` job: one `check` matrix
-(lint, typecheck, test), and the browser and vitals jobs, which each build first. Actions are
+(lint, typecheck, test), where pull requests lint and test only the files that changed since the
+base commit (a `changes` job picks full or changed), and the browser and vitals jobs, which each build first. Actions are
 pinned to commit SHAs with the version in a comment; update both together. Before opening a
 PR, run them locally with `act workflow_dispatch -W .github/workflows/ci.yml`; the root
-`.actrc` picks the Docker runner, keeps the pnpm store outside the workspace and gives each
-job its own copy of an action, so parallel jobs cannot break each other's setup. act skips the
+`.actrc` gives each job its own copy of an action, so parallel jobs cannot break each other's
+setup; the machine's `~/.actrc` selects the runner, architecture and shared caches. act skips the
 Lighthouse job because Docker is too slow to measure it; `pnpm test:vitals` covers it locally.
 
 ## Release
