@@ -197,9 +197,11 @@ where the page uses `backdrop-filter`, so the browser job times out
 ([playwright#43426](https://github.com/microsoft/playwright/issues/43426)). Update once a
 release ships WebKit r2373 or newer.
 
-CI runs the same checks as parallel jobs behind one required `CI Gate` job: one `check` matrix
-(lint, typecheck, test), where pull requests lint and test only the files that changed since the
-base commit (a `changes` job picks full or changed), and the browser and vitals jobs, which each build first. Actions are
+CI runs on Linux only, behind one required `CI Gate` job: `test` (vitest), and the browser and vitals
+jobs, which each build first. Pull requests run only what their changed paths touch (a `changes` job
+picks full or changed tests), a push to main runs everything, and a failed main run opens a
+`ci-failure` issue. Lint and typecheck run in the husky pre-push hook (`pnpm lint && pnpm typecheck`),
+so a new worktree needs `pnpm install` before its first push. Actions are
 pinned to commit SHAs with the version in a comment; update both together. Before opening a
 PR, run them locally with the run-ci-locally skill. It runs one act process per job, each
 holding a machine-wide slot, so parallel sessions do not run Docker out of memory; never run
