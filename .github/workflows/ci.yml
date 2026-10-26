@@ -11,7 +11,30 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  changes:
+    name: Changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      since: ${{ steps.filter.outputs.everything != 'true' && github.event.pull_request.base.sha || '' }}
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+      id: filter
+      if: github.event_name == 'pull_request'
+      with:
+        token: ''
+        filters: |
+          everything:
+            - pnpm-lock.yaml
+            - pnpm-workspace.yaml
+            - package.json
+            - biome.json
+            - 'tsconfig*.json'
+            - '*.config.ts'
+            - '.github/**'
   check:
+    needs: changes
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -23,10 +46,23 @@ jobs:
         - test
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        fetch-depth: 0
     - name: Setup workspace
       uses: ./.github/actions/setup
     - name: Run check
+      if: needs.changes.outputs.since == '' || matrix.command == 'typecheck'
       run: pnpm ${{ matrix.command }}
+    - name: Lint the changed files
+      if: needs.changes.outputs.since != '' && matrix.command == 'lint'
+      run: pnpm exec biome check --changed --since="$SINCE" --no-errors-on-unmatched
+      env:
+        SINCE: ${{ needs.changes.outputs.since }}
+    - name: Test what the changes touch
+      if: needs.changes.outputs.since != '' && matrix.command == 'test'
+      run: pnpm exec vitest run --changed "$SINCE"
+      env:
+        SINCE: ${{ needs.changes.outputs.since }}
   browser:
     uses: ./.github/workflows/browser.yml
   vitals:
@@ -37,6 +73,7 @@ jobs:
     runs-on: ubuntu-slim
     timeout-minutes: 5
     needs:
+    - changes
     - check
     - browser
     - vitals
