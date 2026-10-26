@@ -1,6 +1,6 @@
 import './experience.css';
 import type { Language } from '../language/language';
-import { experienceProofNames, experienceRoleNames, experienceText } from './experience.text';
+import { experienceFactNames, experienceProofNames, experienceText } from './experience.text';
 
 const ebayMcpLink = 'https://github.com/YosefHayim/ebay-mcp';
 
@@ -18,10 +18,10 @@ export const ExperienceSection = ({ language }: ExperienceSectionProps) => {
           <span>{text.heading}</span>
           <span className="muted-line">{text.mutedHeading}</span>
         </h2>
-        <ul className="experience-roles reveal-on-scroll" aria-label={text.rolesLabel}>
-          {experienceRoleNames.map((roleName) => (
-            <li key={roleName} className="experience-role">
-              {text.roles[roleName]}
+        <ul className="experience-facts reveal-on-scroll" aria-label={text.factsLabel}>
+          {experienceFactNames.map((factName) => (
+            <li key={factName} className="experience-fact">
+              {text.facts[factName]}
             </li>
           ))}
         </ul>

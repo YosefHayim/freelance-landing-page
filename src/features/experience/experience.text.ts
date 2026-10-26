@@ -1,10 +1,10 @@
 import type { Language } from '../language/language';
 
-export const experienceRoleNames = ['startup', 'internship', 'freelance'] as const;
+export const experienceFactNames = ['years', 'aiAndWeb', 'nativeApps'] as const;
 
 export const experienceProofNames = ['dataMove', 'ebayMcp', 'excellence'] as const;
 
-type ExperienceRoleName = (typeof experienceRoleNames)[number];
+type ExperienceFactName = (typeof experienceFactNames)[number];
 
 type ExperienceProofName = (typeof experienceProofNames)[number];
 
@@ -16,8 +16,8 @@ type ExperienceProofText = {
 type ExperienceText = {
   heading: string;
   mutedHeading: string;
-  rolesLabel: string;
-  roles: Record<ExperienceRoleName, string>;
+  factsLabel: string;
+  facts: Record<ExperienceFactName, string>;
   lead: string;
   proofs: Record<ExperienceProofName, ExperienceProofText>;
   ebayMcpLinkLabel: string;
@@ -27,11 +27,11 @@ export const experienceText: Record<Language, ExperienceText> = {
   en: {
     heading: 'AI can write code',
     mutedHeading: 'I know what it misses',
-    rolesLabel: 'My experience',
-    roles: {
-      startup: '1 year at a startup',
-      internship: '3-month internship',
-      freelance: 'Almost a year freelance',
+    factsLabel: 'My experience',
+    facts: {
+      years: 'Over two years of experience',
+      aiAndWeb: 'AI systems, web design and architecture',
+      nativeApps: 'Native iPhone and Android apps',
     },
     lead: 'Not from a tutorial. From real work:',
     proofs: {
@@ -53,11 +53,11 @@ export const experienceText: Record<Language, ExperienceText> = {
   he: {
     heading: 'AI יודע לכתוב קוד',
     mutedHeading: 'אני יודע מה הוא מפספס',
-    rolesLabel: 'הניסיון שלי',
-    roles: {
-      startup: 'שנה בסטארטאפ',
-      internship: '3 חודשי התמחות',
-      freelance: 'כמעט שנה כעצמאי',
+    factsLabel: 'הניסיון שלי',
+    facts: {
+      years: 'יותר משנתיים של ניסיון',
+      aiAndWeb: 'מערכות AI, עיצוב אתרים וארכיטקטורה',
+      nativeApps: 'אפליקציות נייטיב לאייפון ולאנדרואיד',
     },
     lead: 'לא מתוך מדריך. מתוך עבודה אמיתית:',
     proofs: {
