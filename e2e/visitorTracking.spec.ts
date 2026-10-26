@@ -42,10 +42,10 @@ const openSiteWithPixel = async (page: Page, language: Language) => {
 };
 
 const scrollToEdge = async (page: Page, edge: 'top' | 'bottom') => {
-  await page.evaluate((isBottom) => {
-    const top = Number(isBottom) * document.documentElement.scrollHeight;
-    window.scrollTo(0, top);
-  }, edge === 'bottom');
+  await page.evaluate((edgeToReach) => {
+    const edgeTops = { top: 0, bottom: document.documentElement.scrollHeight };
+    window.scrollTo(0, edgeTops[edgeToReach]);
+  }, edge);
   await letNextRenderHappen(page);
 };
 
