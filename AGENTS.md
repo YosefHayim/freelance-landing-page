@@ -195,7 +195,9 @@ Port 4173 must be free.
 Playwright stays at 1.63.0. The WebKit in 1.64.0 and 1.64.1 paints almost no frames on Linux
 where the page uses `backdrop-filter`, so the browser job times out
 ([playwright#43426](https://github.com/microsoft/playwright/issues/43426)). Update once a
-release ships WebKit r2373 or newer.
+release ships WebKit r2373 or newer. The browser job runs in the Playwright image
+(`mcr.microsoft.com/playwright:v<version>-noble`), which ships the browsers and their system
+libraries; bump its tag together with `@playwright/test`.
 
 CI runs on Linux only, behind one required `CI Gate` job: `test` (vitest), and the browser and vitals
 jobs, which each build first. Pull requests run only what their changed paths touch (a `changes` job
