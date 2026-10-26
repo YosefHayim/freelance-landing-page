@@ -18,30 +18,36 @@ const detailsNamed = (pixelCalls: unknown[][], eventName: string) => {
   return namedCalls.map((pixelCall) => pixelCall[2]);
 };
 
+const letNextRenderHappen = (page: Page) =>
+  page.evaluate(
+    () =>
+      new Promise<void>((pageRendered) => {
+        const nextRender = new IntersectionObserver(() => {
+          nextRender.disconnect();
+          pageRendered();
+        });
+        nextRender.observe(document.documentElement);
+      }),
+  );
+
 const openSiteWithPixel = async (page: Page, language: Language) => {
   const pixelCalls = collectPixelCalls(page, metaPixelLogPrefix);
   await visitSite(page, language);
   await letAppStart(page);
   await letPageSettle(page);
   await page.keyboard.press('Shift');
+  await letNextRenderHappen(page);
   await expect.poll(() => pixelCalls).toContainEqual(['track', 'PageView']);
   return pixelCalls;
 };
 
-const scrollToEdge = (page: Page, edge: 'top' | 'bottom') =>
-  page.evaluate(
-    (isBottom) =>
-      new Promise<void>((pageSawScroll) => {
-        const top = isBottom ? document.documentElement.scrollHeight : 0;
-        window.scrollTo(0, top);
-        const nextRender = new IntersectionObserver(() => {
-          nextRender.disconnect();
-          pageSawScroll();
-        });
-        nextRender.observe(document.documentElement);
-      }),
-    edge === 'bottom',
-  );
+const scrollToEdge = async (page: Page, edge: 'top' | 'bottom') => {
+  await page.evaluate((isBottom) => {
+    const top = Number(isBottom) * document.documentElement.scrollHeight;
+    window.scrollTo(0, top);
+  }, edge === 'bottom');
+  await letNextRenderHappen(page);
+};
 
 const introCallLink = (page: Page, language: Language) =>
   page.locator('#intro').getByRole('link', { name: introText[language].callLabel });
