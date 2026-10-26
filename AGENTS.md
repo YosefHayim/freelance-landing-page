@@ -201,10 +201,11 @@ CI runs the same checks as parallel jobs behind one required `CI Gate` job: one 
 (lint, typecheck, test), where pull requests lint and test only the files that changed since the
 base commit (a `changes` job picks full or changed), and the browser and vitals jobs, which each build first. Actions are
 pinned to commit SHAs with the version in a comment; update both together. Before opening a
-PR, run them locally with `act workflow_dispatch -W .github/workflows/ci.yml`; the root
-`.actrc` gives each job its own copy of an action, so parallel jobs cannot break each other's
-setup; the machine's `~/.actrc` selects the runner, architecture and shared caches. act skips the
-Lighthouse job because Docker is too slow to measure it; `pnpm test:vitals` covers it locally.
+PR, run them locally with the run-ci-locally skill. It runs one act process per job, each
+holding a machine-wide slot, so parallel sessions do not run Docker out of memory; never run
+`act` on the whole workflow. The root `.actrc` gives each job its own copy of an action, so
+parallel jobs cannot break each other's setup. act skips the Lighthouse job because Docker is
+too slow to measure it; `pnpm test:vitals` covers it locally.
 
 ## Release
 
@@ -218,8 +219,8 @@ Lighthouse job because Docker is too slow to measure it; `pnpm test:vitals` cove
   links work. Save the commit and Worker version in the PR. If the live check fails, roll back
   to the recorded version.
 - Never touch mail records in the `yosefhayimsabag.com` and `yosefhayimsabag.dev` zones.
-- If GitHub Actions is blocked by billing, run the workflow with act in Docker and remove only
-  what that run created. Never prune Docker globally.
+- If GitHub Actions is blocked by billing, run the workflow with the run-ci-locally skill, which
+  removes only what that run created. Never prune Docker globally.
 
 ## Working here
 
