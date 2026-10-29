@@ -204,12 +204,7 @@ jobs, which each build first. Pull requests run only what their changed paths to
 picks full or changed tests), a push to main runs everything, and a failed main run opens a
 `ci-failure` issue. Lint and typecheck run in the husky pre-push hook (`pnpm lint && pnpm typecheck`),
 so a new worktree needs `pnpm install` before its first push. Actions are
-pinned to commit SHAs with the version in a comment; update both together. Before opening a
-PR, run them locally with the run-ci-locally skill. It runs one act process per job, each
-holding a machine-wide slot, so parallel sessions do not run Docker out of memory; never run
-`act` on the whole workflow. The root `.actrc` gives each job its own copy of an action, so
-parallel jobs cannot break each other's setup. act skips the Lighthouse job because Docker is
-too slow to measure it; `pnpm test:vitals` covers it locally.
+pinned to commit SHAs with the version in a comment; update both together.
 
 ## Release
 
@@ -223,8 +218,6 @@ too slow to measure it; `pnpm test:vitals` covers it locally.
   links work. Save the commit and Worker version in the PR. If the live check fails, roll back
   to the recorded version.
 - Never touch mail records in the `yosefhayimsabag.com` and `yosefhayimsabag.dev` zones.
-- If GitHub Actions is blocked by billing, run the workflow with the run-ci-locally skill, which
-  removes only what that run created. Never prune Docker globally.
 
 ## Working here
 
